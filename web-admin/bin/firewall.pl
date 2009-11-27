@@ -505,7 +505,7 @@ sub do_set_lanif {
 	use XML::LibXML;
 	use File::Temp qw(tempfile);
 	my $if = $ARGV[1];
-	my $old_if = $if == 'eth1' ? 'br0' : 'eth1';
+	my $old_if = $if eq 'eth1' ? 'br0' : 'eth1';
 
 	unless( -f '/etc/network/firewall.conf' ) {
 		system("/sbin/iptables-save > /etc/network/firewall.conf");
@@ -513,7 +513,7 @@ sub do_set_lanif {
 	my $parser = new XML::LibXML();
 	my $file_fw = qx{/usr/sbin/iptables-xml /etc/network/firewall.conf};
 	my $doc = $parser->parse_string( $file_fw );
-	foreach my $context( $doc->findnodes("//match/i[. = \"$old_if\"]/text()") ) {
+	foreach my $context( $doc->findnodes("//match/i[. = \"$old_if\"]/text()")->get_nodelist() ) {
 		$context->setData( $if );
 	}
 	my ($fh, $filename) = tempfile();
