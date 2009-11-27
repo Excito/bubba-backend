@@ -1,8 +1,8 @@
 bubba-backend (1.2.4.10) claire; urgency=low
 
-  * updating cupsd.conf, chainging @LOCAL to @IF(eth1) 
+  * updating cupsd.conf, chainging @LOCAL to @IF(eth1) (Closes: #1071)
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 27 Nov 2009 14:00:44 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 27 Nov 2009 14:01:22 +0100
 
 bubba-backend (1.2.4.9) claire; urgency=low
 
