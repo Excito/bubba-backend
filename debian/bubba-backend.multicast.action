@@ -1,0 +1,29 @@
+#!/bin/sh
+# vim: ft=sh
+set -e
+
+LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
+
+if [ $1 != $LANIF ]  
+then
+	echo "Wrong IF $1"
+	exit 0
+fi
+
+case "$2" in
+up)
+	(
+		/sbin/ifconfig $LANIF allmulti 2> /dev/null &&
+		echo "Adding allmulti to $LANIF";
+	) || true
+	(
+		/sbin/route add -net 239.0.0.0 netmask 255.0.0.0 $LANIF 2> /dev/null &&
+		echo "Adding multicast 239.0.0.0 route to $LANIF";
+	) || true
+	;;
+down)
+	;;
+*)	
+	echo "Unknown action: $2"
+	;;
+esac

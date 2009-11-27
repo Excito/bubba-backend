@@ -1,0 +1,87 @@
+div#site_wrapper{
+height: 100%;
+}
+ul#myController li{
+display: inline;
+}
+li.jFlowPrev{
+position: relative;
+}
+li.jFlowNext{
+position: relative;
+}
+
+div.slideshow div.details{
+background: url(../images/details_bg.gif) right bottom no-repeat;
+}
+
+ul#myController li{
+overflow: hidden;
+}
+
+img.left{
+display: inline;
+}
+img.right{
+display: inline;
+}
+
+
+div.news_image{
+display: inline;
+}
+p.date{
+display: inline;
+}
+div#header_image h1{
+display: inline;
+}
+div#header_image a.buy_now{
+display: inline;
+}
+
+
+
+div#header div#logo{
+display: inline;
+}
+
+
+h1.segment_title img.icon{
+display: inline;
+}
+
+
+ul#myController li{
+display: inline;
+}
+
+div.blurb{
+display: inline;
+}
+
+
+div#nav{
+display: inline;
+}
+div#nav ul li{
+display: inline;
+}
+
+div#nav ul li.last{
+background: url(../images/nav-round-blue-br.gif) bottom right no-repeat;
+}
+
+
+div#breadcrumbs{
+display: inline;
+}
+
+div#sub_nav{
+display: inline;
+}
+
+
+div#sub_nav ul li{
+display: inline;
+}

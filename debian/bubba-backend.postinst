@@ -1,0 +1,229 @@
+#!/bin/sh
+# postinst script for bubba-backend
+#
+# see: dh_installdeb(1)
+
+set -e
+
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <postinst> `abort-remove'
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+# for details, see http://www.debian.org/doc/debian-policy/ or
+# the debian-policy package
+
+case "$1" in
+    configure)
+	for f in cups/cupsd.conf samba/smb.conf
+	do
+		dpkg-divert --add --package bubba-backend --rename \
+		--divert /etc/$f.distrib /etc/$f
+		[ \! -e /etc/$f -o -L /etc/$f ] && ln -sf /etc/bubba/$f /etc/$f
+	done
+
+	# Set mdadm default values
+	if [ -f /etc/default/mdadm ]; then
+		bkup=$(tempfile);
+		cp /etc/default/mdadm $bkup;
+		sed -i "s/AUTOSTART=false/AUTOSTART=true/;s/START_DAEMON=false/START_DAEMON=true/;s/INITRDSTART=.*/INITRDSTART='none'/" /etc/default/mdadm
+		if ! `cmp --silent $bkup /etc/default/mdadm`; then
+			invoke-rc.d mdadm restart;
+		fi
+		rm -f $bkup;
+	fi
+
+	if dpkg --compare-versions "$2" lt 1.2.3; then
+		bkup=$(tempfile);
+		cnf=/etc/mdadm/mdadm.conf;
+
+		cp $cnf $bkup;
+		sed -i "s|^PROGRAM.*$|PROGRAM /usr/lib/web-admin/notify-monitor-raid.pl|;" $cnf;
+		if ! grep --silent PROGRAM $cnf && `cmp --silent $bkup $cnf`; then
+			cat >> $cnf <<-EOF
+			# program to handle events sent my mdadm
+			PROGRAM /usr/lib/web-admin/notify-monitor-raid.pl
+			EOF
+		fi
+
+		if ! `cmp --silent $bkup $cnf`; then
+			mv $bkup $cnf.dpkg-old
+			invoke-rc.d mdadm restart;
+		else
+			rm -f $bkup;
+		fi
+
+	fi
+
+	# forch upgrade of apt config files from old rc7
+	if dpkg --compare-versions "$2" lt 1.0.11; then
+		echo "Installing newq versions of apt preferences."
+		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/preferences /etc/apt/preferences
+		echo "Installing new versions of apt sources.list."
+		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/sources.list /etc/apt/sources.list
+	fi
+
+	# removing leftovers
+	if dpkg --compare-versions "$2" lt 1.0.32; then
+		update-rc.d -f firewall remove
+		rm -f /etc/init.d/firewall
+		update-rc.d -f disable-offload remove
+		rm -f /etc/init.d/disable-offload
+	fi
+
+	if [ ! -e /etc/network/firewall.conf ]; then
+		echo "Installing default firewall config"
+		cp /usr/share/bubba-configs/firewall.conf /etc/network/firewall.conf
+		iptables-restore /etc/network/firewall.conf
+	fi
+
+	#
+	# Start static avahi services
+	#
+	if [ ! -e /etc/avahi/services/ftp.service ]; then
+		cp /usr/share/bubba-configs/ftp.service /etc/avahi/services/ftp.service
+	fi
+
+	if [ ! -e /etc/avahi/services/publicweb.service ]; then
+		cp /usr/share/bubba-configs/publicweb.service /etc/avahi/services/publicweb.service
+	fi
+
+	if [ ! -e /etc/avahi/services/samba.service ]; then
+		cp /usr/share/bubba-configs/samba.service /etc/avahi/services/samba.service
+	fi
+
+	if [ ! -e /etc/avahi/services/sftp.service ]; then
+		cp /usr/share/bubba-configs/sftp.service /etc/avahi/services/sftp.service
+	fi
+
+	if [ ! -e /etc/avahi/services/ssh.service ]; then
+		cp /usr/share/bubba-configs/ssh.service /etc/avahi/services/ssh.service
+	fi
+
+	if [ ! -e /etc/avahi/services/webadmin.service ]; then
+		cp /usr/share/bubba-configs/webadmin.service /etc/avahi/services/webadmin.service
+	fi
+
+	if [ ! -e /etc/avahi/services/pim.service ]; then
+		cp /usr/share/bubba-configs/pim.service /etc/avahi/services/pim.service
+	fi
+
+	if [ ! -e /etc/avahi/services/afpd.service ]; then
+		cp /usr/share/bubba-configs/afpd.service /etc/avahi/services/afpd.service
+	fi
+
+	invoke-rc.d --quiet avahi-daemon reload
+	#
+	# End static avahi services
+	#
+
+
+	# Add icmp type 3 code 4 rules to the firewall, if none already exists.
+	if dpkg --compare-versions "$2" lt 1.0.14; then
+		if ! iptables -nL INPUT | grep -q -- "icmp type 3 code 4"; then
+			iptables -A INPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
+		fi
+		if ! iptables -nL FORWARD | grep -q -- "icmp type 3 code 4"; then
+			iptables -A FORWARD -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
+		fi
+		cp /etc/network/firewall.conf /etc/network/firewall.conf.dpkg-old
+		iptables-save > /etc/network/firewall.conf
+
+	fi
+
+	# Adding missing routes "on the fly".
+	if dpkg --compare-versions "$2" lt 1.1.11; then
+		(
+		/sbin/route add -net 224.0.0.0 netmask 255.0.0.0 eth1 2> /dev/null &&
+		echo "Adding multicast 224.0.0.0 route to eth1";
+		) || true
+		(
+		/sbin/route add -net 239.0.0.0 netmask 255.0.0.0 eth1 2> /dev/null &&
+		echo "Adding multicast 239.0.0.0 route to eth1";
+		) || true
+	fi
+
+	if ! getent passwd admin >/dev/null; then
+		echo "Adding administrator user \"admin\""
+		/usr/sbin/useradd -m -c "Administrator" -s "/bin/bash" -p `perl -MCrypt::PasswdMD5 -e 'print unix_md5_crypt("admin")'` admin
+		if [ ! -f /home/admin/.bubbacfg ]
+		then
+    	echo "run_wizard = yes" > /home/admin/.bubbacfg
+    	echo "network_profile = server" >> /home/admin/.bubbacfg
+    	chown root:www-data /home/admin/.bubbacfg
+		fi
+
+	fi
+	if ! /usr/bin/pdbedit -L -u admin > /dev/null 2>&1; then
+		echo "Adding admin user to samba"
+		printf "admin\nadmin" | smbpasswd -sa admin
+	fi
+	if [ ! -d /etc/skel/private ]; then
+		echo "Creating directory /etc/skel/private"
+		install --directory --owner=root   --group=root  --mode=0700 /etc/skel/private
+	fi
+	if [ ! -d /etc/skel/downloads ]; then
+		echo "Creating directory /etc/skel/private"
+		install --directory --owner=root   --group=root  --mode=0750 /etc/skel/private
+	fi
+	if [ ! -d /etc/skel/torrents ]; then
+		echo "Creating directory /etc/skel/torrents"
+		install --directory --owner=root   --group=root  --mode=0700 /etc/skel/torrents
+	fi
+	if [ ! -e /home/storage ]; then
+		echo "Creating directory /home/storage"
+		install --directory --owner=root   --group=users --mode=1777 /home/storage
+	fi
+	if [ ! -e /home/storage/music ]; then
+		echo "Creating directory /home/storage/music"
+		install --directory --owner=nobody --group=users --mode=1777 /home/storage/music
+	fi
+	if [ ! -e /home/storage/video ]; then
+		echo "Creating directory /home/storage/video"
+		install --directory --owner=nobody --group=users --mode=1777 /home/storage/video
+	fi
+	if [ ! -e /home/storage/pictures ]; then
+		echo "Creating directory /home/storage/pictures"
+		install --directory --owner=nobody --group=users --mode=1777 /home/storage/pictures
+	fi
+	if [ ! -e /home/storage/extern ]; then
+		echo "Creating directory /home/storage/extern"
+		install --directory --owner=nobody   --group=users --mode=1775 /home/storage/extern
+	fi
+	if [ ! -e /home/web ]; then
+		echo "Creating directory /home/web"
+		install --directory --owner=root   --group=users --mode=0775 /home/web
+	fi
+
+	# install default web if missing
+	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then
+		cp -a /usr/share/bubba-backend/default_web/* /home/web
+	fi
+
+	if id -Gn admin | grep -vqE '\busers\b' 2>&-; then
+		adduser admin users
+	fi
+
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+# dh_installdeb will replace this with shell code automatically
+# generated by other debhelper scripts.
+
+#DEBHELPER#
+
+exit 0
+
+

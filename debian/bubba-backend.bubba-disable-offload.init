@@ -1,0 +1,38 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          firewall
+# Required-Start:    $networking
+# Required-Stop:     $networking
+# Default-Start:     S
+# Default-Stop:      0 6
+# Short-Description: Disable TCP offload
+### END INIT INFO
+
+# Author: Carl Fürstenberg <carl@excito.com>
+
+# TODO : die
+
+# Do NOT "set -e"
+
+. /lib/lsb/init-functions 
+
+case "$1" in
+	start)
+	log_action_begin_msg "Disable offload on wan/lan interfaces"
+
+	/usr/sbin/ethtool --offload eth0 rx off tx off #WAN
+	/usr/sbin/ethtool --offload eth1 rx off tx off #LAN
+
+	log_action_end_msg $?
+	exit 0
+	;;
+
+	stop|restart|force-reload)
+	exit 0
+	;;
+
+	*)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac

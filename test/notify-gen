@@ -1,0 +1,32 @@
+#!/usr/bin/perl 
+
+use strict;
+use warnings;
+use Switch;
+
+my $level=$ARGV[0];
+my $message=$ARGV[2];
+my $description = $ARGV[1];
+chomp(my $uuid=`uuidgen`);
+chomp(my $date=`date`);
+my $sender="TestGen";
+
+my $spool = "/var/spool/bubba-notify/$uuid";
+
+$message =~ s/\n\n/\n.\n/sg;
+$message =~ s/\n/\n /sg;
+$description =~ s/\n\n/\n.\n/sg;
+$description =~ s/\n/\n /sg;
+
+open SPOOL, '>', $spool or die "couldn't open spool for writing: $!";
+print SPOOL <<EOF;
+UUID: $uuid
+Action: MSG
+Level: $level
+Date: $date
+Sender: $sender
+Description: $description
+Message: $message
+
+EOF
+close SPOOL;

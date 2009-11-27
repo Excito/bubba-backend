@@ -1,0 +1,40 @@
+# network related
+/etc/network/interfaces
+/etc/network/firewall.conf
+/etc/network/easyfind.conf
+/etc/dnsmasq.conf
+/etc/hostname
+/etc/hosts
+/etc/proftpd/proftpd.conf
+/etc/samba/smb.conf
+/etc/postfix/main.cf
+/etc/dhcp3/dhclient.conf
+/etc/cups/printers.conf
+/etc/resolv.conf
+/etc/fetchmailrc
+/etc/ftd/ftdconfig.ini
+
+/etc/mediatomb/config.xml
+
+/etc/ntp.conf
+/etc/cron.d/bubba-backup
+
+# Samba
+/var/lib/samba/printers/*
+/var/lib/samba/secrets.tdb
+/var/lib/samba/group_mapping.tdb
+/var/lib/samba/passdb.tdb
+/var/lib/samba/account_policy.tdb
+/var/lib/samba/share_info.tdb
+/var/lib/samba/registry.tdb
+/var/lib/samba/ntdrivers.tdb
+/var/lib/samba/ntprinters.tdb
+/var/lib/samba/ntforms.tdb
+
+# Apache
+/etc/apache2/cacert.pem
+/etc/apache2/privkey.pem
+
+# Squeezecenter
+/var/lib/squeezecenter/prefs
+

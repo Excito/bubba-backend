@@ -1,0 +1,16 @@
+/usr/sbin
+/usr/lib/web-admin
+/etc/network
+/etc/apt
+/etc/ifplugd/action.d
+/etc/dhcp3/dhclient-exit-hooks.d
+/usr/share/bubba-backend
+
+/etc/bubba-notify/available
+/etc/bubba-notify/enabled
+/var/spool/bubba-notify
+/var/cache/bubba-notify
+
+ /usr/share/bubba-configs
+ /etc/bubba/cups
+ /etc/bubba/samba
