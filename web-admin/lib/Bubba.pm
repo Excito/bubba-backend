@@ -2013,7 +2013,7 @@ sub _query_network_manager {
 			'--socket', '/tmp/bubba-networkmanager.sock',
 			'--config', '/etc/bubba-networkmanager.conf'
 		] );
-	$worker->say( to_json( @_ ) );
+	$worker->say( to_json( {@_} ) );
 	return from_json($worker->getline);
 }
 
