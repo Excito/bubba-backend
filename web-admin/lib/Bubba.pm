@@ -2131,7 +2131,7 @@ sub notify_stop {
 		_notify_disable( $notify );
 	}
 
-	system( 'rm' '-f', glob('/var/spool/bubba-notify/*') );
+	system( 'rm', '-f', glob('/var/spool/bubba-notify/*') );
 
 	&_notify_write_config( $conf );
 }
