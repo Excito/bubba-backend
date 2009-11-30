@@ -7,8 +7,9 @@ bubba-backend (1.2.4.10) claire; urgency=low
   [ Tor Krill ]
   * Save firewall rules to local file after changing lan if
   * Trim return value when retrieving lan if from networkmanager 
+  * Add interface argument to dnsmasq config 
 
- -- Tor Krill <tor@excito.com>  Mon, 30 Nov 2009 08:18:33 +0100
+ -- Tor Krill <tor@excito.com>  Mon, 30 Nov 2009 23:17:38 +0100
 
 bubba-backend (1.2.4.9) claire; urgency=low
 

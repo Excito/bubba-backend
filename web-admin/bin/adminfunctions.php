@@ -1092,7 +1092,7 @@ function get_dnsmasq_settings() {
 	$dhcpd["range_end"]="n/a";
 	$dhcpd["netmask"]="n/a";
 	$dhcpd["leasetime"]="n/a";
-	
+
 	$conf_file="/etc/dnsmasq.conf";
 	if (file_exists($conf_file)) {
 		$arr = file($conf_file);
@@ -1100,17 +1100,21 @@ function get_dnsmasq_settings() {
 
 		foreach($arr as $line){
 			$line=trim($line);
-			
+
 			if($line==""){
 				continue;
 			}
 			if($line[0]=='#' || $line[0]==';'){
-					continue;
+				continue;
 			}	
-	
+
+			if(preg_match("/^\s*interface\s*=\s*(.*)$/i",$line,$matches)){
+				$dhcpd["interface"]=$matches[1];
+			}
+
 			if(preg_match("/^\s*dhcp-range\s*=\s*([\d\w\.,-]*)$/i",$line,$matches)){
 				$range_vals = explode(",",$matches[1]);				
-				
+
 				$range_offset=0;
 				$lease_offset=0;
 				if(preg_match("/([a-z,A-Z])+/i",$range_vals[0])) {
@@ -1118,8 +1122,7 @@ function get_dnsmasq_settings() {
 				}
 				if(preg_match("/[hms]+/",$range_vals[1+$range_offset]))
 					$lease_offset=1;
-				
-				
+
 				$dhcpd["range_start"]=explode(".",$range_vals[0+$range_offset]);
 				$dhcpd["range_end"]=explode(".",$range_vals[1+$range_offset]);
 				if($lease_offset)
@@ -1130,7 +1133,7 @@ function get_dnsmasq_settings() {
 
 			if(preg_match("/^\s*no-dhcp-interface\s*=\s*".$lanif."\s*$/i",$line,$matches)) {
 				$dhcpd["dhcpd"]=false;
-			} 
+			}
 		}
 	}
 	return $dhcpd;	
@@ -1197,14 +1200,18 @@ function configure_dnsmasq($dnsmasq) {
 	} else {
 		$dnsmasq["dhcpd"]= false;
 	}
-		
-	if ( ( $odnsmasq["dhcpd"] != $dnsmasq["dhcpd"] ) || $new_range ) {
+	
+	if(!isset($dnsmasq["interface"])){
+		$dnsmasq["interface"]=$odnsmasq["interface"];
+	}
+	
+	if ( ( $odnsmasq["dhcpd"] != $dnsmasq["dhcpd"] )|| $odnsmasq["interface"] != $dnsmasq["interface"] || $new_range ) {
 		if($dnsmasq["dhcpd"])
 			$dhcpd_on = "1";
 		else
 			$dhcpd_on = "0";
 		
-		$cmd = BACKEND." dnsmasq_config $dhcpd_on $start $end";
+		$cmd = BACKEND." dnsmasq_config $dhcpd_on $start $end ".$dnsmasq['interface'];
 		exec($cmd,$out,$ret);
 		stop_service("dnsmasq");
 		start_service("dnsmasq");

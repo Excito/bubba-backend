@@ -1843,26 +1843,27 @@ sub do_echo{
 
 
 sub dnsmasq_config {
-   my ($dhcpd,$range_start,$range_end) = @_;
-   open(FILE, "/etc/dnsmasq.conf") or die "Failed to open file";
-   my @data=<FILE>;
-   chomp(@data);
-   close(FILE);
-   my $file=join("\n",@data);
-   
-   $lan = _get_lanif;
-   	if($dhcpd) { # enable dhcpd on LANINTERFACE.
-	   	$file =~ s/no-dhcp-interface=$lan\n*/ /g;
- 		} else { # disable dhcpd on LANINTERFACE.
-			$file .= "\nno-dhcp-interface=$lan\n";
-  	}
-   $file =~ s/(dhcp-range\s*=\s*)[\d\.]+,[\d\.]+/$1$range_start,$range_end/g;
-   $file =~ s/[\s\n]*$//;
-   $file .= "\n";
-   
-   open(FILE, ">/etc/dnsmasq.conf") or die "Failed to open file for writing";
-   print FILE $file;
-   close(FILE);
+	my ($dhcpd,$range_start,$range_end,$ifs) = @_;
+	open(FILE, "/etc/dnsmasq.conf") or die "Failed to open file";
+	my @data=<FILE>;
+	chomp(@data);
+	close(FILE);
+	my $file=join("\n",@data);
+
+	$lan = $ifs;
+	if($dhcpd) { # enable dhcpd on LANINTERFACE.
+		$file =~ s/no-dhcp-interface=$lan\n*/ /g;
+	} else { # disable dhcpd on LANINTERFACE.
+		$file .= "\nno-dhcp-interface=$lan\n";
+	}
+	$file =~ s/(interface\s*=\s*)(\w+)/$1$ifs/g;
+	$file =~ s/(dhcp-range\s*=\s*)[\d\.]+,[\d\.]+/$1$range_start,$range_end/g;
+	$file =~ s/[\s\n]*$//;
+	$file .= "\n";
+
+	open(FILE, ">/etc/dnsmasq.conf") or die "Failed to open file for writing";
+	print FILE $file;
+	close(FILE);
 }
 
 sub easyfind {
