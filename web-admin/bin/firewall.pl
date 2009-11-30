@@ -521,6 +521,7 @@ sub do_set_lanif {
 	close( $fh );
 	system( "xsltproc /usr/share/bubba-backend/iptables.xslt $filename | iptables-restore" );
 	unlink( $filename );
+	save_rules();
 }
 
 # Hash with all commands

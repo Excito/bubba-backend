@@ -1,9 +1,14 @@
 bubba-backend (1.2.4.10) claire; urgency=low
 
+  [ Carl Fürstenberg ]
   * updating cupsd.conf, chainging @LOCAL to @IF(eth1) (Closes: #1071)
   * evil '==' changed to non-evil 'eq' in firewall.pl 
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 27 Nov 2009 15:35:22 +0100
+  [ Tor Krill ]
+  * Save firewall rules to local file after changing lan if
+  * Trim return value when retrieving lan if from networkmanager 
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Nov 2009 08:18:33 +0100
 
 bubba-backend (1.2.4.9) claire; urgency=low
 

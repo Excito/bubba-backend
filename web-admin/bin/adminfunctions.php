@@ -18,7 +18,7 @@ function _getlanif(){
 	if($lanif==""){
 		$lanif=shell_exec("/usr/bin/bubba-networkmanager-cli getlanif");
 	}
-	return $lanif;
+	return rtrim($lanif);
 }
 
 # TODO - Fix return values
