@@ -19,6 +19,13 @@ set -e
 
 case "$1" in
     configure)
+
+    # for the last time, get rid of this bugger
+    if [ -e /etc/udev/rules.d/z45_persistent-net-generator.rules ]; then
+        rm -f /etc/udev/rules.d/z45_persistent-net-generator.rules
+        rm -f /etc/udev/rules.d/z25_persistent-net.rules
+    fi
+
 	for f in cups/cupsd.conf samba/smb.conf
 	do
 		dpkg-divert --add --package bubba-backend --rename \
