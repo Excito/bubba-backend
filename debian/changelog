@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.12) claire; urgency=low
+
+  * Refactored query_service to return true if service is enabled 
+
+ -- Tor Krill <tor@excito.com>  Sun, 03 Jan 2010 15:40:38 +0100
+
 bubba-backend (1.2.4.11) karmic; urgency=low
 
   * Remove the old and glory persistent rules bugger 

@@ -615,7 +615,7 @@ function remove_service($name){
 function query_service($name){
 
    $res=glob("/etc/rc2.d/S??$name");
-   return $res?false:true;
+   return $res?true:false;
 
 }
 
@@ -1164,7 +1164,7 @@ function configure_dnsmasq($dnsmasq) {
 	if(isset($dnsmasq["running"])) {
 		if (service_running("dnsmasq")) {
 			// service already running, check if it is in the startscripts.
-			if(query_service("dnsmasq")) {
+			if(!query_service("dnsmasq")) {
 				// not there, probably started by dhcp fallback script. Add it.
 				add_service("dnsmasq");
 			}
