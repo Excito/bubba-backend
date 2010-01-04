@@ -1,8 +1,21 @@
-bubba-backend (1.2.4.13) claire estelle; urgency=low
+bubba-backend (1.2.4.15) claire estelle; urgency=low
+
+  * non-free instead of nonfree
+  * remove v=* as it's difficult as best
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:30:51 +0100
+
+bubba-backend (1.2.4.14) karmic; urgency=low
+
+  * bugfix 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:23:29 +0100
+
+bubba-backend (1.2.4.13) estelle claire; urgency=low
 
   * adding change_distribution script 
 
- -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:05:38 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:15:49 +0100
 
 bubba-backend (1.2.4.12) claire; urgency=low
 
