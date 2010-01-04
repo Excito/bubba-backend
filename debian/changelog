@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.13) claire estelle; urgency=low
+
+  * adding change_distribution script 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:05:38 +0100
+
 bubba-backend (1.2.4.12) claire; urgency=low
 
   * Refactored query_service to return true if service is enabled 

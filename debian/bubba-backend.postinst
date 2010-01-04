@@ -68,7 +68,7 @@ case "$1" in
 
 	# forch upgrade of apt config files from old rc7
 	if dpkg --compare-versions "$2" lt 1.0.11; then
-		echo "Installing newq versions of apt preferences."
+		echo "Installing new versions of apt preferences."
 		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/preferences /etc/apt/preferences
 		echo "Installing new versions of apt sources.list."
 		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/sources.list /etc/apt/sources.list

@@ -20,4 +20,4 @@ iptables.xslt /usr/share/bubba-backend
 bubba-notify.conf /etc/bubba-notify
 cupsd.conf /etc/bubba/cups
 smb.conf /etc/bubba/samba
-
+change_distribution /usr/sbin
