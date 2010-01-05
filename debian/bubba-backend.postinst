@@ -17,6 +17,21 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+function divert {
+package=$1;
+file=$2;
+diverted=$3;
+source_file=$4;
+rc_d=$5;
+if [ $(dpkg-divert --truename $file) = $file ]; then # we are not diverted at all
+    dpkg-divert --add --package $package --rename --divert $diverted $file;
+    if [ ! -e $file ]; then
+        ln -sf $source_file $file;
+        invoke-rc.d --quiet $rc_d restart || true;
+    fi
+fi
+
+}
 case "$1" in
     configure)
 
@@ -26,12 +41,9 @@ case "$1" in
         rm -f /etc/udev/rules.d/z25_persistent-net.rules
     fi
 
-	for f in cups/cupsd.conf samba/smb.conf
-	do
-		dpkg-divert --add --package bubba-backend --rename \
-		--divert /etc/$f.distrib /etc/$f
-		[ \! -e /etc/$f -o -L /etc/$f ] && ln -sf /etc/bubba/$f /etc/$f
-	done
+    divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib /etc/bubba/hostapd.conf hostapd;
+    divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib /etc/bubba/cupsd.conf cups;
+    divert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib /etc/bubba/smb.conf samba;
 
 	# Set mdadm default values
 	if [ -f /etc/default/mdadm ]; then

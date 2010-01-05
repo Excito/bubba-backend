@@ -11,6 +11,5 @@
 /var/spool/bubba-notify
 /var/cache/bubba-notify
 
- /usr/share/bubba-configs
- /etc/bubba/cups
- /etc/bubba/samba
+/usr/share/bubba-configs
+/etc/bubba

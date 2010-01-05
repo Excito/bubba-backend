@@ -16,6 +16,17 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+function undivert {
+package=$1;
+file=$2;
+diverted=$3;
+rc_d=$4;
+rm -f $file;
+dpkg-divert --remove --package $package --rename --divert $diverted $file;
+if [ -e $file ]; then
+    invoke-rc.d --quiet $rc_d restart || true;
+fi
+}
 . /usr/share/debconf/confmodule
 
 db_version 2.0
@@ -26,12 +37,10 @@ case "$1" in
 	upgrade|deconfigure)
 	;;
 	remove)
-	for f in cups/cupsd.conf samba/smb.conf
-	do
-		[ -L /etc/$f ] && rm /etc/$f
-		dpkg-divert --remove --package bubba-backend --rename \
-		--divert /etc/$f.distrib /etc/$f
-	done
+
+    undivert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib hostapd;
+    undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib cups;
+    undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib samba;
 
 	if [ -e /etc/avahi/services/ftp.service ]; then
 		rm /etc/avahi/services/ftp.service

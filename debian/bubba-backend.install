@@ -18,6 +18,7 @@ dhclient-fallback/firewall_rewrite /etc/dhcp3/dhclient-exit-hooks.d/
 default_web /usr/share/bubba-backend
 iptables.xslt /usr/share/bubba-backend
 bubba-notify.conf /etc/bubba-notify
-cupsd.conf /etc/bubba/cups
-smb.conf /etc/bubba/samba
+cupsd.conf /etc/bubba
+smb.conf /etc/bubba
+hostapd.conf /etc/bubba
 change_distribution /usr/sbin
