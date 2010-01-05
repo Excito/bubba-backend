@@ -69,10 +69,7 @@ my %commands=(
 	"set_mtu"				=> [\&Bubba::set_mtu ,1],
 	"ftp_check_anonymous"	=> [\&Bubba::ftp_check_anonymous ,0],
 	"ftp_set_anonymous"		=> [\&Bubba::ftp_set_anonymous ,1],
-	'set_samba_interface'	=>  [\&Bubba::set_samba_interface,1],
-	'set_mediatomb_interface'	=>  [\&Bubba::set_mediatomb_interface,1],
-	'set_cups_interface'	=>  [\&Bubba::set_cups_interface,1],
-	'set_dhclient_conf_interface'	=>  [\&Bubba::set_dhclient_conf_interface,1],
+	'set_interface'	        => [\&Bubba::set_interface,1],
 	# Filemanager
 	"dump_file"				=> [\&Bubba::dump_file ,1],
 	"ls"					=> [\&Bubba::ls ,2],

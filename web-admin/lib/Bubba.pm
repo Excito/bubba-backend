@@ -2170,64 +2170,71 @@ sub notify_flush {
 	system('/usr/lib/web-admin/notify-dispatcher.pl');
 }
 
-sub set_samba_interface {
-	my( $interface ) = @_;
-	my $smb_conf = '/etc/samba/smb.conf';
-	use Config::Tiny;
-	my $cfg = Config::Tiny->read( $smb_conf );
-	$cfg->{global}->{interfaces} = $interface;
-	$cfg->write( $smb_conf )
+sub set_interface {
 
-    return 0;
-}
-
-sub set_mediatomb_interface{
-
-	my( $interface ) = @_;
-    my $config = '/etc/mediatomb/config.xml';
+    use Config::Tiny;
     use XML::LibXML;
     use File::Slurp;
 
-    my $parser = new XML::LibXML();
-    my $doc = $parser->parse_file( $config );
-    my $xpc = new XML::LibXML::XPathContext();
-    $xpc->registerNs('m', "http://mediatomb.cc/config/1");
-    my $node;
-    my $nodes = $xpc->findnodes("/m:config/m:server/m:interface", $doc);
-    if( $nodes->size() == 0 ) {
-        return 1;
+    my( $interface ) = @_;
+
+    {
+        my $config = '/etc/samba/smb.conf';
+
+        my $cfg = Config::Tiny->read( $config );
+        $cfg->{global}->{interfaces} = $interface;
+        $cfg->write( $config );
     }
-    $node = $nodes->get_node(1);
-    $node->removeChildNodes();
-    $node->appendTextNode( $interface );
-    $doc->toFile( $config, 1 );
 
-    my $default = '/etc/default/mediatomb';
-    my $data = read_file( $default );
-    return 1 unless $data =~ s/^\h*INTERFACE\h*=\h*".*?"\h*$/INTERFACE="$interface"/m );
-    write_file( $default, $data );
+    {
+        my $config = '/etc/mediatomb/config.xml';
 
-    return 0;
-}
+        my $parser = new XML::LibXML();
+        my $xpc = new XML::LibXML::XPathContext();
 
-sub set_cups_interface {
-    my( $interface ) = @_;
-    my $config = '/etc/cups/cupsd.conf';
-    use File::Slurp;
-    my $data = read_file( $config );
-    return 1 unless $data =~ s/\@IF\(.*?\)/\@IF($interface)/g;
-    write_file( $config, $data );
+        my $doc = $parser->parse_file( $config );
+        $xpc->registerNs('m', "http://mediatomb.cc/config/1");
 
-    return 0;
-}
+        my $nodes = $xpc->findnodes("/m:config/m:server/m:interface", $doc);
+        
+        return 1 if $nodes->size() == 0;
 
-sub set_dhclient_conf_interface {
-    my( $interface ) = @_;
-    my $config = '/etc/dhcp3/dhclient.conf';
-    use File::Slurp;
-    my $data = read_file( $config );
-    return 1 unless $data =~ s/interface ".*?";/interface "$interface";/g;
-    write_file( $config, $data );
+        my $node = $nodes->get_node(1);
+        $node->removeChildNodes();
+        $node->appendTextNode( $interface );
+
+        $doc->toFile( $config, 1 );
+    }
+
+    {
+        my $config = '/etc/default/mediatomb';
+
+        my $data = read_file( $config );
+
+        return 1 unless $data =~ s/^\s*INTERFACE\s*=\s*".*?"\s*?$/INTERFACE="$interface"/m;
+
+        write_file( $config, $data );
+    }
+
+    {
+        my $config = '/etc/cups/cupsd.conf';
+
+        my $data = read_file( $config );
+
+        return 1 unless $data =~ s/\@IF\(.*?\)/\@IF($interface)/g;
+
+        write_file( $config, $data );
+    }
+
+    {
+        my $config = '/etc/dhcp3/dhclient.conf';
+
+        my $data = read_file( $config );
+
+        return 1 unless $data =~ s/interface ".*?";/interface "$interface";/g;
+
+        write_file( $config, $data );
+    }
 
     return 0;
 }
