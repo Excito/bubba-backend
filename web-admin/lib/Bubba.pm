@@ -2177,4 +2177,57 @@ sub set_samba_interface {
 	my $cfg = Config::Tiny->read( $smb_conf );
 	$cfg->{global}->{interfaces} = $interface;
 	$cfg->write( $smb_conf )
+
+    return 0;
+}
+
+sub set_mediatomb_interface{
+
+	my( $interface ) = @_;
+    my $config = '/etc/mediatomb/config.xml';
+    use XML::LibXML;
+    use File::Slurp;
+
+    my $parser = new XML::LibXML();
+    my $doc = $parser->parse_file( $config );
+    my $xpc = new XML::LibXML::XPathContext();
+    $xpc->registerNs('m', "http://mediatomb.cc/config/1");
+    my $node;
+    my $nodes = $xpc->findnodes("/m:config/m:server/m:interface", $doc);
+    if( $nodes->size() == 0 ) {
+        return 1;
+    }
+    $node = $nodes->get_node(1);
+    $node->removeChildNodes();
+    $node->appendTextNode( $interface );
+    $doc->toFile( $config, 1 );
+
+    my $default = '/etc/default/mediatomb';
+    my $data = read_file( $default );
+    return 1 unless $data =~ s/^\h*INTERFACE\h*=\h*".*?"\h*$/INTERFACE="$interface"/m );
+    write_file( $default, $data );
+
+    return 0;
+}
+
+sub set_cups_interface {
+    my( $interface ) = @_;
+    my $config = '/etc/cups/cupsd.conf';
+    use File::Slurp;
+    my $data = read_file( $config );
+    return 1 unless $data =~ s/\@IF\(.*?\)/\@IF($interface)/g;
+    write_file( $config, $data );
+
+    return 0;
+}
+
+sub set_dhclient_conf_interface {
+    my( $interface ) = @_;
+    my $config = '/etc/dhcp3/dhclient.conf';
+    use File::Slurp;
+    my $data = read_file( $config );
+    return 1 unless $data =~ s/interface ".*?";/interface "$interface";/g;
+    write_file( $config, $data );
+
+    return 0;
 }
