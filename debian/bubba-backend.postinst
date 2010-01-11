@@ -36,8 +36,10 @@ case "$1" in
     configure)
 
     # extend the dovecot certificate to 10 years
-    if [ "$(date --date="$(openssl x509 -in foo.pem -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s)" -lt "$(date +%s)" ]; then
-        openssl x509 -in /etc/ssl/certs/dovecot.pem -days 3650 -out /etc/ssl/certs/dovecot.pem -signkey /etc/ssl/private/dovecot.pem;
+    public="/etc/ssl/certs/dovecot.pem";
+    private="/etc/ssl/private/dovecot.pem";
+    if [ "$(date --date="$(openssl x509 -in $public -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s)" -lt "$(date +%s)" ]; then
+        openssl x509 -in $public -days 3650 -out $public -signkey $private;
     fi
 
     # for the last time, get rid of this bugger
