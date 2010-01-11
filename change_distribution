@@ -52,10 +52,12 @@ my $contrib = 0;
 my $nonfree = 0;
 my $help = 0;
 my $man = 0;
+my $experimental = 0;
 
 my $result = GetOptions(
     "upstream|u" => \$upstream,
     "source|s" => \$source,
+    "experimental|e" => \$experimental,
     "nonfree|n" => \$nonfree,
     "contrib|c" => \$contrib,
     "help|h" => \$help,
@@ -103,6 +105,9 @@ foreach my $distribution ( @ARGV ) {
             pod2usage("Distribution '$distribution' is not valid.")
         }
     }
+    push @sources_list, "deb $excito_url experimental main" if $experimental;
+    push @sources_list, "deb-src $excito_url experimental main" if $experimental and $source;
+
     push @sources_list, "deb $excito_url $distribution main";
     push @sources_list, "deb-src $excito_url $distribution main" if $source;
     push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 999\n";
