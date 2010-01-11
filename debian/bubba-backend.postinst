@@ -36,8 +36,11 @@ case "$1" in
     configure)
 
     # extend the dovecot certificate to 10 years
-    if dpkg --compare-versions "$2" lt 1.3; then
+    if [ "$(date --date="$(openssl x509 -in foo.pem -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s)" -lt "$(date +%s)" ]; then
         openssl x509 -in /etc/ssl/certs/dovecot.pem -days 3650 -out /etc/ssl/certs/dovecot.pem -signkey /etc/ssl/private/dovecot.pem
+    fi
+
+
     fi
 
     # for the last time, get rid of this bugger
