@@ -1,4 +1,3 @@
-echo "ENTER firewall rewrite, reason $reason"
 
 # Check if this is the right reason and interface for us
 
@@ -6,17 +5,15 @@ if [ "$reason" != "BOUND" ] && [ "$reason" != "RENEW" ] && [ "$reason" != "REBIN
 
 then
 
-	echo "Exit firewall rewrite."
+	echo "Firwall rewite, nothing todo."
 
 else
 
-# Update firewall config.
-echo "Update firewall config"
-logger "Update firewall WAN address.";
-sed -i "s/PREROUTING -d [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\/[0-9]*/PREROUTING -d $new_ip_address\/32/" /etc/network/firewall.conf
-
-echo "Activate updated firewall config."
-logger "Activate updated firewall config."
-/sbin/iptables-restore /etc/network/firewall.conf
+	# Update firewall config.
+	echo "Update firewall config"
+	sed -i "s/PREROUTING -d [0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\/[0-9]*/PREROUTING -d $new_ip_address\/32/" /etc/network/firewall.conf
+	
+	echo "Activate updated firewall config."
+	/sbin/iptables-restore /etc/network/firewall.conf
 
 fi

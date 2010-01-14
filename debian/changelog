@@ -1,3 +1,10 @@
+bubba-backend (1.2.4.24) claire estelle; urgency=low
+
+  * Reworked IP auto-magic.
+  * Added ifplugd-script to link eth1-up to br0 actions
+
+ -- PA Nilsson <pa@excito.com>  Wed, 14 Jan 2010 22:42:01 +0100
+
 bubba-backend (1.2.4.23) claire estelle; urgency=low
 
   * missed one little foo (had an foo file while testing) 

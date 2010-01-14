@@ -1,0 +1,28 @@
+#!/bin/sh
+LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
+MODE=`grep $LANIF /etc/network/interfaces | cut -d" " -f4`
+
+echo "Running eth1 br0 link script: $LANIF $MODE"
+
+if [ $1 == 'eth1' ] && [ $2 == 'up' ] && [ $LANIF == 'br0' ] && [ $MODE == "dhcp" ]; then
+	if [ -f "/var/run/dnsmasq.pid" ]; then
+		echo "Stopping dnsmasq";
+    /etc/init.d/dnsmasq stop;
+    RESTART_DNSMASQ=1;
+  fi
+
+	
+	if /usr/sbin/dhcpping -i $LANIF; then
+		echo "DHCP server on br0";
+		echo "run dhclient on br0";
+		/sbin/dhclient br0
+	else
+		echo "No DHCP server on $LANIF";
+		if [ $RESTART_DNSMASQ ]; then
+			echo "Restart dnsmasq";
+      /etc/init.d/dnsmasq start;
+    fi
+	fi
+else
+	echo "Exit link script"
+fi

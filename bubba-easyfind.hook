@@ -5,9 +5,9 @@
 if [ "$reason" != "BOUND" ] && [ "$reason" != "RENEW" ] \
 	&& [ "$reason" != "REBIND" ] || [ "$interface" != "eth0" ]
 then
-        echo "Easyfind: eth1 not for me."
+        echo "Easyfind: nothing todo."
 else
         # Update easyfind db
-        /usr/lib/web-admin/easyfind.pl
         echo "Launching easyfind update script"
+        /usr/lib/web-admin/easyfind.pl
 fi
