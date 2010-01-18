@@ -4,8 +4,8 @@ if [ "$interface" == "eth1" ] || [ "$interface" == "br0" ]; then
 	FALLBACK_IP="192.168.10.1";
 	if [ $reason == "PREINIT" ]; then	
 		if [ -f "/var/run/dnsmasq.pid" ]; then
-	    echo "Shutting down dnsmasq"
-	    /etc/init.d/dnsmasq stop
+	    echo "Shutting down dnsmasq";
+	    /etc/init.d/dnsmasq stop;
 		fi
 	fi
 	
@@ -24,6 +24,12 @@ if [ "$interface" == "eth1" ] || [ "$interface" == "br0" ]; then
 	 	# remove defaule route on internal net to have default gw on eth0
 		echo "Removing default route.";
 		route del default gw 192.168.10.1;
+	fi
+
+	if [ "$interface" == "br0" ] && [ "$new_ip_address" != "$old_ip_address" ] && ( [ $reason == "BOUND" ] || [ $reason == "RENEW" ] || [ $reason == "REBIND" ] || [ $reason == "TIMEOUT" ]); then
+		# when REBOOT IP has not changed
+		echo "Restarting hostapd";
+		/etc/init.d/hostapd restart;
 	fi
 	echo "Exit Fallback ($reason)";
 fi
