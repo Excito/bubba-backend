@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.26) claire; urgency=low
+
+  * use bubba-networkmanager-cli instead of worker for hotfix 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 19 Jan 2010 16:27:09 +0100
+
 bubba-backend (1.2.4.25) claire; urgency=low
 
   [ PA Nilsson ]

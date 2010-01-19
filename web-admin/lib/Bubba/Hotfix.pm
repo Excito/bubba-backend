@@ -26,7 +26,6 @@ use File::Slurp;
 use base qw(Net::Daemon);
 use IPC::Run3;
 use MIME::Base64;
-use Bubba::Worker;
 require File::Temp;
 require LWP::UserAgent;
 
@@ -54,15 +53,7 @@ my $LAN						= 'eth1';
 
 sub new($$;$) {
 	my($class, $attr, $args) = @_;
-	my $worker = new Bubba::Worker( 
-		'/tmp/bubba-networkmanager.sock', [
-			'/usr/sbin/bubba-networkmanager',
-			'--socket', '/tmp/bubba-networkmanager.sock',
-			'--config', '/etc/bubba-networkmanager.conf'
-		] );
-	$worker->say( to_json( {'cmd' => 'getlanif'} ) );
-	my $data = from_json($worker->getline);
-	$LAN = $data->{lanif};
+	$LAN = `bubba-networkmanager-cli getlanif`;
 	my($self) = $class->SUPER::new($attr, $args);
 	$self;
 }
