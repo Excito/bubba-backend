@@ -1,9 +1,16 @@
-bubba-backend (1.2.4.24) claire estelle; urgency=low
+bubba-backend (1.2.4.25) claire; urgency=low
 
+  [ PA Nilsson ]
   * Reworked IP auto-magic.
   * Added ifplugd-script to link eth1-up to br0 actions
 
- -- PA Nilsson <pa@excito.com>  Wed, 14 Jan 2010 22:42:01 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 19 Jan 2010 15:45:47 +0100
+
+bubba-backend (1.2.4.24) claire estelle; urgency=low
+
+  * update postinst to set hostname in hostapd on first install 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 13 Jan 2010 16:34:22 +0100
 
 bubba-backend (1.2.4.23) claire estelle; urgency=low
 
