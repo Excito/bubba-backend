@@ -1470,7 +1470,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cupsys postfix dovecot fetchmail mediatomb dnsmasq squeezecenter);
+	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter);
 
 	my $meta = {
 		version => $revision,
@@ -1800,12 +1800,12 @@ sub restore_config{
 				remove_service("fetchmail");
 			}
 
-			if($lines=~/cupsys/){
-				start_service("cupsys");
-				reload_service("cupsys");
+			if($lines=~/cups/){
+				start_service("cups");
+				reload_service("cups");
 			}else{
-				stop_service("cupsys");
-				remove_service("cupsys");
+				stop_service("cups");
+				remove_service("cups");
 			}
 
 			if($lines=~/dnsmasq/){
