@@ -800,13 +800,9 @@ sub run_now {
 			if ($line =~ m/(^WARNING[^S])/i ) {
 				$warnings = 1;
 			}
-			if ( $line =~ m/(ERROR[^S])/i ) {
-				unless($error) {
-					$error = "Errors/warnings encountered during backup.\n";
-					print("Errors/warnings encountered during backup.\n");
-				}
-			}
+
 			if($error) {
+				#grab error message
 				if($line =~ m/^\. (.*fail.*)|(.*invalid.*)|(.*no space.*)/i) {
 					#$line = <LOGFILE>;
 					#$line =~ /\.\s(.*)/;
@@ -818,6 +814,14 @@ sub run_now {
 				}
 				$error .= $warn_msg;
 				$warn_msg = "";
+			}
+
+			if ( $line =~ m/(^ERROR[^S])/i ) {
+				unless($error) {
+					$error = "Errors/warnings encountered during backup.\n";
+					print("Errors/warnings encountered during backup.\n");
+					print("ERROR found on line: $line \n");
+				}
 			}
 		}		
 		close(LOGFILE);
@@ -854,11 +858,19 @@ sub run_now {
 		my $info_error = "";
 		foreach my $line (@output) {
 			if($line =~ m/errors?\s/i) {
-				unless($info_error) {
-					$info_error .= "Error found, ".$line."\n";
-				}
-				if($line =~ m/GnuPG exited non-zero, with code 2/) {
-					$info_error .= "Encryption key error";
+				# part of filename?
+				if($line =~ m/	^\w{3}\s\w{3}\s{1,2}                       # day + month 'Mon Jun '
+									\d{1,2}\s											# date '03'
+									\d{2}:\d{2}:\d{2}\s								# time 01:02:03
+									\d{4}\s												# year '2010'
+								/ix) {
+				} else {
+					unless($info_error) {
+						$info_error .= "Error found, ".$line."\n";
+					}
+					if($line =~ m/GnuPG exited non-zero, with code 2/) {
+						$info_error .= "Encryption key error";
+					}
 				}
 			}
 		}
