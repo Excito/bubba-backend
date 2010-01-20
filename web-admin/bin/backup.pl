@@ -247,7 +247,7 @@ sub ftp_mkdir {
 		
 		print "Running ncftpput\n";
 		my $cmd = NCFTPPUT . " -t 5 -r 1 -u '".$targetdata->{"target_user"}."' -p '".$targetdata->{"target_FTPpasswd"}."' -m ".$targetdata->{"target_host"}." " .$targetdata->{"target_path"}." ".MSGFILE;
-		print "$cmd";
+		#print "$cmd";
 		my @ncftp_res = exec_cmd($cmd);
 		my $res = join(/\n/,@ncftp_res);
 		if($res =~ m/Permission denied/) {
@@ -280,6 +280,7 @@ sub test_ftpconnection {
 			
 	print "Running ncftpls\n";
 	my $cmd = NCFTPLS . " -t 5 -r 1 -u $targetdata->{target_user} -p $targetdata->{target_FTPpasswd} ftp://$targetdata->{target_host}";
+	#print "$cmd\n";
 	my @ncftp_res = exec_cmd($cmd);
 	my $res = join(/\n/,@ncftp_res);
 	if($res =~ m/unknown host/) {
@@ -385,6 +386,10 @@ sub get_destinations {
 		next if(/^#/);
 		$line =~ m/^(\w+)\s+=\s+(.*)$/;
 		$targetdata{$1} = esc_chars($2);
+		if( !$targetdata{'target_path'} ) {
+			#do not allow empty target, set to "."
+			$targetdata{'target_path'} = esc_chars(".");
+		}
 	}
 	
 	unless($targetdata{"local_user"} && $targetdata{"jobname"}) {
