@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.28) claire; urgency=low
+
+  * Added functions to bring up bridge interface during boot.
+
+ -- PA Nilsson <pa@excito.com>  Thu, 28 Jan 2010 12:57:43 +0100
+
 bubba-backend (1.2.4.27) claire; urgency=low
 
   [ Carl Fürstenberg ]
