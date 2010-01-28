@@ -13,7 +13,8 @@ if [ $1 == 'eth1' ] && [ $2 == 'up' ] && [ $LANIF == 'br0' ] && [ $MODE == "dhcp
   fi
 
 	
-	if /usr/sbin/dhcpping -i $LANIF; then
+	if true; then
+	#if /usr/sbin/dhcpping -i $LANIF -d 7; then
 		echo "DHCP server on br0";
 		echo "run dhclient on br0";
 		/sbin/dhclient br0
