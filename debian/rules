@@ -12,8 +12,8 @@ endef
 
 
 binary-install/bubba-backend::
-	dh_installudev --name=rtc --priority=25
-	dh_installudev --name=net-nomultionwan --priority=z70
+	debian/dh_installudev_old --name=rtc --priority=25
+	debian/dh_installudev_old --name=net-nomultionwan --priority=z70
 	dh_installinit --name=bubba-firewall --update-rcd-params="start 40 S ."
 	dh_installinit --name=bubba-disable-offload --update-rcd-params="start 99 2 ."
 	dh_installcron --name=bubba-notify
