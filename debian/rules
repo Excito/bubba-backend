@@ -20,6 +20,7 @@ binary-install/bubba-backend::
 	install -m 755 debian/bubba-backend.mtu.action debian/bubba-backend/etc/ifplugd/action.d/mtu
 	install -m 755 debian/bubba-backend.multicast.action debian/bubba-backend/etc/ifplugd/action.d/multicast
 	install -m 755 debian/bubba-backend.eth1br0-link debian/bubba-backend/etc/ifplugd/action.d/eth1br0-link
+	install -m 755 debian/bubba-backend.ifup-br0 debian/bubba-backend/etc/init.d/ifup-br0
 	install -m 644 apt/apt.conf debian/bubba-backend/etc/apt/bubba-apt.conf
 	install -m 755 bubba-easyfind.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/bubba-easyfind
 	$(foreach notifier, $(wildcard notifiers/*),$(call install_notifier, $(value notifier)))
