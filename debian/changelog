@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.29) claire estelle; urgency=low
+
+  * adding default wmm_ac and tx_queue_data parameters to hostapd.conf
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 28 Jan 2010 17:33:33 +0100
+
 bubba-backend (1.2.4.28) claire; urgency=low
 
   * Added functions to bring up bridge interface during boot.
