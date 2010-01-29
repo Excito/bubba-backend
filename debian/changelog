@@ -1,3 +1,10 @@
+bubba-backend (1.2.4.30) claire estelle; urgency=low
+
+  * Changed bringup of br0 during boot.
+  * Manually setting eth1 to promisc during boot.
+
+ -- PA Nilsson <pa@excito.com>  Fri, 29 Jan 2010 15:35:16 +0100
+
 bubba-backend (1.2.4.29) claire estelle; urgency=high
 
   * adding default wmm_ac and tx_queue_data parameters to hostapd.conf
