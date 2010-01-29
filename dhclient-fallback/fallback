@@ -26,8 +26,9 @@ if [ "$interface" == "eth1" ] || [ "$interface" == "br0" ]; then
 		route del default gw 192.168.10.1;
 	fi
 
-	if [ "$interface" == "br0" ] && [ "$new_ip_address" != "$old_ip_address" ] && [ $new_ip_address != "" ] && ( [ $reason == "BOUND" ] || [ $reason == "RENEW" ] || [ $reason == "REBIND" ] || [ $reason == "TIMEOUT" ]); then
+	if [ -f "/var/lib/initscripts/nologin" ] && [ "$interface" == "br0" ] && [ "$new_ip_address" != "$old_ip_address" ] && [ $new_ip_address != "" ] && ( [ $reason == "BOUND" ] || [ $reason == "RENEW" ] || [ $reason == "REBIND" ] || [ $reason == "TIMEOUT" ]); then
 		# when REBOOT IP has not changed
+		# do not restart hostapd during boot, as it will be started later.
 		echo "Restarting hostapd";
 		/etc/init.d/hostapd restart;
 	fi

@@ -28,6 +28,7 @@ do_start() {
 	if [ $LANIF == 'br0' ]; then
 		echo "Bringing up $LANIF";
 		ifup $LANIF
+		ifconfig eth1 promisc
 	fi
 }
 
