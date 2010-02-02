@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.36) estelle calire; urgency=low
+
+  * enable per default notifications 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 02 Feb 2010 22:41:04 +0100
+
 bubba-backend (1.2.4.35) estelle calire; urgency=low
 
   * setting delaylogin 

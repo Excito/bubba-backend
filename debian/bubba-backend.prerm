@@ -41,6 +41,10 @@ case "$1" in
     undivert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib hostapd;
     undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib cups;
     undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib samba;
+	
+	for i in ui.pl led.pl; do
+		[ -L /etc/bubba-notify/enabled/$i ] && rm -f /etc/bubba-notify/enabled/$i
+	done
 
 	if [ -e /etc/avahi/services/ftp.service ]; then
 		rm /etc/avahi/services/ftp.service

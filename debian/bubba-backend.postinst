@@ -45,6 +45,12 @@ invoke-rc.d --quiet $5 restart || true;
 case "$1" in
     configure)
 
+	if dpkg --compare-versions "$2" lt 1.2.4.36; then
+		for i in ui.pl led.pl; do
+			ln -t /etc/bubba-notify/enabled -s -f /etc/bubba-notify/available/$i;
+		done
+	fi
+
 	if dpkg --compare-versions "$2" lt 1.2.4.34; then
 		sed -i 's/^\s*DELAYLOGIN\s*=\s*no/DELAYLOGIN=yes/' /etc/default/rcS
 	fi
