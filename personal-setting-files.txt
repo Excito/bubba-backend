@@ -40,3 +40,22 @@
 # Squeezecenter
 /var/lib/squeezecenter/prefs
 
+# Bubba diverted configs
+/etc/bubba/*
+
+# AFP
+/etc/netatalk/afpd.conf
+/etc/netatalk/AppleVolumes.default
+/etc/netatalk/AppleVolumes.system
+/etc/netatalk/atalkd.conf
+/etc/netatalk/papd.conf
+
+# MDADM
+/etc/mdadm/mdadm.conf
+
+# Bubba notify
+
+/etc/bubba-notify/enabled/*
+/etc/bubba-notify/available/*
+/etc/bubba-notify/bubba-notify.conf
+

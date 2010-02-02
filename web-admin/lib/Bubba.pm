@@ -1470,7 +1470,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd);
+	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk);
 
 	my $meta = {
 		version => $revision,
@@ -1494,7 +1494,7 @@ sub backup_config{
 		"--same-owner",
 		"--absolute-names",
 		"--atime-preserve",
-		grep { -f $_ } map { bsd_glob $_ } grep { !/^(#|\s*$)/ } @psettings_data,
+		grep { -f $_ || -l $_ } map { bsd_glob $_ } grep { !/^(#|\s*$)/ } @psettings_data,
 	) >> 8;
 
 	$ret |= system(
@@ -2003,24 +2003,8 @@ sub do_set_timezone {
 	return $ret;
 }
 
-sub _query_network_manager {
-	use Bubba::Worker;
-	use Perl6::Say;
-	use JSON;
-
-	my $worker = new Bubba::Worker( 
-		'/tmp/bubba-networkmanager.sock', [
-			'/usr/sbin/bubba-networkmanager',
-			'--socket', '/tmp/bubba-networkmanager.sock',
-			'--config', '/etc/bubba-networkmanager.conf'
-		] );
-	$worker->say( to_json( {@_} ) );
-	return from_json($worker->getline);
-}
-
 sub _get_lanif {
-	my $data = _query_network_manager( 'cmd' => 'getlanif' );
-	return $data->{lanif};
+	return `/usr/bin/bubba-networkmanager-cli getlanif`;
 }
 
 sub _notify_read_config {

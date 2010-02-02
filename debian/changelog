@@ -1,8 +1,12 @@
 bubba-backend (1.2.4.35) estelle calire; urgency=low
 
   * setting delaylogin 
+  * adding bubba diverted configs to backup
+  * including links into backup
+  * remove usage of Bubba::Worker as it's broken at the moment (only used for
+    getlanif, and bubba-networkmanger-cli handles that)
 
- -- Carl Fürstenberg <carl@excito.com>  Tue, 02 Feb 2010 14:40:17 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 02 Feb 2010 14:57:26 +0100
 
 bubba-backend (1.2.4.34) claire estelle; urgency=low
 
