@@ -13,6 +13,8 @@
 /etc/resolv.conf
 /etc/fetchmailrc
 /etc/ftd/ftdconfig.ini
+/etc/hostapd/hostapd.conf
+/etc/bubba-networkmanager.conf
 
 /etc/mediatomb/config.xml
 
