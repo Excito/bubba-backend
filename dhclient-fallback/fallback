@@ -17,8 +17,11 @@ if [ "$interface" == "eth1" ] || [ "$interface" == "br0" ]; then
 			# dnsmasq not running, shall we start it?
 			PROFILE=`grep "profile" /home/admin/.bubbacfg | cut -d= -f2`;
 			if [ $PROFILE = "auto" ] || test -e /etc/rc2.d/S??dnsmasq; then
-			  echo "Starting dnsmasq.";
-			  /etc/init.d/dnsmasq start;
+				HOSTNAME=`cat /proc/sys/kernel/hostname`;
+		                echo "Starting dnsmasq.";
+		                echo "$FALLBACK_IP $HOSTNAME $HOSTNAME.localdomain" > /etc/bubba-host;
+		                /usr/sbin/dnsmasq -H /etc/bubba-host;
+				echo "Starting dnsmasq.";
 			fi
 		fi
 	 	# remove defaule route on internal net to have default gw on eth0
