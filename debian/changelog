@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.38) estelle claire; urgency=low
+
+  * Fixed setting workgroup.
+
+ -- PA Nilsson <pa@excito.com>  Thu, 04 Feb 2010 14:49:35 +0100
+
 bubba-backend (1.2.4.37) estelle claire; urgency=low
 
   * Adding bubba-host to hold hostname when starting dnsmasq from fallback script. Closes #1136
