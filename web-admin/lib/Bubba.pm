@@ -370,7 +370,7 @@ sub set_workgroup {
    chomp(@data);
    my $file=join("\n",@data);
    
-   $file =~ s/[^#].workgroup = .*/\n\tworkgroup = $workgroup/g;
+   $file =~ s/[^#].*workgroup\s*=.*/\nworkgroup = $workgroup/g;
    
    open(FILE, ">/etc/samba/smb.conf") or die "Failed to open file for writing";
    print FILE $file;
