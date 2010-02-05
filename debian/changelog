@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.39) estelle claire; urgency=low
+
+  * removing MDADM from personal-settings-file 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 05 Feb 2010 10:21:55 +0100
+
 bubba-backend (1.2.4.38) estelle claire; urgency=low
 
   * Fixed setting workgroup.

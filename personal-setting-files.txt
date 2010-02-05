@@ -50,9 +50,6 @@
 /etc/netatalk/atalkd.conf
 /etc/netatalk/papd.conf
 
-# MDADM
-/etc/mdadm/mdadm.conf
-
 # Bubba notify
 
 /etc/bubba-notify/enabled/*
