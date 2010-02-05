@@ -1605,6 +1605,7 @@ sub restore_config{
 				'--comment', $user->{comment},
 				'--password', $user->{password},
 				'--shell', $user->{shell},
+				'--create-home',
 				$user->{username}
 			);
 		}
