@@ -45,6 +45,14 @@ invoke-rc.d --quiet $5 restart || true;
 case "$1" in
     configure)
 
+	# Old wizard created localtime to utilize TAI instead of UTC
+	if dpkg --compare-versions "$2" lt 1.3; then
+		if readlink -fn /etc/localtime | grep -q '/right/'; then
+			new_target=$(readlink -fn /etc/localtime | sed 's/\/right\//\//');
+			ln -f -s $new_target /etc/localtime;
+		fi
+	fi
+
 	if dpkg --compare-versions "$2" lt 1.2.4.36; then
 		for i in ui.pl led.pl; do
 			ln -t /etc/bubba-notify/enabled -s -f /etc/bubba-notify/available/$i;

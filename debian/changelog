@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.42) claire estelle; urgency=low
+
+  * Old wizard created localtime to utilize TAI instead of UTC (Closes: #1087) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sat, 06 Feb 2010 15:22:14 +0100
+
 bubba-backend (1.2.4.41) claire estelle; urgency=low
 
   [ PA Nilsson ]
