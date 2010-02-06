@@ -1,9 +1,9 @@
 bubba-backend (1.2.4.41) claire estelle; urgency=low
 
   [ PA Nilsson ]
-  * * Updated to allow access from @LOCAL. Closes#1142
+  * Updated to allow access from @LOCAL. (Closes: #1142)
 
- -- Carl Fürstenberg <carl@excito.com>  Sat, 06 Feb 2010 14:34:04 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Sat, 06 Feb 2010 14:34:40 +0100
 
 bubba-backend (1.2.4.40) claire estelle; urgency=low
 
