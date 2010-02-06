@@ -1470,7 +1470,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk);
+	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk ifup-br0);
 
 	my $meta = {
 		version => $revision,
