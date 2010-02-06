@@ -26,10 +26,12 @@ rc_d=$5;
 if [ $(dpkg-divert --truename $file) = $file ]; then # we are not diverted at all
     dpkg-divert --add --package $package --rename --divert $diverted $file;
     if [ ! -e $file ]; then
-        ln -sf $source_file $file;
+		if [ xfalse != x$source_file ]; then
+			ln -sf $source_file $file;
+		fi
 		if [ x$(type -t "divert_cb_$rc_d" 2>/dev/null) = xfunction ]; then 
 			divert_cb_$rc_d "$@";
-		elif [ x$rc_d != x ]; then
+		elif [ x$rc_d != xfalse ]; then
 			invoke-rc.d --quiet $rc_d restart || true;
 		fi
     fi
@@ -79,6 +81,7 @@ case "$1" in
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib /etc/bubba/cupsd.conf cups;
     divert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib /etc/bubba/smb.conf samba;
+    divert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/dhcp3/dhclient-exit-hooks.d/samba false false;
 
 	# Set mdadm default values
 	if [ -f /etc/default/mdadm ]; then
