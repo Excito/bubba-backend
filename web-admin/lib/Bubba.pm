@@ -1682,7 +1682,7 @@ sub restore_config{
 				}
 			}
 		}
-		return 1;
+		return 0;
 	} else {
 		# old type of system backup
 		my @old_files=<$pathname/bubbatwo-backup-*.tar.gz>;

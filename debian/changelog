@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.44) claire estelle; urgency=low
+
+  * return 0 instead of 1 from restore_backup 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 16:56:30 +0100
+
 bubba-backend (1.2.4.43) claire estelle; urgency=low
 
   * Move initialization of mediatomb to start at 26 instead of 20 (Closes:
