@@ -1696,7 +1696,7 @@ sub restore_config{
 
 			system(
 				'tar',
-				'--directory', $tempdir
+				'--directory', $tempdir,
 				'--extract',
 				'--gzip',
 				'--files-from', $tempfile,
