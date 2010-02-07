@@ -1,9 +1,9 @@
 bubba-backend (1.2.4.43) claire estelle; urgency=low
 
   * Move initialization of mediatomb to start at 26 instead of 20 (Closes:
-	#1141) 
+    #1141) 
 
- -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 12:32:01 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 12:35:40 +0100
 
 bubba-backend (1.2.4.42) claire estelle; urgency=low
 
