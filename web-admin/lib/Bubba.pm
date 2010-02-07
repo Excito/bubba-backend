@@ -1692,15 +1692,15 @@ sub restore_config{
 			# some sort of username handling for old backups
 			my $tempfile = tmpnam();
 			my $tempdir = tempdir( CLEANUP => 1 );
-			write_file( $tempfile, [ '/etc/passwd', '/etc/shadow', '/etc/group' ] );
+			write_file( $tempfile, join( "\n", '/etc/passwd', '/etc/shadow', '/etc/group' ) );
 
 			system(
 				'tar',
+				'--directory', $tempdir
 				'--extract',
 				'--gzip',
 				'--files-from', $tempfile,
 				'--file', $old_files[-1],
-				'--directory', $tempdir
 			);
 			my @bubba_users = map { 
 				my $__=$_;
