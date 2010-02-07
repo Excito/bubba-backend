@@ -1687,7 +1687,7 @@ sub restore_config{
 		# old type of system backup
 		my @old_files=<$pathname/bubbatwo-backup-*.tar.gz>;
 
-		if(@old_files){
+		if(scalar @old_files > 0){
 
 			# some sort of username handling for old backups
 			my $tempfile = tmpnam();

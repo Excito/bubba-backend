@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.45) claire estelle; urgency=emergency
+
+  * sheck for scalar of array for old backups (Closes: #1156) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 17:07:53 +0100
+
 bubba-backend (1.2.4.44) claire estelle; urgency=low
 
   * return 0 instead of 1 from restore_backup 
