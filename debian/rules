@@ -23,5 +23,6 @@ binary-install/bubba-backend::
 	install -m 755 debian/bubba-backend.ifup-br0 debian/bubba-backend/etc/init.d/ifup-br0
 	install -m 644 apt/apt.conf debian/bubba-backend/etc/apt/bubba-apt.conf
 	install -m 755 bubba-easyfind.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/bubba-easyfind
+	install -m 755 samba-dhcp3.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/samba
 	$(foreach notifier, $(wildcard notifiers/*),$(call install_notifier, $(value notifier)))
 
