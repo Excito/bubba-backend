@@ -1722,7 +1722,7 @@ sub restore_config{
 
 			foreach my $user ( @bubba_users ) {
 				my $action = 'usermod';
-				unless( system("/usr/bin/getent passwd $user &>/dev/null") >> 8 == 0 ) {
+				unless( system("/usr/bin/getent passwd $user->{username} &>/dev/null") >> 8 == 0 ) {
 					$action = 'useradd';
 				}
 				system(
@@ -1735,13 +1735,24 @@ sub restore_config{
 					$user->{username}
 				);
 			}
-
 			my($in, $out, $err);
-			my $pid = open3($in, $out, $err,"cd /;tar --extract --gzip --verbose --file ".quotemeta($old_files[-1])." --atime-preserve --preserve --same-owner --absolute-names --exclude-from $tempfile");
+			my $pid = open3($in, $out, $err,
+				"tar",
+				"--directory", "/",
+				"--extract",
+				"--gzip", 
+				"--verbose",
+				"--file", $old_files[-1],
+				"--atime-preserve", 
+				"--preserve", 
+				"--same-owner",
+				"--absolute-names",
+				"--exclude-from" , $tempfile
+			);
 
-			unlink $tempfile;
 			my $lines=join("",<$out>);
 			waitpid($pid,0);
+			unlink $tempfile;
 
 			restart_network("eth0");
 			$lan = _get_lanif;
