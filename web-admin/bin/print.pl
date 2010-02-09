@@ -177,7 +177,9 @@ sub add_printer{
    my ($name,$url,$info,$loc)=@_;
    print "Add printer $name at $url\n";
    
-   return system("/usr/sbin/lpadmin -p \"$name\" -v $url -D \"$info\" -L \"$loc\" -o raw -E");
+   my $retval = system("/usr/sbin/lpadmin -p \"$name\" -v $url -D \"$info\" -L \"$loc\" -o raw -E");
+   system("/etc/init.d/samba restart");
+   return $retval;
 }
 
 # Delete printer
@@ -192,7 +194,9 @@ sub delete_printer{
    my ($name)=@_;
    print "Delete printer $name\n";
    
-   return system("/usr/sbin/lpadmin -x $name");
+   my $retval = system("/usr/sbin/lpadmin -x $name");
+   system("/etc/init.d/samba restart");
+   return $retval;
 }
 
 # Set default printer

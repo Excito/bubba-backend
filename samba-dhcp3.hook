@@ -74,4 +74,10 @@ netbios_setup() {
 
 }
 
-netbios_setup
+LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
+if [ $interface == $LANIF ] && [ $reason != "PREINIT" ] ; then
+	echo "Samba restart";
+        netbios_setup
+fi
+
+
