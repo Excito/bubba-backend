@@ -1,3 +1,9 @@
+bubba-backend (1.2.4.51) karmic; urgency=low
+
+  * Fixed lookup when accessing networkmanager from dhclient exit script. 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 10 Feb 2010 12:04:10 +0100
+
 bubba-backend (1.2.4.50) claire estelle; urgency=low
 
   * Restarting samba when adding and deleting printers
