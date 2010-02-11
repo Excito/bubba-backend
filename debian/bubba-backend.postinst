@@ -211,13 +211,12 @@ case "$1" in
 	fi
 
 	if ! getent passwd admin >/dev/null; then
-		echo "Adding administrator user \"admin\""
-		/usr/sbin/useradd -m -c "Administrator" -s "/bin/bash" -p `perl -MCrypt::PasswdMD5 -e 'print unix_md5_crypt("admin")'` admin
-		if [ ! -f /home/admin/.bubbacfg ]
-		then
-    	echo "run_wizard = yes" > /home/admin/.bubbacfg
-    	echo "network_profile = server" >> /home/admin/.bubbacfg
-    	chown root:www-data /home/admin/.bubbacfg
+		echo "Adding administrator user \"admin\"";
+		/usr/sbin/useradd -m -c "Administrator" -s "/bin/bash" -p `perl -MCrypt::PasswdMD5 -e 'print unix_md5_crypt("admin")'` admin;
+		if [ ! -f /home/admin/.bubbacfg ]; then
+			echo "run_wizard = yes" > /home/admin/.bubbacfg
+			echo "network_profile = auto" >> /home/admin/.bubbacfg
+			chown root:www-data /home/admin/.bubbacfg
 		fi
 
 	fi
