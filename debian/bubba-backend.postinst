@@ -71,11 +71,44 @@ case "$1" in
 		sed -i 's/^\s*DELAYLOGIN\s*=\s*no/DELAYLOGIN=yes/' /etc/default/rcS
 	fi
 
-    # extend the dovecot certificate to 10 years
-    public="/etc/ssl/certs/dovecot.pem";
-    private="/etc/ssl/private/dovecot.pem";
-    if [ "$(date --date="$(openssl x509 -in $public -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s)" -lt "$(date +%s)" ]; then
-        openssl x509 -in $public -days 3650 -out $public -signkey $private;
+	# Create a new dovecot certificate if it's due to expire
+	
+	# Certs and key file (most faithfully stolen from dovecot postinst)
+	SSL_CERT="/etc/ssl/certs/dovecot.pem"
+	SSL_KEY="/etc/ssl/private/dovecot.pem"
+	current_enddate=$(date --date="$(openssl x509 -in $public -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s);
+	current_serial=$(openssl x509 -in $public -serial -noout | sed -n 's/.*\?=\(.*\)/\1/p');
+	
+    if \
+		[ "$current_enddate" -lt "$(date +%s)" ] || \
+		[ "$current_serial" -eq "C2FAB6C937D57722" ] || \
+		[ "$current_serial" -eq "8DFFAC7F75252659" ]; then
+		echo "Creating new generic self-signed certificate: $SSL_CERT"
+		echo "(replace with hand-crafted or authorized one if needed)."
+		cd /etc/ssl/certs
+		PATH=$PATH:/usr/bin/ssl
+		FQDN=`hostname -f`
+		MAILNAME=`cat /etc/mailname 2> /dev/null || hostname -f`
+		(openssl req -new -x509 -days 3650 -nodes -out $SSL_CERT -keyout $SSL_KEY > /dev/null 2>&1 <<+
+.
+.
+.
+Dovecot mail server
+$FQDN
+$FQDN
+root@$MAILNAME
++
+		) || echo "Warning : Bad SSL config, can't generate certificate."
+
+		if [ -e $SSL_CERT ] && [ -e $SSL_KEY ]; then
+			chown root $SSL_CERT || true
+			chgrp dovecot $SSL_CERT || true
+			chmod 0644 $SSL_CERT || true
+			chown root $SSL_KEY || true
+			chgrp dovecot $SSL_KEY || true
+			chmod 0600 $SSL_KEY || true
+		fi
+		
     fi
 
     # for the last time, get rid of this bugger
