@@ -23,6 +23,12 @@ case "$1" in
 	/usr/sbin/ethtool --offload eth0 rx off tx off #WAN
 	/usr/sbin/ethtool --offload eth1 rx off tx off #LAN
 
+	# Fix buggy behavour of ethtool above which breaks promisc by some reason
+	LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`;
+	if [ "$LANIF" = "br0" ]; then
+		/sbin/ifconfig eth1 promisc
+	fi
+
 	log_action_end_msg $?
 	exit 0
 	;;

@@ -1,3 +1,9 @@
+bubba-backend (1.3.3) karmic; urgency=emergency
+
+  * force promisc on eth1 if br0 after ethtool due to buggy ethtool 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 22 Feb 2010 15:25:32 +0100
+
 bubba-backend (1.3.2) claire estelle; urgency=low
 
   * create new cert instead of updating old one for dovecot
