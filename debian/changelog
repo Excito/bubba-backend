@@ -5,6 +5,9 @@ bubba-backend (1.3.3) karmic; urgency=emergency
  -- Carl Fürstenberg <carl@excito.com>  Mon, 22 Feb 2010 15:25:32 +0100
 
 bubba-backend (1.3.2) claire estelle; urgency=low
+  * Fixed issue with dhcpd being disabled when wlan enabled.
+
+ -- PA Nilsson <pa@excito.com>  Fri, 19 Feb 2010 13:07:12 +0100
 
   * create new cert instead of updating old one for dovecot
 

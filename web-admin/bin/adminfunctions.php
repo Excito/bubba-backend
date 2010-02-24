@@ -1084,10 +1084,7 @@ function fw_updateservices($portlist) {
 
 function get_dnsmasq_settings() {
 
-	if($dhcpd["running"]=service_running("dnsmasq"))
-		$dhcpd["dhcpd"]=true;
-	else
-		$dhcpd["dhcpd"]=false;	
+	$dhcpd["running"]=service_running("dnsmasq");
 	$dhcpd["range_start"]="n/a";
 	$dhcpd["range_end"]="n/a";
 	$dhcpd["netmask"]="n/a";
@@ -1098,6 +1095,8 @@ function get_dnsmasq_settings() {
 		$arr = file($conf_file);
 		$lanif=_getlanif();
 
+		$dhcpd["dhcpd"]=true; // will be changed if there is a "no-dhcp-interface" option below.
+		
 		foreach($arr as $line){
 			$line=trim($line);
 
@@ -1134,6 +1133,7 @@ function get_dnsmasq_settings() {
 			if(preg_match("/^\s*no-dhcp-interface\s*=\s*".$lanif."\s*$/i",$line,$matches)) {
 				$dhcpd["dhcpd"]=false;
 			}
+
 		}
 	}
 	return $dhcpd;	
@@ -1160,31 +1160,7 @@ function get_leases() {
 function configure_dnsmasq($dnsmasq) {
 	// returns an array ($retval) with "errors" with what was wrong.
 
-	$retval = array("dns" => false, "dhcpd" => false, "dhcpdrange" => false);
-	if(isset($dnsmasq["running"])) {
-		if (service_running("dnsmasq")) {
-			// service already running, check if it is in the startscripts.
-			if(!query_service("dnsmasq")) {
-				// not there, probably started by dhcp fallback script. Add it.
-				add_service("dnsmasq");
-			}
-		} else {
-			// start service
-			add_service("dnsmasq");
-			start_service("dnsmasq");
-			$retval["dns"] != service_running("dnsmasq");
-		}
-	} else {
-		if(service_running("dnsmasq")) {
-			// stop serivce
-			stop_service("dnsmasq");
-			remove_service("dnsmasq");
-			$retval["dns"] = service_running("dnsmasq");
-		} else {
-			// do nothing, serice is not running
-		}
-	}
-	
+	$retval = array("dns" => false, "dhcpd" => false, "dhcpdrange" => false);	
 		 
 	$odnsmasq = get_dnsmasq_settings();
 	$ostart = implode(".",$odnsmasq["range_start"]);
@@ -1212,13 +1188,37 @@ function configure_dnsmasq($dnsmasq) {
 			$dhcpd_on = "0";
 		
 		$cmd = BACKEND." dnsmasq_config $dhcpd_on $start $end ".$dnsmasq['interface'];
-		exec($cmd,$out,$ret);
-		stop_service("dnsmasq");
-		start_service("dnsmasq");
-			
-	} else {
+		exec($cmd,$out,$ret);			
 	}
 	
+	// start/remove/restart?
+	if(isset($dnsmasq["running"]) && $dnsmasq["running"]) {
+		if (service_running("dnsmasq")) {
+			// service already running, check if it is in the startscripts.
+			if(!query_service("dnsmasq")) {
+				// not there, probably started by dhcp fallback script. Add it.
+				add_service("dnsmasq");
+			}
+			// restart
+			stop_service("dnsmasq");
+			start_service("dnsmasq");
+		} else {
+			// start service
+			add_service("dnsmasq");
+			start_service("dnsmasq");
+			$retval["dns"] != service_running("dnsmasq");
+		}
+	} else {
+		if(service_running("dnsmasq")) {
+			// stop serivce
+			stop_service("dnsmasq");
+			remove_service("dnsmasq");
+			$retval["dns"] = service_running("dnsmasq");
+		} else {
+			// do nothing, service is not running
+		}
+	}
+
 	return $retval;			
 }
 
