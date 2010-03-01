@@ -1,3 +1,9 @@
+bubba-backend (1.9.0) claire; urgency=low
+
+  * First build for UI rework.
+
+ -- PA Nilsson <pa@excito.com>  Mon, 01 Mar 2010 11:29:28 +0100
+
 bubba-backend (1.3.3) karmic; urgency=emergency
 
   * force promisc on eth1 if br0 after ethtool due to buggy ethtool 
