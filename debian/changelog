@@ -1,3 +1,9 @@
+bubba-backend (1.9.1) claire; urgency=low
+
+  * Adding cp function 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Mar 2010 12:12:39 +0100
+
 bubba-backend (1.9.0) claire; urgency=low
 
   * First build for UI rework.

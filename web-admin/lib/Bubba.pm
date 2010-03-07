@@ -191,6 +191,27 @@ sub mv{
 
 }
 
+# copy a file from srcfile to dstfile
+# used by filemgr.php
+sub cp{
+  my ($srcfile,$dstfile,$user) = @_;
+  my $res=0;
+  
+  su($user,"users");
+  print("cp -f \"$srcfile\" \"$dstfile\"\n");
+  system("cp","-f",$srcfile,$dstfile);
+  $res=$?;
+  unsu();
+
+  if($res>0){
+     return $res;
+  }
+
+  system("chown", "$user:users",$dstfile);
+  return $?;
+
+}
+
 # Get filesize for file
 sub get_filesize{
 	my ($file, $user)=@_;

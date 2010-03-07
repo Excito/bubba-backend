@@ -93,6 +93,18 @@ function mv($srcfile,$dstfile,$user) {
 	return $result;	
 }
 
+function cp($srcfile,$dstfile,$user) {
+
+	$srcfile=escapeshellarg($srcfile);
+	$dstfile=escapeshellarg($dstfile);
+
+	$cmd= BACKEND." cp $srcfile $dstfile $user";
+
+	exec($cmd,$out,$result);
+
+	return $result;	
+}
+
 function changemod($dest, $mask, $user){
 
 	$dest=escapeshellarg($dest);

@@ -71,6 +71,7 @@ my %commands=(
 	"ftp_set_anonymous"		=> [\&Bubba::ftp_set_anonymous ,1],
 	'set_interface'	        => [\&Bubba::set_interface,1],
 	# Filemanager
+	"cp"					=> [\&Bubba::cp ,3],
 	"dump_file"				=> [\&Bubba::dump_file ,1],
 	"ls"					=> [\&Bubba::ls ,2],
 	"get_mime"				=> [\&Bubba::get_mime ,1],
