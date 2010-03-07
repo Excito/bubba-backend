@@ -198,8 +198,8 @@ sub cp{
   my $res=0;
   
   su($user,"users");
-  print("cp -f \"$srcfile\" \"$dstfile\"\n");
-  system("cp","-f",$srcfile,$dstfile);
+  print("cp -rf \"$srcfile\" \"$dstfile\"\n");
+  system("cp","-rf",$srcfile,$dstfile);
   $res=$?;
   unsu();
 
