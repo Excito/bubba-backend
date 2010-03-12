@@ -30,6 +30,7 @@ my %commands=(
 	"reload_samba"			=> [\&Bubba::reload_samba ,0],
 	"change_hostname"		=> [\&Bubba::change_hostname ,1],
 	"power_off"				=> [\&Bubba::power_off ,0],
+	"reboot"				=> [\&Bubba::reboot ,0],
 	"dump_file"				=> [\&Bubba::dump_file ,1],
 	"restart_network"		=> [\&Bubba::restart_network ,1],
 	"set_static_netcfg"		=> [\&Bubba::set_static_netcfg ,4],

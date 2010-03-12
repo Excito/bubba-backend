@@ -638,6 +638,17 @@ sub power_off{
    }
 }
 
+# Reboot system
+#
+# Args   : none  
+#
+# Outputs: nothing
+#
+# Return : Status of operation.
+sub reboot{
+   return system("/sbin/reboot");
+}
+
 # Dump any file on stdout
 #
 # Args	: file - filename to dump

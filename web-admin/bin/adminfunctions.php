@@ -391,6 +391,13 @@ function power_off(){
 	return $res;
 }
 
+function reboot(){
+	
+	$cmd = BACKEND." reboot";
+	exec($cmd,$out,$res);
+	return $res;
+}
+
 function change_hostname($hostname){
 
 	$cmd=BACKEND." change_hostname $hostname";

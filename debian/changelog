@@ -1,3 +1,9 @@
+bubba-backend (1.9.3) claire; urgency=low
+
+  * Added reboot command 
+
+ -- Tor Krill <tor@excito.com>  Fri, 12 Mar 2010 14:20:20 +0100
+
 bubba-backend (1.9.2) claire; urgency=low
 
   * recursive 
