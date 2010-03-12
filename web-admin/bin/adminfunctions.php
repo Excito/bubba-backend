@@ -21,6 +21,12 @@ function _getlanif(){
 	return rtrim($lanif);
 }
 
+function user_exists($user) {
+	$cmd = array('/usr/bin/getent', 'passwd', $user);
+	exec( escapeshellargs($cmd), $output, $retval );
+	return $retval == 0;
+}
+
 # TODO - Fix return values
 
 function uptime(){
