@@ -1,3 +1,9 @@
+bubba-backend (1.9.5) karmic; urgency=low
+
+  * Fixed easyfind enable bug. 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 19 Mar 2010 16:11:10 +0100
+
 bubba-backend (1.9.4) claire; urgency=low
 
   * added user_exists command 
