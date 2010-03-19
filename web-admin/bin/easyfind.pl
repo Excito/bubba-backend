@@ -278,7 +278,7 @@ if ($cmd) {
 
 	} elsif ($cmd eq "enable") {
 			$extip = get_extip();
- 			if(update_ip($extip)) {
+ 			if(update_ip($extip) == 0) {
  			  $config{'ip'} = $extip;
  			  $config{'enable'} = "yes";
 	    }
