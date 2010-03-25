@@ -1,3 +1,9 @@
+bubba-backend (1.9.6) karmic; urgency=low
+
+  * Increased timeout on ncftpput for backup. 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 25 Mar 2010 21:15:44 +0100
+
 bubba-backend (1.9.5) karmic; urgency=low
 
   * Fixed easyfind enable bug. 

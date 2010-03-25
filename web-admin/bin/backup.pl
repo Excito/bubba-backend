@@ -246,7 +246,7 @@ sub ftp_mkdir {
 		}
 		
 		print "Running ncftpput\n";
-		my $cmd = NCFTPPUT . " -t 5 -r 1 -u '".$targetdata->{"target_user"}."' -p '".$targetdata->{"target_FTPpasswd"}."' -m ".$targetdata->{"target_host"}." " .$targetdata->{"target_path"}." ".MSGFILE;
+		my $cmd = NCFTPPUT . " -t 30 -r 1 -u '".$targetdata->{"target_user"}."' -p '".$targetdata->{"target_FTPpasswd"}."' -m ".$targetdata->{"target_host"}." " .$targetdata->{"target_path"}." ".MSGFILE;
 		#print "$cmd";
 		my @ncftp_res = exec_cmd($cmd);
 		my $res = join(/\n/,@ncftp_res);
