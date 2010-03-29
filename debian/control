@@ -8,7 +8,7 @@ Homepage: http://www.excito.com
 
 Package: bubba-backend
 Architecture: all
-Depends: bubba,
+Depends: ${misc:Depends}, bubba,
  bubba-apt,
  bubba-status,
  bubba-kernel,

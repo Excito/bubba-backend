@@ -54,10 +54,10 @@ bubba-backend (1.3.3) karmic; urgency=emergency
  -- Carl Fürstenberg <carl@excito.com>  Mon, 22 Feb 2010 15:25:32 +0100
 
 bubba-backend (1.3.2) claire estelle; urgency=low
+  [PA Nilsson]
   * Fixed issue with dhcpd being disabled when wlan enabled.
 
- -- PA Nilsson <pa@excito.com>  Fri, 19 Feb 2010 13:07:12 +0100
-
+  [Carl Fürstenberg]
   * create new cert instead of updating old one for dovecot
 
  -- Carl Fürstenberg <carl@excito.com>  Wed, 17 Feb 2010 22:29:47 +0100
@@ -135,8 +135,7 @@ bubba-backend (1.2.4.42) claire estelle; urgency=low
 
   [ Carl Fürstenberg ]
   * Old wizard created localtime to utilize TAI instead of UTC (Closes: #1087) 
-  * diverting samba dhclient script from enter hook to exit hook (Closes:
-	#1053) 
+  * diverting samba dhclient script from enter hook to exit hook (Closes: #1053) 
 
   [ PA Nilsson ]
   * Added ifup rc2.d link to backup.
@@ -981,7 +980,7 @@ bubba-backend (1.1.124) estelle; urgency=low
 
 bubba-backend (1.1.123) estelle; urgency=low
 
-  * disable debug for updatebackend (Closes: bug driven developement) 
+  * disable debug for updatebackend 
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 12 Jun 2009 17:47:15 +0200
 
