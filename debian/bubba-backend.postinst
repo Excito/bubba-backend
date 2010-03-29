@@ -17,7 +17,7 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-function divert {
+divert() {
 package=$1;
 file=$2;
 diverted=$3;
@@ -39,7 +39,7 @@ fi
 
 }
 
-function divert_cb_hostapd {
+divert_cb_hostapd() {
 echo "setting default AP SSID"
 sed -i "s/ssid=.*\$/ssid=$(hostname)/" $2
 invoke-rc.d --quiet $5 restart || true;
@@ -298,6 +298,20 @@ root@$MAILNAME
 	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then
 		cp -a /usr/share/bubba-backend/default_web/* /home/web
 	fi
+
+	if dpkg --compare-versions "$2" lt-nl 2.0; then
+		sha1=$(sha1sum /home/web/index.html);
+		if \
+			[ "$sha1" -eq "1df55d178ba481f4800d235ec4deae0dc8d20236" ] \
+			|| [ "$sha1" -eq "21e67035005d87ac363d6f6f1c6ae522773f93e8" ] \
+			|| [ "$sha1" -eq "5d824aa5182dbc7a356fb0ff8d40e0ce9f117b7d" ]; then
+			# we have an unaltered index.html.
+			# We progress to move it out of the way and install the redirect instead
+			mv /home/web/index.html /home/web/index.html.old;
+			cp -a /usr/share/bubba-backend/default_web/index.html /home/web/index.html;
+		fi
+	fi
+
 
 	if id -Gn admin | grep -vqE '\busers\b' 2>&-; then
 		adduser admin users

@@ -16,7 +16,7 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
-function undivert {
+undivert() {
 package=$1;
 file=$2;
 diverted=$3;

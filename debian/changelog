@@ -1,8 +1,9 @@
 bubba-backend (1.9.7) claire; urgency=low
 
   * updating default web to be a redirect 
+  * fix bashism 
 
- -- Carl Fürstenberg <carl@excito.com>  Mon, 29 Mar 2010 14:44:53 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 29 Mar 2010 15:06:13 +0200
 
 bubba-backend (1.9.6) karmic; urgency=low
 
