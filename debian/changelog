@@ -1,3 +1,10 @@
+bubba-backend (1.9.8) karmic; urgency=low
+
+  * correct invocation of test "=" instead of "-eq", and take only first
+    column from sha1sum 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 30 Mar 2010 17:05:06 +0200
+
 bubba-backend (1.9.7) claire; urgency=low
 
   * updating default web to be a redirect 

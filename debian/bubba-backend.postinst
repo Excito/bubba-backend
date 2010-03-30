@@ -81,8 +81,8 @@ case "$1" in
 	
     if \
 		[ "$current_enddate" -lt "$(date +%s)" ] || \
-		[ "$current_serial" -eq "C2FAB6C937D57722" ] || \
-		[ "$current_serial" -eq "8DFFAC7F75252659" ]; then
+		[ "$current_serial" = "C2FAB6C937D57722" ] || \
+		[ "$current_serial" = "8DFFAC7F75252659" ]; then
 		echo "Creating new generic self-signed certificate: $SSL_CERT"
 		echo "(replace with hand-crafted or authorized one if needed)."
 		cd /etc/ssl/certs
@@ -300,11 +300,11 @@ root@$MAILNAME
 	fi
 
 	if dpkg --compare-versions "$2" lt-nl 2.0; then
-		sha1=$(sha1sum /home/web/index.html);
+		sha1=$(sha1sum /home/web/index.html| awk '{print $1}');
 		if \
-			[ "$sha1" -eq "1df55d178ba481f4800d235ec4deae0dc8d20236" ] \
-			|| [ "$sha1" -eq "21e67035005d87ac363d6f6f1c6ae522773f93e8" ] \
-			|| [ "$sha1" -eq "5d824aa5182dbc7a356fb0ff8d40e0ce9f117b7d" ]; then
+			[ "$sha1" = "1df55d178ba481f4800d235ec4deae0dc8d20236" ] \
+			|| [ "$sha1" = "21e67035005d87ac363d6f6f1c6ae522773f93e8" ] \
+			|| [ "$sha1" = "5d824aa5182dbc7a356fb0ff8d40e0ce9f117b7d" ]; then
 			# we have an unaltered index.html.
 			# We progress to move it out of the way and install the redirect instead
 			mv /home/web/index.html /home/web/index.html.old;
