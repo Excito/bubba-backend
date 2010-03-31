@@ -1680,7 +1680,7 @@ function get_backupschedule($user,$jobname) {
 	exec($cmd,$jobs,$ret);
 	if($jobs) {
 		foreach($jobs as $job) {
-			preg_match("/^(\w+)\s(.*)/",$job,$matches);
+			preg_match("/^([\w\-]+)\s(.*)/",$job,$matches);
 			
 			
 			if(preg_match("/0 \* \* \* \*/",$matches[2])) {
