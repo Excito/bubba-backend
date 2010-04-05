@@ -233,7 +233,7 @@ function get_easyfind() {
 		if($retval[0]) {
     	$cmd=BACKEND." easyfind getname 0";
 		  exec($cmd,$out,$ret);
-		  if($ret == 0) {
+		  if(sizeof($out)) {
 		  	$retval[2] = $out[0];
 		  } else {
 			  $retval[2] = "No name set";
