@@ -1,3 +1,9 @@
+bubba-backend (1.9.12) karmic; urgency=low
+
+  * Do not restart samba on "DHCP RELEASE"
+
+ -- PA Nilsson <pa@excito.com>  Tue, 06 Apr 2010 10:17:43 +0200
+
 bubba-backend (1.9.11) karmic; urgency=low
 
   * Updated default web. 
