@@ -75,7 +75,7 @@ netbios_setup() {
 }
 
 if [ $interface == "eth1" ] || [ $interface == "br0" ] ; then
-	if [ $reason != "PREINIT" ]; then
+	if [ $reason != "PREINIT" ] && [ $reason != "RELEASE" ]; then
 		echo "Samba restart";
         	netbios_setup
 	fi
