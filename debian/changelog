@@ -1,3 +1,9 @@
+bubba-backend (1.9.17) claire; urgency=low
+
+  * update rules
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 16 Apr 2010 14:26:58 +0200
+
 bubba-backend (1.9.16) karmic; urgency=low
 
   * Fixed restart of samba in "auto" profile. Closes #1399 

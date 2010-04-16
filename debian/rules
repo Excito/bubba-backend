@@ -1,17 +1,15 @@
 #!/usr/bin/make -f
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/perlmodule.mk
-
-DEB_MAKE_CHECK_TARGET :=
+%:
+	dh $@
 
 define install_notifier
 	install -m 755 $(1) debian/bubba-backend/usr/sbin/bubba-notify-$(notdir $(1));
 	dh_link /usr/sbin/bubba-notify-$(notdir $(1)) /etc/bubba-notify/available/$(notdir $(1));
 endef
 
-
-binary-install/bubba-backend::
+override_dh_install:
+	dh_install
 	debian/dh_installudev_old --name=rtc --priority=25
 	debian/dh_installudev_old --name=net-nomultionwan --priority=z70
 	dh_installinit --name=bubba-firewall --update-rcd-params="start 40 S ."
@@ -25,4 +23,3 @@ binary-install/bubba-backend::
 	install -m 755 bubba-easyfind.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/bubba-easyfind
 	install -m 755 samba-dhcp3.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/samba
 	$(foreach notifier, $(wildcard notifiers/*),$(call install_notifier, $(value notifier)))
-
