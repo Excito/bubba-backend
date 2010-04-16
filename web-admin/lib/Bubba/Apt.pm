@@ -13,7 +13,6 @@ use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
 use XML::LibXML;
-use Bubba::Worker;
 
 use vars qw($exit);
 use vars qw($VERSION);
@@ -56,15 +55,8 @@ my $LAN	: shared 						= 'eth1';
 
 sub new($$;$) {
 	my($class, $attr, $args) = @_;
-	my $worker = new Bubba::Worker( 
-		'/tmp/bubba-networkmanager.sock', [
-			'/usr/sbin/bubba-networkmanager',
-			'--socket', '/tmp/bubba-networkmanager.sock',
-			'--config', '/etc/bubba-networkmanager.conf'
-		] );
-	$worker->say( to_json( {'cmd' => 'getlanif'} ) );
-	my $data = from_json($worker->getline);
-	$LAN = $data->{lanif};
+	$LAN = `bubba-networkmanager-cli getlanif`;
+	chomp $LAN;
 	my($self) = $class->SUPER::new($attr, $args);
 	$self;
 }

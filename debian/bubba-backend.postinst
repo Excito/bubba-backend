@@ -76,8 +76,8 @@ case "$1" in
 	# Certs and key file (most faithfully stolen from dovecot postinst)
 	SSL_CERT="/etc/ssl/certs/dovecot.pem"
 	SSL_KEY="/etc/ssl/private/dovecot.pem"
-	current_enddate=$(date --date="$(openssl x509 -in $public -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s);
-	current_serial=$(openssl x509 -in $public -serial -noout | sed -n 's/.*\?=\(.*\)/\1/p');
+	current_enddate=$(date --date="$(openssl x509 -in $SSL_CERT -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s);
+	current_serial=$(openssl x509 -in $SSL_CERT -serial -noout | sed -n 's/.*\?=\(.*\)/\1/p');
 	
     if \
 		[ "$current_enddate" -lt "$(date +%s)" ] || \

@@ -54,6 +54,7 @@ my $LAN						= 'eth1';
 sub new($$;$) {
 	my($class, $attr, $args) = @_;
 	$LAN = `bubba-networkmanager-cli getlanif`;
+	chomp $LAN;
 	my($self) = $class->SUPER::new($attr, $args);
 	$self;
 }

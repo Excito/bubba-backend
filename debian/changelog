@@ -1,3 +1,28 @@
+bubba-backend (1.9.16) karmic; urgency=low
+
+  * Fixed restart of samba in "auto" profile. Closes #1399 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 14 Apr 2010 14:24:42 +0200
+
+bubba-backend (1.9.15) estelle claire; urgency=low
+
+  * chomp $LAN (Closes: #1394) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 13 Apr 2010 11:34:53 +0200
+
+bubba-backend (1.9.14) estelle claire; urgency=high
+
+  * was a missing change from $public to $SSL_CERT in postinst
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Apr 2010 17:46:02 +0200
+
+bubba-backend (1.9.13) estelle claire; urgency=low
+
+  * readding missing change in Bubba/Apt.pm to remove usage of Bubba::Worker
+    (Closes: #1323)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Apr 2010 14:34:14 +0200
+
 bubba-backend (1.9.12) karmic; urgency=low
 
   * Do not restart samba on "DHCP RELEASE"
