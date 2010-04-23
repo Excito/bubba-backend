@@ -1144,6 +1144,7 @@ sub Run($) {
 						$STATUS_MESSAGE = "Format disk $disk";
 						my $cmd = [ MANAGER, 'disk', 'format', "${disk}1", 'ext3' ];
 						my($wtr, $rdr, $err, $buf);
+						$err = 1; # we want to dump errors here
 						my $pid = open3($wtr, $rdr, $err, @$cmd );
 						my $token =  ftok( '/tmp/dmgshm', $pid );
 						if( my $sid = shmget( $token, 4096,  S_IRUSR | IPC_CREAT ) ) {

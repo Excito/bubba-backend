@@ -51,38 +51,37 @@ sub d_print {
 	my $msg = shift;
 	if(DEBUG) {
 		if($msg) {
-			 print "DEBUG: $msg";
+			print "DEBUG: $msg";
 		}
 	}
 }
-		
+
 
 sub return_json {
 	use JSON;
-	
+
 	my $json_hash = shift;
 	my $json = to_json($json_hash);
 	print $json;
 	print "\n";
 	return $json;
 }
-	
+
 sub exec_cmd {
 	use POSIX ":sys_wait_h";
 
 	my $cmd = shift;
-	#d_print "CMD: $cmd\n";	
 	my @outdata;
 	my($in, $out, $err);
+	$err = 1; # we want to dump errors here
 	my $pid = open3($in, $out, $err,$cmd);
 	d_print "PID: $pid\n";
 	while(not waitpid($pid,WNOHANG)) {
-    while (<$out>) { 
-    	push(@outdata,$_);
-    	#print $_;
-    }
-    sleep 1;
-    seek($out, 0, 1);
+		while (<$out>) { 
+			push(@outdata,$_);
+		}
+		sleep 1;
+		seek($out, 0, 1);
 	}
 	return @outdata;
 }
@@ -97,12 +96,12 @@ sub umount {
 }
 
 sub test_sshconnection {
-	
+
 	use Expect;
 	my ($targetdata,$test_targetpath) = @_;
 	my $error;
 	my $ssh_cmd;
-	
+
 	if($test_targetpath) {
 		$test_targetpath = $targetdata->{"target_path"};
 		$ssh_cmd = "ls -1";
@@ -110,8 +109,7 @@ sub test_sshconnection {
 		$test_targetpath = "";
 		$ssh_cmd = "exit";
 	}
-	
-	d_print "Running ssh to test connection\n";
+
 	my @ssh = (
 		"-l" , $targetdata->{"target_user"},
 		'-o', "KbdInteractiveAuthentication=yes",
@@ -130,7 +128,6 @@ sub test_sshconnection {
 		$exp->expect(60,
 			[ qr/Pass(word|phrase .*):/i => sub {
 					my $exp = shift;
-					d_print "Sending password\n";
 					$exp->send("$targetdata->{target_FTPpasswd}\n");
 					exp_continue; 
 				} 
@@ -172,7 +169,7 @@ sub ssh_mkdir {
 	use Expect;
 	my $targetdata = shift;
 	my $error;
-	
+
 	print "Running ssh to create dirs\n";
 	my $target_path = $targetdata->{"target_path"};
 	unless ($target_path) {
@@ -234,53 +231,51 @@ sub ssh_mkdir {
 	}
 	return $error;
 }
-	
-sub ftp_mkdir {
-	
-		my $targetdata = shift;
-		my $error;
-		
-		if(open(MSG,">",MSGFILE)) {
-			print MSG "Created by Bubba|Two backup script.\nhttp://www.excito.com\n";
-			close(MSG);
-		}
-		
-		print "Running ncftpput\n";
-		my $cmd = NCFTPPUT . " -t 30 -r 1 -u '".$targetdata->{"target_user"}."' -p '".$targetdata->{"target_FTPpasswd"}."' -m ".$targetdata->{"target_host"}." " .$targetdata->{"target_path"}." ".MSGFILE;
-		#print "$cmd";
-		my @ncftp_res = exec_cmd($cmd);
-		my $res = join(/\n/,@ncftp_res);
-		if($res =~ m/Permission denied/) {
-			$error = "Error creating backup directory '$targetdata->{target_path}': Permission denied\n";
-		}
-		if($res =~ m/unknown host/) {
-			$error = "Error connecting to target. Target host unknown\n";
-		}
-		if($res =~ m/password was not accepted/) {
-			$error = "Error connecting to target. Invalid user/password combination.\n";
-		}
-		if($res =~ m/Connection refused/) {
-			$error = "Error connecting to target. Connection refused.\n";
-		}
-		if($res =~ m/Connection timed out/) {
-			$error = "Error connecting to target. Connection timed out.\n";
-		}
-		if($res =~ m/No route to host/) {
-			$error = "Error connecting to target. No route to host.\n";
-		}
 
-		unlink MSGFILE;
-		return $error;
+sub ftp_mkdir {
+
+	my $targetdata = shift;
+	my $error;
+
+	if(open(MSG,">",MSGFILE)) {
+		print MSG "Created by Bubba|Two backup script.\nhttp://www.excito.com\n";
+		close(MSG);
+	}
+
+	print "Running ncftpput\n";
+	my $cmd = NCFTPPUT . " -t 30 -r 1 -u '".$targetdata->{"target_user"}."' -p '".$targetdata->{"target_FTPpasswd"}."' -m ".$targetdata->{"target_host"}." " .$targetdata->{"target_path"}." ".MSGFILE;
+	my @ncftp_res = exec_cmd($cmd);
+	my $res = join(/\n/,@ncftp_res);
+	if($res =~ m/Permission denied/) {
+		$error = "Error creating backup directory '$targetdata->{target_path}': Permission denied\n";
+	}
+	if($res =~ m/unknown host/) {
+		$error = "Error connecting to target. Target host unknown\n";
+	}
+	if($res =~ m/password was not accepted/) {
+		$error = "Error connecting to target. Invalid user/password combination.\n";
+	}
+	if($res =~ m/Connection refused/) {
+		$error = "Error connecting to target. Connection refused.\n";
+	}
+	if($res =~ m/Connection timed out/) {
+		$error = "Error connecting to target. Connection timed out.\n";
+	}
+	if($res =~ m/No route to host/) {
+		$error = "Error connecting to target. No route to host.\n";
+	}
+
+	unlink MSGFILE;
+	return $error;
 
 }
 
 sub test_ftpconnection {
 	my $targetdata = shift;
 	my $error = "";
-			
+
 	print "Running ncftpls\n";
 	my $cmd = NCFTPLS . " -t 5 -r 1 -u $targetdata->{target_user} -p $targetdata->{target_FTPpasswd} ftp://$targetdata->{target_host}";
-	#print "$cmd\n";
 	my @ncftp_res = exec_cmd($cmd);
 	my $res = join(/\n/,@ncftp_res);
 	if($res =~ m/unknown host/) {
@@ -296,18 +291,18 @@ sub test_ftpconnection {
 		$error = "Error connecting to target. Connection timed out.\n";
 	}
 	if($res =~ m/No route to host/) {
-	$error = "Error connecting to target. No route to host.\n";
+		$error = "Error connecting to target. No route to host.\n";
 	}
 
 	return $error;
-	
+
 }
 
 sub esc_chars {
-  # will change, for example, a!!a to a\!\!a
-  	my $data = shift;
-    $data =~ s/([;<>\*\|`&\$!#\(\)\[\]\{\}:'"\ ])/\\$1/g;
-    return $data;
+	# will change, for example, a!!a to a\!\!a
+	my $data = shift;
+	$data =~ s/([;<>\*\|`&\$!#\(\)\[\]\{\}:'"\ ])/\\$1/g;
+	return $data;
 }
 
 sub find_disk {
@@ -315,35 +310,35 @@ sub find_disk {
 	my $uuid = shift;
 	my $cmd = DISKMANAGER . " disk list";
 	my @disklist = exec_cmd($cmd);
-  my $disks = from_json($disklist[0]);
-  my $disk_found = 0;
-  my $mountpath = "";
-  my %retval;
+	my $disks = from_json($disklist[0]);
+	my $disk_found = 0;
+	my $mountpath = "";
+	my %retval;
 	$retval{"diskfound"} = 0;
 	$retval{"mountpath"} = "";
 	$retval{"dev"} = "";
-  
-  print "Find disk: $uuid\n";
-  foreach my $disk (@$disks) {
-  	foreach my $partition (@{$disk->{"partitions"}}) {
-  		if($partition->{"uuid"} eq $uuid) {
-  			print "Disk found,";
-  			$retval{"diskfound"} = 1;
-  			$retval{"mountpath"} = $partition->{"mountpath"};
-  			$retval{"dev"} = $partition->{"dev"};
-  		}
-  		last;
-  	}
-	  if($disk_found) {
-	  	last;
-	  }
+
+	print "Find disk: $uuid\n";
+	foreach my $disk (@$disks) {
+		foreach my $partition (@{$disk->{"partitions"}}) {
+			if($partition->{"uuid"} eq $uuid) {
+				print "Disk found,";
+				$retval{"diskfound"} = 1;
+				$retval{"mountpath"} = $partition->{"mountpath"};
+				$retval{"dev"} = $partition->{"dev"};
+			}
+			last;
+		}
+		if($disk_found) {
+			last;
+		}
 	}
 	return %retval;
 }
 
 sub get_destinations {
 	use JSON;
-	
+
 	# use this function to return a list of targets
 	# each target needs:
 	# target_path - path to the backup directory on the remote system.
@@ -367,15 +362,15 @@ sub get_destinations {
 	# nbr_fullbackups - The number of full backups to keep on the backupserver. "1" means to keep only the last fullbackup.
 	#     removal of old full backups will be made _after_ a new has been created.
 	# full_expiretime - how long the last full backup is valid. 0 -> never expire
-	
+
 	d_print "Setup backupjob.\n";
-	
+
 	my($user,$jobname,$nolog) = @_;
 	my %targetdata;
 	my $jobfile = "/home/" . $user ."/" . ARCHIVEINFO_DIR . $jobname . "/" . JOBFILE;
 	my @jobdata;
 	my $error = "";
-	
+
 	if(open(THISJOB,"<",$jobfile)) {
 		@jobdata = <THISJOB>;
 		close(THISJOB);
@@ -391,12 +386,12 @@ sub get_destinations {
 			$targetdata{'target_path'} = esc_chars(".");
 		}
 	}
-	
+
 	unless($targetdata{"local_user"} && $targetdata{"jobname"}) {
 		setlogsock('unix');
-    openlog($0,'','user');
-    syslog('err', "Unable to retrieve job information for user: $user job: $jobname.");
-    closelog;
+		openlog($0,'','user');
+		syslog('err', "Unable to retrieve job information for user: $user job: $jobname.");
+		closelog;
 		print "Error. No backupjob information available, exiting.\n";
 		$targetdata{"error"} = "Error. No backupjob information available, exiting.\n";
 		return \%targetdata;
@@ -407,7 +402,7 @@ sub get_destinations {
 
 	# ----  Check existance of include files -----
 	my $missing_files = "";
-	
+
 	unless(-e $targetdata{"basedir"}.INCLUDEFILE) {
 		$missing_files .= " ".INCLUDEFILE;
 	}	
@@ -420,15 +415,15 @@ sub get_destinations {
 
 	if($missing_files) {
 		setlogsock('unix');
-    openlog($0,'','user');
-    syslog('err', "Missing include files:$missing_files\n");
-    closelog;
+		openlog($0,'','user');
+		syslog('err', "Missing include files:$missing_files\n");
+		closelog;
 		print "Error. Missing include files:$missing_files.\nExiting.\n";
 		$targetdata{"error"} = "Error. Missing include files:$missing_files.\nExiting.\n";
 		return \%targetdata;
 	}
-		
-	
+
+
 	# ----- Create/check directories ------
 	# archive data.
 	unless(-e "/home/" .$targetdata{"local_user"} . "/" . ARCHIVEINFO_DIR ) {
@@ -439,7 +434,7 @@ sub get_destinations {
 		print $targetdata{"basedir"} . " not existing. Creating.\n";
 		system("mkdir " . $targetdata{"basedir"});
 	}
-		
+
 	# log files.
 	unless(-e LOGDIR) {
 		print LOGDIR . " not existing. Creating.\n";
@@ -463,9 +458,9 @@ sub get_destinations {
 	if($targetdata{"target_protocol"} eq "file") {
 
 		my %diskinfo = find_disk($targetdata{"disk_uuid"});
-    if(!$diskinfo{"diskfound"}) {
-    	print("Backup disk not found, exiting\n");
-    	$error = "Backup disk not found, exiting\n";
+		if(!$diskinfo{"diskfound"}) {
+			print("Backup disk not found, exiting\n");
+			$error = "Backup disk not found, exiting\n";
 
 		} else {
 			if($diskinfo{"mountpath"}) {
@@ -489,13 +484,13 @@ sub get_destinations {
 
 				my $cmd = DISKMANAGER . " user_mount ".$diskinfo{"dev"} ." ". $mountpoint;
 				exec_cmd($cmd);
-				
+
 				# check to see that the disk is mounted.
 				my %verified_mountpath = find_disk($targetdata{"disk_uuid"});
 				if($verified_mountpath{"mountpath"}) {
 					print(" and verified disk mounted on ".$verified_mountpath{"mountpath"}."\n");
-			    $targetdata{"target_path"} = $verified_mountpath{"mountpath"}."/".$targetdata{"target_path"};
-			    $targetdata{"mountpath"} = $verified_mountpath{"mountpath"};
+					$targetdata{"target_path"} = $verified_mountpath{"mountpath"}."/".$targetdata{"target_path"};
+					$targetdata{"mountpath"} = $verified_mountpath{"mountpath"};
 				} else {
 					print(" but unable to verify mountpoint, exiting.\n");
 					$error = "Disk found, but unable to verify mountpoint, exiting.\n";
@@ -510,28 +505,28 @@ sub get_destinations {
 		unless($nolog) {
 			my $infofile = $local_fileinfo . "/" . now() . ".err.info";
 			print("Writing error log to " . $infofile . "\n");
-			
+
 			open(my $fh_FILEINFO, '>',$infofile );
 			chmod(0600, $fh_FILEINFO);
 			print $fh_FILEINFO $error;
-		  close($fh_FILEINFO);
+			close($fh_FILEINFO);
 		}
 		$targetdata{"error"} = $error;
 	}
 	return \%targetdata;
-	
+
 }
 
 sub now {
-	
-		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
-		my $date = sprintf("%04s-%02s-%02s",$year+1900,$mon+1,$mday);
-		my $time = sprintf("%02s:%02s:%02s",$hour,$min,$sec);
-	  return "$date-$time";
+
+	my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime(time);
+	my $date = sprintf("%04s-%02s-%02s",$year+1900,$mon+1,$mday);
+	my $time = sprintf("%02s:%02s:%02s",$hour,$min,$sec);
+	return "$date-$time";
 }
 
 sub setup_jobinfo {
-	
+
 	my $targetdata = shift;
 
 	my $cmd;
@@ -548,7 +543,7 @@ sub setup_jobinfo {
 	} else {
 		$no_crypt = "--no-encryption";
 	}
-	
+
 	if(($targetdata->{"target_protocol"} eq "scp") or ($targetdata->{"target_protocol"} eq "FTP")) {
 		if($targetdata->{"target_keypath"}) {
 			$ssh_key = "--ssh-options=\"-oIdentityFile=" . $targetdata->{"target_keypath"} . "\" ";
@@ -559,7 +554,7 @@ sub setup_jobinfo {
 			}
 		}
 	}
-	
+
 	my $target = $targetdata->{"target_protocol"} . "://";
 
 	if(($targetdata->{"target_protocol"} ne "file")) {
@@ -574,11 +569,11 @@ sub setup_jobinfo {
 		} else {
 			$target	 .= "/" . $targetdata->{"jobname"};
 		}
-	
+
 	} else {
 		$target	 .= $targetdata->{"target_path"} . "/" . $targetdata->{"jobname"};
 	}
-	
+
 	if($targetdata->{"full_expiretime"}) {
 		$full_expiretime = " --full-if-older-than "  . $targetdata->{"full_expiretime"};
 	}
@@ -594,61 +589,61 @@ sub run_backup {
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
 	my $newjobs = 1;
-	
+
 	#queue job here.
 	open(my $fh_QUEUE,">>",QUEUE_FILE) or die "Unable to open queue file\n";
 	print("Queueing job: $jobname for user: $user\n");
 	print $fh_QUEUE "$user $jobname\n";
 	close($fh_QUEUE);
-		
+
 	if (-e LOCK_FILE) {
 		open(my $fh_LOCK,"<",LOCK_FILE);
 		flock($fh_LOCK,LOCK_EX | LOCK_NB) or die "Unable to get lock\n";
 		# no lock, continue.
 	}
-		
+
 	open(my $fh_LOCK,">",LOCK_FILE);
 	flock($fh_LOCK,LOCK_EX | LOCK_NB) or die "Unable to get lock\n";
-		#lock granted, no other instance is running
-		
-		# run all jobs in the queue
-		# just read the first entry, then close the file
-		while($newjobs) {
-			$newjobs = 0;
-			open(my $fh_QUEUE,"<",QUEUE_FILE) or die "Unable to open queue file\n";
-			my @queue = <$fh_QUEUE>;
-			close($fh_QUEUE);
-			foreach my $jobline (@queue) {
-				if($jobline =~ m/^(\w+)\s+([\w\-]+)$/) {
-					print("New job found for $1 $2\n");
-					$newjobs = 1;
-					$user = $1;
-					$jobname = $2;
-					last;
-				}
+	#lock granted, no other instance is running
+
+	# run all jobs in the queue
+	# just read the first entry, then close the file
+	while($newjobs) {
+		$newjobs = 0;
+		open(my $fh_QUEUE,"<",QUEUE_FILE) or die "Unable to open queue file\n";
+		my @queue = <$fh_QUEUE>;
+		close($fh_QUEUE);
+		foreach my $jobline (@queue) {
+			if($jobline =~ m/^(\w+)\s+([\w\-]+)$/) {
+				print("New job found for $1 $2\n");
+				$newjobs = 1;
+				$user = $1;
+				$jobname = $2;
+				last;
 			}
-			
-			if($newjobs) {
-				# remove the job from the list then write it to file.
-				shift(@queue);
-				open(my $fh_QUEUE,">",QUEUE_FILE);
-				if($fh_QUEUE) {
-					print $fh_QUEUE @queue;
-					close($fh_QUEUE);
-		
-					print("Running queued job: $jobname for user: $user \n");
-					print $fh_LOCK "$user $jobname";
-					if(run_now($user,$jobname)) {
-						print $_;
-					}
-				} else {
-					print("Unable to open queue file\n");
+		}
+
+		if($newjobs) {
+			# remove the job from the list then write it to file.
+			shift(@queue);
+			open(my $fh_QUEUE,">",QUEUE_FILE);
+			if($fh_QUEUE) {
+				print $fh_QUEUE @queue;
+				close($fh_QUEUE);
+
+				print("Running queued job: $jobname for user: $user \n");
+				print $fh_LOCK "$user $jobname";
+				if(run_now($user,$jobname)) {
+					print $_;
 				}
-			}			
+			} else {
+				print("Unable to open queue file\n");
+			}
 		}			
-		flock($fh_LOCK,LOCK_UN);
-		close($fh_LOCK);
-		unlink(LOCK_FILE)
+	}			
+	flock($fh_LOCK,LOCK_UN);
+	close($fh_LOCK);
+	unlink(LOCK_FILE)
 }
 
 sub removelogs {
@@ -660,7 +655,6 @@ sub removelogs {
 	# -- Try to find any removed backupsets.
 	open(my $fh_remove,"<",$logfile);
 	my $deletefiles = 0;
-	#my %deletedate;
 	my $oldestdate;
 	foreach my $line (<$fh_remove>) {
 		if($deletefiles) {
@@ -673,7 +667,7 @@ sub removelogs {
 		if($line =~ m/Deleting backup set/) {
 			$deletefiles = 1;
 		}
-			
+
 	}
 	close($fh_remove);
 
@@ -686,7 +680,7 @@ sub removelogs {
 			print("Delete $file\n");
 			unlink($file);
 		}			
-			
+
 	}
 }
 
@@ -701,14 +695,14 @@ sub run_now {
 	if($targetdata->{"error"}) {
 		return $targetdata->{"error"};
 	}
-	
+
 	my ($cmd,$key,$no_crypt,$ssh_key,$ssh_key,$use_sshpasswd,$full_expiretime,$target) = setup_jobinfo($targetdata);
 	my $now = now();
-	
+
 	my $includelist = $targetdata->{"basedir"} .INCLUDEFILE;
 	my $include_childlist = $targetdata->{"basedir"} .INCLUDE_CHILD;
 	my $excludelist = $targetdata->{"basedir"} .EXCLUDEFILE;
-		
+
 	my $local_archiveinfo = $targetdata->{"basedir"} . "archives";
 	my $logdir = LOGDIR . $targetdata->{"local_user"} . "/" . $targetdata->{"jobname"};
 	my $error = "";
@@ -743,26 +737,24 @@ sub run_now {
 		print "Starting backup\n";
 		# ---------- Setup backup command ------------
 		$cmd = $key . "nice " . DUPLICITY . " --time-separator '.' -v 5 $full_expiretime $use_sshpasswd $no_crypt  --num-retries 2 --volsize " . VOL_SIZE . " --log-file $logfile --archive-dir $local_archiveinfo $ssh_key --exclude-globbing-file " . $excludelist . " --include-globbing-file " . $includelist . " --include " . $local_fileinfo  . " --include '$targetdata->{basedir}*glob.list' --include '$targetdata->{basedir}jobdata' --exclude \"**\"  /home " . $target;
-	
-		#print "$cmd\n";
+
 		my @outdata = exec_cmd($cmd);
-	
+
 		print("Backup done.\n");
 		my $print_stats;
-		
+
 		# ------ Change file permissions if the target is "file" ------
 		if($target =~ m/^file:\/\/(.*)/) {
 			print "File target, setting permissions\n";
 			print "Target is: $1 \n";
 			print exec_cmd("chown -R admin $1");		
 		}
-		
-		
-			
+
+
+
 		open(LOGFILE,'>>',$logfile);
-	
+
 		foreach my $line (@outdata) {
-	#	foreach my $line (<$out>) {
 			if ( $line =~ m/Backup Statistics/ ) {
 				$print_stats = 1;
 			}
@@ -772,8 +764,8 @@ sub run_now {
 			}
 		}
 		close(LOGFILE);
-		
-	
+
+
 		# ----- Investigate logfile ---------
 		open(LOGFILE,'<',$logfile);
 		my $warnings = 0;
@@ -801,7 +793,7 @@ sub run_now {
 				}
 				$warnings = 0;
 			}
-			
+
 			if ($line =~ m/(^WARNING[^S])/i ) {
 				$warnings = 1;
 			}
@@ -809,9 +801,6 @@ sub run_now {
 			if($error) {
 				#grab error message
 				if($line =~ m/^\. (.*fail.*)|(.*invalid.*)|(.*no space.*)/i) {
-					#$line = <LOGFILE>;
-					#$line =~ /\.\s(.*)/;
-					#$error .= $1;
 					$error .= $line;
 				}
 				if($line =~ m/^\. OSError\: \[Errno 2\] No such file or directory\: /i) {
@@ -831,7 +820,7 @@ sub run_now {
 		}		
 		close(LOGFILE);
 	}
-	
+
 
 	# --- Write file information to file
 	my $infofile;
@@ -844,18 +833,16 @@ sub run_now {
 		print $fh_FILEINFO $error;
 		print "Errors found:\n";
 		print "$error\n";
-	  if($warn_msg) {
+		if($warn_msg) {
 			print $fh_FILEINFO $warn_msg;
 		}
 		close($fh_FILEINFO);
-		
+
 	} else {
 
 		# ---  Get what files are included in the backup.
 		$cmd = $key . DUPLICITY . " list-current-files --time-separator '.' $use_sshpasswd $no_crypt --num-retries 2 $ssh_key " . $target;
-		#print $cmd;
-		#print "\n";
-	
+
 
 		my @output = exec_cmd($cmd);
 
@@ -865,10 +852,10 @@ sub run_now {
 			if($line =~ m/errors?\s/i) {
 				# part of filename?
 				if($line =~ m/	^\w{3}\s\w{3}\s{1,2}                       # day + month 'Mon Jun '
-									\d{1,2}\s											# date '03'
-									\d{2}:\d{2}:\d{2}\s								# time 01:02:03
-									\d{4}\s												# year '2010'
-								/ix) {
+					\d{1,2}\s											# date '03'
+					\d{2}:\d{2}:\d{2}\s								# time 01:02:03
+					\d{4}\s												# year '2010'
+					/ix) {
 				} else {
 					unless($info_error) {
 						$info_error .= "Error found, ".$line."\n";
@@ -887,14 +874,14 @@ sub run_now {
 		open(my $fh_FILEINFO, '>',$infofile );
 		chmod(0600, $fh_FILEINFO);
 		print $fh_FILEINFO "# Fileinformation from $now\n";
-	
+
 		print "List file info to $infofile\n";
 		if($info_error) {
 			print $fh_FILEINFO $info_error;
 		} else {
 			print $fh_FILEINFO @output;
 		}
-		
+
 		close($fh_FILEINFO);
 
 
@@ -903,10 +890,9 @@ sub run_now {
 		if($targetdata->{"nbr_fullbackups"}>0) {
 			my $logfile = $logdir . "/". $now.".removefull";
 			print("Logging removal of fullbackups to: $logfile \n");
-	
+
 			$cmd = $key . DUPLICITY . " remove-all-but-n-full " . $targetdata->{"nbr_fullbackups"} . " --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
-		  exec_cmd($cmd);
-		  #print "$cmd\n";
+			exec_cmd($cmd);
 
 			removelogs($local_fileinfo,$logfile);
 			removelogs($logdir,$logfile);
@@ -914,7 +900,6 @@ sub run_now {
 			my $logfile = $logdir . "/". $now.".cleanup";
 			print("Logging removal of cleanup log to: $logfile \n");
 			$cmd = $key . DUPLICITY . " cleanup --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
-		  #print "$cmd\n";
 			exec_cmd($cmd);
 
 		}
@@ -922,7 +907,7 @@ sub run_now {
 	print("Info to: $infofile \n");
 	# ---  umount disk if it was mounted by backup script.
 	umount($targetdata->{"mountpath"});
-	
+
 #  foreach my $file (<$out>) {
 #  	# example entry: Mon Feb 16 15:02:10 2009 home/storage
 #  	$file =~ m/^\w+\s+\w+\s+\d+\s+\d+:\d+:\d+\s+\d+\s(.*)/;
@@ -933,8 +918,8 @@ sub run_now {
 #		my @output = <$fout>;
 #  	print $fh_FILEINFO @output;
 #  }	
-  
-  # ---  Remove old full-backups ----
+
+	# ---  Remove old full-backups ----
 }	
 
 sub get_lastsetinfo {
@@ -949,7 +934,7 @@ sub get_lastsetinfo {
 	my $jobname = $ARGV[2];
 	my $error;
 	my $fh_LOCK;
-	
+
 	if(-e LOCK_RESTOREFILE) { # does the file exist?
 		open($fh_LOCK,"<",LOCK_RESTOREFILE);
 		unless(flock($fh_LOCK,LOCK_EX | LOCK_NB)) {
@@ -970,7 +955,7 @@ sub get_lastsetinfo {
 	print("Restoring files for $ARGV[1] job $ARGV[2].\n");
 
 	my $targetdata = get_destinations($user,$jobname,1);
-	
+
 	if($targetdata->{"target_protocol"} eq "scp") {
 		$error = test_sshconnection($targetdata,1);
 		if($error) {
@@ -994,7 +979,7 @@ sub get_lastsetinfo {
 			return 0;
 		}
 	}
-	
+
 	my ($cmd,$key,$no_crypt,$ssh_key,$ssh_key,$use_sshpasswd,$full_expiretime,$target) = setup_jobinfo($targetdata);
 
 	# ---- Get the status of the backupsets
@@ -1019,7 +1004,7 @@ sub get_lastsetinfo {
 			return 0;
 		}
 	}	
-	
+
 	d_print @output;
 
 	# ---  Get what files are included in the backup.
@@ -1059,7 +1044,7 @@ sub get_lastsetinfo {
 	} else {
 		print $fh_FILEINFO @output;
 	}
-	
+
 	close($fh_FILEINFO);
 
 	umount($targetdata->{"mountpath"});  # unmount disk (umount checks if it was mounted by script)
@@ -1074,14 +1059,14 @@ sub get_lastsetinfo {
 }
 
 sub write_filelists {
-	
+
 	my ($user,$jobname) = @_;
 	my $basedir = "/home/" . $user . "/" . ARCHIVEINFO_DIR . $jobname . "/";
 
 	our @includeglob;
 	our @include_childglob;
 	our @excludeglob;
-	
+
 	my $includelist = $basedir . INCLUDEFILE;
 	my $include_childlist = $basedir .INCLUDE_CHILD;
 	my $excludelist = $basedir .EXCLUDEFILE;
@@ -1104,33 +1089,33 @@ sub write_filelists {
 	chmod(0600, $fh_EXCLUDE);
 	print $fh_EXCLUDE @excludeglob;
 	close($fh_EXCLUDE);
-	
+
 }
 
 sub read_filelists {
-	
+
 	my ($user,$jobname) = @_;
 	my $basedir = "/home/" . $user . "/" . ARCHIVEINFO_DIR . $jobname . "/";
 
 	our @includeglob;
 	our @include_childglob;
 	our @excludeglob;
-	
+
 	my $includelist = $basedir .INCLUDEFILE;
 	my $include_childlist = $basedir .INCLUDE_CHILD;
 	my $excludelist = $basedir .EXCLUDEFILE;
-	
-	
+
+
 	if(open(INCLUDE,"<",$includelist)) {
 		@includeglob = <INCLUDE>;
 		close(INCLUDE);
 	}
-	
+
 	if(open(INCLUDECHILD,"<",$include_childlist)) {
 		@include_childglob = <INCLUDECHILD>;
 		close(INCLUDECHILD);
 	}
-	
+
 	if(open(EXCLUDE,"<",$excludelist)) {
 		@excludeglob = <EXCLUDE>;
 		close(EXCLUDE);
@@ -1140,7 +1125,6 @@ sub read_filelists {
 sub checkfile_included {
 	my ($file,$child) = @_;
 	d_print("Checkfile included\n");
-	#print "FILE: $file, Check child: $child\n";
 	my $index = 1;
 	our @includeglob;
 	our @include_childglob;
@@ -1148,14 +1132,12 @@ sub checkfile_included {
 	my @file_to_check;
 	if($child) {
 		@file_to_check = @include_childglob;
-		#print "Checking child file\n";
 		$child = "child";
 	} else {
 		@file_to_check = @includeglob;
-		#print "Checking main include file\n";
 		$child = "";
 	}
-	
+
 	foreach my $filename (@file_to_check) {
 		my $name = $filename;
 		$file =~ s/(.*?)\/?$/$1/; # remove any trailing "/"
@@ -1164,7 +1146,6 @@ sub checkfile_included {
 		chomp($name);
 		$name =quotemeta($name);
 		if($file =~ m/$name/) {
-			#print "$file is in included $child list\n";
 			if($file =~ m/^$name$/) {
 				d_print("Exact match\n");
 				return -$index;
@@ -1182,7 +1163,7 @@ sub checkfile_excluded {
 	my $file=shift;
 	my $index = 1;
 	our @excludeglob;
-	
+
 	foreach my $filename (@excludeglob) {
 		my $name = $filename;
 		$file =~ s/(.*?)\/?$/$1/; # remove any trailing "/"
@@ -1209,37 +1190,33 @@ sub remove_rec {
 	my ($file,$listref) = @_;
 	my $i=0;
 	my @indexes_to_remove;
-	
-	d_print("Removing recursivly from $file \n");
-	
+
 	$file = quotemeta($file);
 	foreach my $name (@$listref) {
-		d_print("REC: FILE: $file <-> LIST: $name");
 		if($name =~ m/$file/) {
 			push(@indexes_to_remove,$i);
 		}
 		$i++
 	}
 	foreach my $index (@indexes_to_remove) {
-		d_print("Removing index $index (" . chomp($listref->[$index]) .")\n");
 		delete $listref->[$index];
 	}	
 }
 
 sub rm_files {
 	use JSON;
-	
+
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
 	my @filelist = split(/;/,$ARGV[3]);
 	my %retval;
-	
+
 	our @includeglob;
 	our @excludeglob;
-	
+
 	$retval{"error"} = 1;
 	read_filelists($user,$jobname);
-	
+
 	foreach my $file (@filelist) {
 		$file =~ s/^\///; # remove any leading "/"
 		unless($file =~ m/^home/) {
@@ -1256,7 +1233,6 @@ sub rm_files {
 		}
 		my $included = checkfile_included($file,0); # do not check childglob.
 		if($included < 0) { # exakt match, remove the file from the include list
-			d_print("Removed $file from includelist.\n");
 			remove_rec($file,\@includeglob);
 			$retval{"error"} = 0;
 			$retval{"status"} = "Removed from backup.";
@@ -1264,7 +1240,6 @@ sub rm_files {
 		} else {
 			# file is recursivly included, should it be added to excludelist?
 			if(checkfile_excluded($file)) {
-				d_print("$file already excluded.\n");
 				$retval{"error"} = 1;
 				$retval{"status"} = "Already excluded (recursivly).";
 				$retval{"file"} = $file;
@@ -1273,7 +1248,6 @@ sub rm_files {
 				$retval{"error"} = 0;
 				$retval{"status"} = "Added to excludelist.";
 				$retval{"file"} = $file;
-				d_print("Excluding $file.\n");
 				push(@excludeglob, "- $file\n");
 			}
 		}
@@ -1286,23 +1260,23 @@ sub rm_files {
 	print $json;
 	print("\n");
 	return $json;
-	
+
 }
 
 sub add_files {
 	use JSON;
-	
+
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
 	my @filelist = split(/\t/,$ARGV[3]);
 	my %retval;
-	
+
 	our @includeglob;
 	our @excludeglob;
-	
+
 	$retval{"error"} = 1;
 	read_filelists($user,$jobname);
-	
+
 	foreach my $file (@filelist) {
 		$file =~ s/^\///; # remove any leading "/"
 		unless($file =~ m/^home/) {
@@ -1317,7 +1291,7 @@ sub add_files {
 			$retval{"file"} = $file;
 			last;
 		}
-			
+
 		if(checkfile_excluded($file)<0) {
 			#remove the file from the exclude list
 			d_print("Removed $file from excludelist.\n");
@@ -1350,7 +1324,7 @@ sub add_files {
 	print $json;
 	print "\n";
 	return $json;
-	
+
 }
 
 sub restore_files {
@@ -1358,8 +1332,8 @@ sub restore_files {
 
 	my %retval;
 	my $fh_LOCK;
-	
-	
+
+
 	if(-e LOCK_RESTOREFILE) { # does the file exist?
 		open($fh_LOCK,"<",LOCK_RESTOREFILE);
 		unless(flock($fh_LOCK,LOCK_EX | LOCK_NB)) {
@@ -1377,7 +1351,7 @@ sub restore_files {
 		open($fh_LOCK,">",LOCK_RESTOREFILE);
 		flock($fh_LOCK,LOCK_EX | LOCK_NB);
 	}
-	
+
 	print("Restoring files for $ARGV[1] job $ARGV[2].\n");
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
@@ -1386,14 +1360,14 @@ sub restore_files {
 	print $fh_LOCK "$user $jobname ";
 	my $targetdata = get_destinations($user,$jobname,1);
 	die "Incorrect jobsettings\n" if $targetdata->{"error"}; 
-	
 
-	
+
+
 	# do we need to make a heavier sanity check here?
 	my $restoredate = $ARGV[4];
 	my $file_to_restore = $ARGV[5];
 	$file_to_restore =~ s/^\///; # remove leading "/"
-	
+
 	my $logdir = LOGDIR . $targetdata->{"local_user"} . "/" . $targetdata->{"jobname"};
 	unless(-e $logdir) {
 		print $logdir . " not existing. Creating.\n";
@@ -1405,7 +1379,7 @@ sub restore_files {
 	print $fh_LOCK "$logfile";
 
 	my ($cmd,$key,$no_crypt,$ssh_key,$ssh_key,$use_sshpasswd,$full_expiretime,$target) = setup_jobinfo($targetdata);
-	
+
 
 	if($restoredate) {
 		$restoredate = "--restore-time $restoredate";
@@ -1417,7 +1391,7 @@ sub restore_files {
 	$file_to_restore =~ s/^\/?home\///; # remove "/home/"
 	my $set_permissions;
 	my $target_dir;
-	
+
 	if($force eq "overwrite") {
 		# overwrite to the same location
 		$force = "--force";
@@ -1440,24 +1414,24 @@ sub restore_files {
 			$file_target = "$target_dir/";
 		}
 		$force  = "";
- 	} else {
- 		#restore any missing files to original location.
+	} else {
+		#restore any missing files to original location.
 		$force  = "";
 	}
-	
+
 	$file_to_restore = esc_chars($file_to_restore);
 	$file_target = esc_chars($file_target);
 	$target = esc_chars($target);
-	
+
 	$cmd = $key . DUPLICITY . " -v 5 $restoredate $use_sshpasswd $no_crypt $force --num-retries 2 --log-file $logfile --file-to-restore $file_to_restore $ssh_key $target $file_target";
 	d_print("$cmd\n");
- 	exec_cmd($cmd);
- 	
- 	if($set_permissions) {
-	 	d_print "Changing permissions on: $set_permissions\n";
+	exec_cmd($cmd);
+
+	if($set_permissions) {
+		d_print "Changing permissions on: $set_permissions\n";
 		system("chown -R $user:users $set_permissions");
 	}
-	
+
 	# ---  umount disk if it was mounted by backup script.
 	umount($targetdata->{"mountpath"});
 
@@ -1471,23 +1445,23 @@ sub restore_files {
 sub list_jobs {
 	my $user = $ARGV[1];
 	my $backupdir = $user . "/" . ARCHIVEINFO_DIR . "*";
-	
+
 	my @files = </home/$backupdir>;
 	foreach my $file (@files) {
 		if(-d $file) {
 			$file =~ m/.*\/(.+)$/o;
- 	 		print $1 . "\n";
- 		}
+			print $1 . "\n";
+		}
 	}
 } 
 
 sub print_schedule {
-	
+
 	my @cronfile;
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
-	
-	
+
+
 	if(open(CRON,"<",CRON_FILE)) {
 		@cronfile = <CRON>;
 		close(CRON);
@@ -1495,35 +1469,34 @@ sub print_schedule {
 
 	foreach my $line (@cronfile) {
 		# minute, hour, day of month, Month, day of week, (user name), command 
-		#my $matchpattern ="([\d\/\*]+)\s([\d\/\*]+)\s([\d\/\*]+)\s([\d\/\*]+)\s([\d\/\*]+)\s+[\w\/]+backup\.pl\s+".$user."\s+".$jobname;
 
 		if($line =~ m/^								# line start 
-								([\w\/\*]+)\s+	# match minute
-								([\w\/\*]+)\s+	# match hour
-								([\w\/\*]+)\s+	# match day of month
-								([\w\/\*]+)\s+	# match Month
-								([\w\/\*\,]+)\s+	# match day of week
-								root\s+				# backup is run by root
-								\/usr\/lib\/web\-admin\/backup\.pl\s+		# match the script_name
-								backup\s+			# match the backup command
-								$user\s+			# match the user
-								$jobname			# match the jobname
-		/x) {								
+			([\w\/\*]+)\s+	# match minute
+			([\w\/\*]+)\s+	# match hour
+			([\w\/\*]+)\s+	# match day of month
+			([\w\/\*]+)\s+	# match Month
+			([\w\/\*\,]+)\s+	# match day of week
+			root\s+				# backup is run by root
+			\/usr\/lib\/web\-admin\/backup\.pl\s+		# match the script_name
+			backup\s+			# match the backup command
+			$user\s+			# match the user
+			$jobname			# match the jobname
+			/x) {								
 			print("$jobname $1 $2 $3 $4 $5\n");
 		}
 	}
-	
+
 }
 
 sub write_schedule {
-	
+
 	my @cronfile;
 	my $user = $ARGV[1];
 	my $jobname = $ARGV[2];
 	my $schedule = $ARGV[3];
 	my $nbrelements;
 	my $jobfound = 0;
-	
+
 	if($schedule ne "disabled") {
 		my @test = split(/ /,$schedule);
 		$nbrelements = @test;
@@ -1552,7 +1525,7 @@ sub write_schedule {
 			# new job, add it to CRON
 			push(@cronfile, $new_line);
 		}
-		
+
 		if(open(CRON,">",CRON_FILE)) {
 			print CRON  @cronfile;
 			close(CRON);
@@ -1606,13 +1579,13 @@ sub delete_job {
 	my $jobdir = "/home/$user/".ARCHIVEINFO_DIR.$jobname;
 	my $logdir = LOGDIR . $user."/".$jobname;
 	my @cronfile;
-	
-	
+
+
 	print("Removing $jobdir\n");
 	rmtree($jobdir);
 	print("Removing $logdir\n");
 	rmtree($logdir);
-	
+
 	if(open(CRON,"<",CRON_FILE)) {
 		@cronfile = <CRON>;
 		close(CRON);
@@ -1653,12 +1626,12 @@ my %commands=(
 	"createjob" 	=> [\&create_job,2], 					# Argument is username, jobname
 	"deletejob" 	=> [\&delete_job,2], 					# Argument is username, jobname
 	"get_currentfiles" => [\&get_lastsetinfo,2],# Argument is username, jobname
-	
+
 #	""	=> [\& ,],
 );
 
 if ((scalar(@ARGV))==0) {
-   die "Not enough arguments";
+	die "Not enough arguments";
 }
 
 my $args=scalar @ARGV-1;

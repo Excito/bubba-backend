@@ -13,6 +13,7 @@ use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
 use XML::LibXML;
+use Try::Tiny;
 
 use vars qw($exit);
 use vars qw($VERSION);
@@ -383,10 +384,22 @@ sub postcheck {
 				system("/sbin/iptables-save > /etc/network/firewall.conf");
 		}
 		my $parser = new XML::LibXML();
+		my $doc;
+		my $broken_file_firewall = 0;
 		my $file_fw = qx{/usr/sbin/iptables-xml /etc/network/firewall.conf};
-		my $doc = $parser->parse_string( $file_fw );
-		unless( $self->firewallcheck( $doc ) ) {
-			# out firewall config is broken, testing live fw
+		try {
+			$doc = $parser->parse_string( $file_fw );
+		} catch {
+			push @local_errors, shared_clone({
+					Code => 'WARN',
+					Desc => "Firewall configuration was corrupt, saving current firewall to disk",
+				});			
+				system("/sbin/iptables-save > /etc/network/firewall.conf");
+				$broken_file_firewall = 1;
+		}
+
+		if( $broken_file_firewall || !$self->firewallcheck( $doc ) ) {
+			# our firewall config is broken, testing live fw
 			my $current_fw = qx{/sbin/iptables-save | /usr/sbin/iptables-xml};
 			$doc = $parser->parse_string( $current_fw );
 			if(  $self->firewallcheck( $doc ) ) {

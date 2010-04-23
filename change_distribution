@@ -22,6 +22,10 @@ my %distributions = (
     'estelle' => 1,
 );
 
+my %snapshotable = (
+	'marielle' => 1
+);
+
 my %upstream_archives = (
     'claire' => 'upstream_etch_forclaire',
     'estelle' => 'upstream_etch_forestelle',
@@ -47,6 +51,7 @@ my %raliases = map { $aliases{$_} => $_ } keys %aliases;
 my $distribution;
 
 my $upstream = 0;
+my $version = 0;
 my $source = 0;
 my $contrib = 0;
 my $nonfree = 0;
@@ -57,6 +62,7 @@ my $experimental = 0;
 my $result = GetOptions(
     "upstream|u" => \$upstream,
     "source|s" => \$source,
+	"version|v=s" => \$version,
     "experimental|e" => \$experimental,
     "nonfree|n" => \$nonfree,
     "contrib|c" => \$contrib,
@@ -105,15 +111,22 @@ foreach my $distribution ( @ARGV ) {
             pod2usage("Distribution '$distribution' is not valid.")
         }
     }
+	my $real_distribution = $distribution;
+	my $real_upstream = $upstream_archives{$distribution};
+
+	if( $version && $snapshotable{$distribution} ) {
+		$real_distribution .= "/snapshots/$version";
+		$real_upstream .= "/snapshots/$version";
+	}
     push @sources_list, "deb $excito_url experimental main" if $experimental;
     push @sources_list, "deb-src $excito_url experimental main" if $experimental and $source;
 
-    push @sources_list, "deb $excito_url $distribution main";
-    push @sources_list, "deb-src $excito_url $distribution main" if $source;
+    push @sources_list, "deb $excito_url $real_distribution main";
+    push @sources_list, "deb-src $excito_url $real_distribution main" if $source;
     push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 999\n";
 
-    push @sources_list, "deb $excito_url $upstream_archives{$distribution} main";
-    push @sources_list, "deb-src $excito_url $upstream_archives{$distribution} main" if $source;
+    push @sources_list, "deb $excito_url $real_upstream main";
+    push @sources_list, "deb-src $excito_url $real_upstream main" if $source;
     push @preferences, "Package: *\nPin:\n release o=Excito, a=$upstream_archives_raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 600\n";
 }
 

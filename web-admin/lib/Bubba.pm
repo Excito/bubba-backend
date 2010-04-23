@@ -324,6 +324,7 @@ use IPC::Open3;
       $prefix.="/";
    }
    my($in, $out, $err);
+   $err = 1; # we want to dump errors here
    my $cmd="cd '$pref2';zip -q -r -0 - -@";
    my $pid=open3($in, $out, $err,$cmd);
 
@@ -366,6 +367,7 @@ use IPC::Open3;
    $pwd=quotemeta unix_md5_crypt($pwd);
 
    my($wtr, $rdr, $err);
+   $err = 1; # we want to dump errors here
    my $pid = open3($wtr, $rdr, $err,"usermod -p $pwd $name");
    my @rt=<$rdr>;
    my @err=<$err>;
@@ -491,6 +493,19 @@ sub add_user {
    return $ret;
 }
 
+# Restart avahi
+#
+# Args   : None  
+#
+# Outputs: nothing
+#
+# Return : Status of operation.
+
+sub restart_avahi {
+   system("/etc/init.d/avahi-daemon", "restart");
+
+   return $?;
+}
 # Restart samba
 #
 # Args   : None  
@@ -547,76 +562,50 @@ END
 #
 # Outputs: nothing
 #
-# Return : Status of operation.
+# Return : 0.
 
 sub change_hostname {
 	my ($name)=@_;
-	my $ret;
 
-	$ret=system("echo $name > /proc/sys/kernel/hostname");
-	if ($ret==0) {
-		$ret=system("echo $name > /etc/hostname");
-	}
+	system("echo $name > /proc/sys/kernel/hostname");
+	system("echo $name > /etc/hostname");
 
-	if ($ret==0) {
-		%ifs = read_interfaces();
-		$lan = _get_lanif;
-		$lanip = $ifs{$lan}{"options"}{"address"};
-		write_hostsfile($lanip,$name);
-	}
+	%ifs = read_interfaces();
+	$lan = _get_lanif;
+	$lanip = $ifs{$lan}{"options"}{"address"};
+	write_hostsfile($lanip,$name);
 
 	if(!query_service("dnsmasq")){
 		#restart dnsmasq
 		stop_service("dnsmasq");
 		start_service("dnsmasq");
 	}
-   
-	if ($ret==0) {
 
-		$ret=system("grep -v \"send host-name\" /etc/dhcp3/dhclient.conf > /etc/dhcp3/dhclient.conf.new");
-		if ($ret==0){
-			$ret=system("echo send host-name \\\"$name\\\"\\\; >> /etc/dhcp3/dhclient.conf.new");
-		}
-		if ($ret==0){
-			$ret=system("mv /etc/dhcp3/dhclient.conf.new /etc/dhcp3/dhclient.conf");
-		}
-		if ($ret==0){
-			$lan = _get_lanif;
-			$ret=system("/sbin/ifup --force eth0 $lan");
-		}
+
+	system("grep -v \"send host-name\" /etc/dhcp3/dhclient.conf > /etc/dhcp3/dhclient.conf.new");
+	system("echo send host-name \\\"$name\\\"\\\; >> /etc/dhcp3/dhclient.conf.new");
+	system("mv /etc/dhcp3/dhclient.conf.new /etc/dhcp3/dhclient.conf");
+	$lan = _get_lanif;
+	system("/sbin/ifup --force eth0 $lan");
+
+	if(change_ftp_servername($name)){
+		system("/etc/init.d/proftpd restart");
 	}
 
-	if ($ret==0) {
-		if(change_ftp_servername($name)){
-			$ret=system("/etc/init.d/proftpd restart");
-		}else{
-			$ret=1;
+	restart_avahi();
+
+	if(!query_service("mt-daapd")){
+		stop_service("mt-daapd");
+		sleep(1);
+		start_service("mt-daapd");
+	}
+	if(change_upnp_servername($name)){
+		if(!query_service("mediatomb")){
+			stop_service("mediatomb");
+			start_service("mediatomb");
 		}
 	}
-
-	if ($ret==0){
-		if(!query_service("avahi-daemon")){
-			stop_service("avahi-daemon");
-			start_service("avahi-daemon");
-		}
-	}
-
-	if ($ret==0){
-		if(!query_service("mt-daapd")){
-			stop_service("mt-daapd");
-			sleep(1);
-			start_service("mt-daapd");
-		}
-	}  
-	if ($ret==0){
-		if(change_upnp_servername($name)){
-			if(!query_service("mediatomb")){
-				stop_service("mediatomb");
-				start_service("mediatomb");
-			}
-		}
-	} 
-	return $ret;
+	return 0;
 }
 # Power off
 #
@@ -1768,6 +1757,7 @@ sub restore_config{
 				);
 			}
 			my($in, $out, $err);
+			$err = 1; # we want to dump errors here
 			my $pid = open3($in, $out, $err,
 				"tar",
 				"--directory", "/",
@@ -1929,6 +1919,7 @@ use IPC::Open3;
 	 my $package = shift;
 	 if ($package !~ m/[;\n:]/) { # make some sanity check
 	   my($wtr, $rdr, $err);
+	   $err = 1; # we want to dump errors here
 	   my $pid = open3($wtr, $rdr, $err,"/usr/bin/dpkg -l $package");
 	   my @rt=<$rdr>;
 	   my @err=<$err>;
