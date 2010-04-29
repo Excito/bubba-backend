@@ -1,6 +1,6 @@
 #!/usr/bin/perl 
 eval 'exec /usr/bin/perl -S $0 ${1+"$@"}'
-  if 0;
+if 0;
 $0 =~ s/^.*?(\w+)[\.\w+]*$/$1/;
 
 use strict;
@@ -17,9 +17,9 @@ my $upstream_url = "http://ftp.se.debian.org/debian";
 my $excito_url = "http://update.excito.org/";
 
 my %distributions = (
-    'claire' => 1,
-    'marielle' => 1,
-    'estelle' => 1,
+	'claire' => 1,
+	'marielle' => 1,
+	'estelle' => 1,
 );
 
 my %snapshotable = (
@@ -27,22 +27,22 @@ my %snapshotable = (
 );
 
 my %upstream_archives = (
-    'claire' => 'upstream_etch_forclaire',
-    'estelle' => 'upstream_etch_forestelle',
-    'marielle' => 'upstream_etch',
+	'claire' => 'upstream_etch_forclaire',
+	'estelle' => 'upstream_etch_forestelle',
+	'marielle' => 'upstream_etch',
 );
 
 my %upstream_archives_raliases = (
-    'claire' => 'upstream_stable_forclaire',
-    'estelle' => 'upstream_stable_forestelle',
-    'marielle' => 'upstream_stable',
+	'claire' => 'upstream_stable_forclaire',
+	'estelle' => 'upstream_stable_forestelle',
+	'marielle' => 'upstream_stable',
 );
 
 # sources can contain both codename and aliases
 my %aliases = (
-    'unstable' => 'claire',
-    'testing' => 'estelle',
-    'stable' => 'marielle',
+	'unstable' => 'claire',
+	'testing' => 'estelle',
+	'stable' => 'marielle',
 );
 
 # reverse aliases, needed for preferences
@@ -60,14 +60,14 @@ my $man = 0;
 my $experimental = 0;
 
 my $result = GetOptions(
-    "upstream|u" => \$upstream,
-    "source|s" => \$source,
+	"upstream|u" => \$upstream,
+	"source|s" => \$source,
 	"version|v=s" => \$version,
-    "experimental|e" => \$experimental,
-    "nonfree|n" => \$nonfree,
-    "contrib|c" => \$contrib,
-    "help|h" => \$help,
-    "man|m" => \$man,
+	"experimental|e" => \$experimental,
+	"nonfree|n" => \$nonfree,
+	"contrib|c" => \$contrib,
+	"help|h" => \$help,
+	"man|m" => \$man,
 ) or pod2usage(2);
 
 pod2usage(0) if $help;
@@ -92,25 +92,25 @@ push @sources_list, "#";
 push @sources_list, "# vim: ft=debsources";
 
 if( $upstream ) {
-    my @suits = ("main");
-    push @suits, 'non-free' if $nonfree;
-    push @suits, 'contrib' if $contrib;
+	my @suits = ("main");
+	push @suits, 'non-free' if $nonfree;
+	push @suits, 'contrib' if $contrib;
 
-    push @sources_list, "deb $upstream_url etch " . join( ' ', @suits );
-    push @sources_list, "deb-src $upstream_url etch " . join( ' ', @suits ) if $source;
+	push @sources_list, "deb $upstream_url etch " . join( ' ', @suits );
+	push @sources_list, "deb-src $upstream_url etch " . join( ' ', @suits ) if $source;
 
-    push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=main\nPin-Priority: 500\n";
-    push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=contrib\nPin-Priority: 400\n" if $contrib;
-    push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=non-free\nPin-Priority: 300\n" if $nonfree;
+	push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=main\nPin-Priority: 500\n";
+	push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=contrib\nPin-Priority: 400\n" if $contrib;
+	push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=non-free\nPin-Priority: 300\n" if $nonfree;
 }
 foreach my $distribution ( @ARGV ) {
-    unless( defined $distributions{$distribution} ) {
-        if( defined $aliases{$distribution} ) {
-            $distribution = $aliases{$distribution};
-        } else {
-            pod2usage("Distribution '$distribution' is not valid.")
-        }
-    }
+	unless( defined $distributions{$distribution} ) {
+		if( defined $aliases{$distribution} ) {
+			$distribution = $aliases{$distribution};
+		} else {
+			pod2usage("Distribution '$distribution' is not valid.")
+		}
+	}
 	my $real_distribution = $distribution;
 	my $real_upstream = $upstream_archives{$distribution};
 
@@ -118,16 +118,16 @@ foreach my $distribution ( @ARGV ) {
 		$real_distribution .= "/snapshots/$version";
 		$real_upstream .= "/snapshots/$version";
 	}
-    push @sources_list, "deb $excito_url experimental main" if $experimental;
-    push @sources_list, "deb-src $excito_url experimental main" if $experimental and $source;
+	push @sources_list, "deb $excito_url experimental main" if $experimental;
+	push @sources_list, "deb-src $excito_url experimental main" if $experimental and $source;
 
-    push @sources_list, "deb $excito_url $real_distribution main";
-    push @sources_list, "deb-src $excito_url $real_distribution main" if $source;
-    push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 999\n";
+	push @sources_list, "deb $excito_url $real_distribution main";
+	push @sources_list, "deb-src $excito_url $real_distribution main" if $source;
+	push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 999\n";
 
-    push @sources_list, "deb $excito_url $real_upstream main";
-    push @sources_list, "deb-src $excito_url $real_upstream main" if $source;
-    push @preferences, "Package: *\nPin:\n release o=Excito, a=$upstream_archives_raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 600\n";
+	push @sources_list, "deb $excito_url $real_upstream main";
+	push @sources_list, "deb-src $excito_url $real_upstream main" if $source;
+	push @preferences, "Package: *\nPin:\n release o=Excito, a=$upstream_archives_raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 600\n";
 }
 
 move('/etc/apt/sources.list', '/etc/apt/sources.list.bkup') or die "couldn't move /etc/apt/sources.list: $!";
