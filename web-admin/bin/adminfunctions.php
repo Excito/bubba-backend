@@ -411,6 +411,10 @@ function change_hostname($hostname){
 	return $res;
 }
 
+function restart_avahi() {
+	_system(BACKEND, 'restart_avahi');
+}
+
 function restart_samba(){
 	
 	$cmd=BACKEND." restart_samba";
@@ -437,26 +441,28 @@ function restart_network($interface){
    
 	$cmd=BACKEND." restart_network $interface";
 	$result=shell_exec($cmd);
-	stop_service("proftpd");
-	start_service("proftpd");
-	if(!strcmp($interface,_getlanif())) { // inverted match
-		restart_samba();
-    if(service_running("avahi-daemon")){
-        stop_service("avahi-daemon");
-        start_service("avahi-daemon");
-    }
-    if(service_running("mt-daapd")){
-        stop_service("mt-daapd");
-				sleep(1);
-        start_service("mt-daapd");
-    }  
-    if(service_running("mediatomb")){
-	    stop_service("mediatomb");
-	    start_service("mediatomb");
-    }
-
+	if(query_service("proftpd")) {
+		stop_service("proftpd");
+		start_service("proftpd");	
 	}
-
+	if( strcmp($interface,_getlanif()) == 0 ) {
+		if(query_service("avahi-daemon")){
+			stop_service("avahi-daemon");
+			start_service("avahi-daemon");
+		}
+		if(query_service("samba")){
+			restart_samba();
+		}
+		if(query_service("mt-daapd")){
+			stop_service("mt-daapd");
+			sleep(1);
+			start_service("mt-daapd");
+		}  
+		if(query_service("mediatomb")){
+			stop_service("mediatomb");
+			start_service("mediatomb");
+		}
+	}
 }
 
 function get_interface_info($iface){

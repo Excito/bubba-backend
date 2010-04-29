@@ -73,6 +73,7 @@ case "$1" in
 
 	# Create a new dovecot certificate if it's due to expire
 	
+	set +e # non-important
 	# Certs and key file (most faithfully stolen from dovecot postinst)
 	SSL_CERT="/etc/ssl/certs/dovecot.pem"
 	SSL_KEY="/etc/ssl/private/dovecot.pem"
@@ -110,6 +111,7 @@ root@$MAILNAME
 		fi
 		
     fi
+	set -e
 
     # for the last time, get rid of this bugger
     if [ -e /etc/udev/rules.d/z45_persistent-net-generator.rules ]; then

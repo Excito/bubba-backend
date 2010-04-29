@@ -20,7 +20,7 @@ if [ "$interface" == "eth1" ] || [ "$interface" == "br0" ]; then
 				HOSTNAME=`cat /proc/sys/kernel/hostname`;
 		                echo "Starting dnsmasq.";
 		                echo "$FALLBACK_IP $HOSTNAME $HOSTNAME.localdomain" > /etc/bubba-host;
-		                /usr/sbin/dnsmasq -H /etc/bubba-host;
+		                /usr/sbin/dnsmasq -hH /etc/bubba-host;
 				echo "Starting dnsmasq.";
 			fi
 		fi

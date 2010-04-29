@@ -70,7 +70,7 @@ sub Loop($) {
 		$is_idle = 0;
 		return;
 	}
-	if( ++$is_idle >= 2 ) {
+	if( ++$is_idle >= 20 ) {
 		$self->Log('notice', "Timeout: %s server terminating", ref($self));
 		# cleaning up
 		-f $self->{'pidfile'} and unlink $self->{'pidfile'};
@@ -418,7 +418,7 @@ sub postcheck {
 				});
 				# current running firewall is borked, restore default
 				system("/bin/cp /etc/network/firewall.conf /etc/network/firewall.conf-bkup");
-				system("/bin/cp /usr/share/bubba-configs/firewall.conf /etc/network/firewall.conf");
+				system("/bin/cat /usr/share/bubba-configs/firewall.conf | sed 's/eth1/$LAN/g;s/eth0/$WAN/g' > /etc/network/firewall.conf");
 				system("/sbin/iptables-restore /etc/network/firewall.conf");
 			}
 		} else {

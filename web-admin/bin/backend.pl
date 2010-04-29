@@ -26,6 +26,7 @@ my %commands=(
 	"update_user"			=> [\&Bubba::update_user ,3],
 	"add_user"				=> [\&Bubba::add_user ,5],
 	# Services
+	"restart_avahi"			=> [\&Bubba::restart_avahi ,0],
 	"restart_samba"			=> [\&Bubba::restart_samba ,0],
 	"reload_samba"			=> [\&Bubba::reload_samba ,0],
 	"change_hostname"		=> [\&Bubba::change_hostname ,1],

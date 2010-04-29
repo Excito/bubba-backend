@@ -3,14 +3,80 @@ bubba-backend (2.1~pre1) UNRELEASED; urgency=low
   * Do not fail totally when firewall an file is unpareable (Closes: #1384)
   * make sure all $err has been set to 1 so IPC::Open3 knows to put error
     there
+  * update rules
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 23 Apr 2010 17:06:45 +0200
 
-bubba-backend (1.9.17) claire; urgency=low
+bubba-backend (2.0.0.11) estelle claire; urgency=low
 
-  * update rules
+  * Fixed removal of firewall rules when in auto mode. (Closes: #1440) 
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 16 Apr 2010 14:26:58 +0200
+ -- PA Nilsson <pa@excito.com>  Thu, 29 Apr 2010 10:39:43 +0200
+
+bubba-backend (2.0.0.10) claire estelle; urgency=low
+
+  * default lanip to 127.0.0.1 if non found 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Apr 2010 15:48:13 +0200
+
+bubba-backend (2.0.0.9) estelle claire; urgency=high
+
+  * fix zip anf firewall error output bug (silently ignore)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Apr 2010 13:03:21 +0200
+
+bubba-backend (2.0.0.8) estelle claire; urgency=low
+
+  [ PA Nilsson ]
+  * Fixed corrupt host file, (Closes: #586)
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 15:35:11 +0200
+
+bubba-backend (2.0.0.7) estelle claire; urgency=low
+
+  * set $err=1 to solve backup error problem 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 13:35:56 +0200
+
+bubba-backend (2.0.0.6) estelle claire; urgency=high
+
+  * readding missing favicon (Closes: #1434)
+  * force $err=1 for all open3 instances,
+  * remove some obsolete commented out code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 12:44:46 +0200
+
+bubba-backend (2.0.0.5) estelle claire; urgency=low
+
+  * seems we need to do an manual restart and not rely on shipped helpers 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 21 Apr 2010 11:10:26 +0200
+
+bubba-backend (2.0.0.4) estelle claire; urgency=low
+
+  * ignore return values in backend change_hostname 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 16:40:09 +0200
+
+bubba-backend (2.0.0.3) estelle claire; urgency=low
+
+  * fix samba restart and proftpd on restart_network 
+  * add avahi restart function 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 16:03:40 +0200
+
+bubba-backend (2.0.0.2) estelle claire; urgency=high
+
+  * increase timeout tenfold, to reduce risk of timing out whne lacking FQDN 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 14:41:14 +0200
+
+bubba-backend (2.0.0.1) estelle claire; urgency=high
+
+  * make default firewall obey current LAN and WAN (Closes: #1358)
+  * make creation of new certificate non-crashable (Touches: #586)
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 16 Apr 2010 14:23:34 +0200
 
 bubba-backend (1.9.16) karmic; urgency=low
 

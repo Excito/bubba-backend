@@ -27,9 +27,7 @@ sub get_ifinfo {
 	$err = 1; # we want to dump errors here
 
 	my $pid = open3($in, $out, $err,"/sbin/ifconfig " . $IF);
-	if($err){
-		my @merr=<$err>;
-	}
+
 	my $lines=join("",<$out>);
 	waitpid($pid,0);
 	my @if;
@@ -378,7 +376,7 @@ sub do_rm_portforward { # args are port,protocol,source IP, local IP, local port
 	my @POSTROUTE_rules = check_port($localport,$prot,"*","nat","POSTROUTING",$ip);
 
 
-	if(@nat_rules && @filter_rules && @POSTROUTE_rules) { # matching rules in both chains
+	if(@nat_rules && @filter_rules) { # matching rules in both chains
 
 		my $exec_retval;
 		my $ret;
@@ -398,12 +396,13 @@ sub do_rm_portforward { # args are port,protocol,source IP, local IP, local port
 				$ret .= $exec_retval;
 			}
 		}
-
-		foreach my $rule (reverse(@POSTROUTE_rules)) {
-			my $cmd = "iptables -t nat -D POSTROUTING $rule";
-			d_print("Remove POSTROUTE: $cmd\n");
-			if ($exec_retval = exec_cmd($cmd)) {
-				$ret .= $exec_retval;
+		if(@POSTROUTE_rules) {  # do not require the rule to be in the POSTROUTE
+			foreach my $rule (reverse(@POSTROUTE_rules)) {
+				my $cmd = "iptables -t nat -D POSTROUTING $rule";
+				d_print("Remove POSTROUTE: $cmd\n");
+				if ($exec_retval = exec_cmd($cmd)) {
+					$ret .= $exec_retval;
+				}
 			}
 		}
 		print $ret;

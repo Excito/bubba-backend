@@ -335,10 +335,6 @@ use IPC::Open3;
 
    close($in);
 
-   if($err){
-	   print "Error: <$err>";
-   }
-
    while(<$out>){
 	   print $_;
    }
@@ -538,9 +534,7 @@ sub write_hostsfile {
 
 my ($lanip,$name) = @_;	
 my $cmd = <<END;
-127.0.0.1	$name.localdomain $name
 127.0.0.1	localhost.localdomain localhost
-
 $lanip	$name.localdomain $name
 
 # The following lines are desirable for IPv6 capable hosts
@@ -571,8 +565,9 @@ sub change_hostname {
 	system("echo $name > /etc/hostname");
 
 	%ifs = read_interfaces();
-	$lan = _get_lanif;
+	chomp($lan = _get_lanif);
 	$lanip = $ifs{$lan}{"options"}{"address"};
+	$lanip = '127.0.0.1' unless $lanip;
 	write_hostsfile($lanip,$name);
 
 	if(!query_service("dnsmasq")){
