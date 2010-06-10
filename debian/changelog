@@ -1,8 +1,8 @@
 bubba-backend (2.1~pre3) vincent; urgency=low
 
-  * add dhclient.conf to backend
+  * add dhclient.conf, dnsmasq.conf to backend
 
- -- Carl Fürstenberg <carl@excito.com>  Thu, 10 Jun 2010 14:38:44 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 10 Jun 2010 14:45:27 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 

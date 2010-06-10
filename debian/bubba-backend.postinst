@@ -121,6 +121,7 @@ root@$MAILNAME
 
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.distrib /etc/bubba/dhclient.conf false;
+    divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.distrib /etc/bubba/dnsmasq.conf dnsmasq;
     divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib /etc/bubba/cupsd.conf cups;
     divert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib /etc/bubba/smb.conf samba;
     divert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/bubba/samba-dhcp3.hook.distrib false false;
