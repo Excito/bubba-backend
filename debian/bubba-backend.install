@@ -23,4 +23,5 @@ smb.conf /etc/bubba
 hostapd.conf /etc/bubba
 dhclient.conf /etc/bubba
 dnsmasq.conf /etc/bubba
+dovecot.conf /etc/bubba
 change_distribution /usr/sbin

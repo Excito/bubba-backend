@@ -42,6 +42,7 @@ case "$1" in
     undivert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.distrib false;
     undivert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.distrib dnsmasq;
     undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib cups;
+    undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.distrib dovecot;
     undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib samba;
     undivert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/dhcp3/dhclient-exit-hooks.d/samba false;
 	
