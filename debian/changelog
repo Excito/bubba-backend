@@ -1,3 +1,16 @@
+bubba-backend (2.1~pre3) vincent; urgency=low
+
+  * add dhclient.conf to backend
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 10 Jun 2010 14:38:44 +0200
+
+bubba-backend (2.1~pre2) vincent; urgency=low
+
+  * Switch to dpkg-source 3.0 (native) format
+  * modify for squeeze 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 09 Jun 2010 13:12:30 +0200
+
 bubba-backend (2.1~pre1) UNRELEASED; urgency=low
 
   * Do not fail totally when firewall an file is unpareable (Closes: #1384)

@@ -2,8 +2,9 @@ Source: bubba-backend
 Section: admin
 Priority: required
 Maintainer: Tor Krill <tor@excito.com>
-Build-Depends: debhelper (>= 5), cdbs
-Standards-Version: 3.7.3
+Uploaders: Carl Fürstenberg <carl@excito.com>
+Build-Depends: debhelper (>= 7.2), cdbs
+Standards-Version: 3.8.4
 Homepage: http://www.excito.com
 
 Package: bubba-backend
@@ -14,6 +15,7 @@ Depends: ${misc:Depends}, bubba,
  bubba-kernel,
  bubba-modules,
  bubba-horde,
+ adduser,
  php5-cgi (>= 5.2.0) | phpapi-20060613+lfs,
  dhcp3-client,
  proftpd,
@@ -55,8 +57,6 @@ Depends: ${misc:Depends}, bubba,
  bubba-diskmanager,
  libexpect-perl,
  libparse-debcontrol-perl,
- libthreads-perl (>= 1.71),
- libthreads-shared-perl (>= 1.27),
  libcrypt-ssleay-perl,
  libconfig-tiny-perl,
  liblist-moreutils-perl,
