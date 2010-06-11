@@ -5,8 +5,9 @@ bubba-backend (2.1~pre3) vincent; urgency=low
    - dnsmasq.conf
    - dovecot.conf
    - AppleVolumes.default
+   - ntp.conf
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 16:21:50 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 16:30:58 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 
