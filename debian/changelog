@@ -6,8 +6,9 @@ bubba-backend (2.1~pre3) vincent; urgency=low
    - dovecot.conf
    - AppleVolumes.default
    - ntp.conf
+   - sshd_config 
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 16:30:58 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 17:04:14 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 
