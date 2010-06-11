@@ -1,8 +1,12 @@
 bubba-backend (2.1~pre3) vincent; urgency=low
 
-  * add dhclient.conf, dnsmasq.conf, dovecot.conf to backend
+  * Adding diverts:
+   - dhclient.conf
+   - dnsmasq.conf
+   - dovecot.conf
+   - AppleVolumes.default
 
- -- Carl Fürstenberg <carl@excito.com>  Thu, 10 Jun 2010 15:10:13 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 16:21:50 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 
