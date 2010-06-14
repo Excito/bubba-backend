@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre5) vincent; urgency=low
+
+  * remove disable offload 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 17:00:51 +0200
+
 bubba-backend (2.1~pre4) vincent; urgency=low
 
   * depend on proftpd-basic 
