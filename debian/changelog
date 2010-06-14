@@ -8,8 +8,9 @@ bubba-backend (2.1~pre3) vincent; urgency=low
    - ntp.conf
    - sshd_config 
    - postfix main.cf
+   - proftpd.conf
 
- -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 10:03:07 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 10:27:16 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 
