@@ -7,8 +7,9 @@ bubba-backend (2.1~pre3) vincent; urgency=low
    - AppleVolumes.default
    - ntp.conf
    - sshd_config 
+   - postfix main.cf
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Jun 2010 17:04:14 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 10:03:07 +0200
 
 bubba-backend (2.1~pre2) vincent; urgency=low
 

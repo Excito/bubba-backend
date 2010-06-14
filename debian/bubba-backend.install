@@ -26,6 +26,7 @@ dhclient.conf /etc/bubba
 dnsmasq.conf /etc/bubba
 dovecot.conf /etc/bubba
 ntp.conf /etc/bubba
+proftpd.conf /etc/bubba
 sshd_config /etc/bubba
 AppleVolumes.default /etc/bubba
 
