@@ -119,6 +119,10 @@ root@$MAILNAME
         rm -f /etc/udev/rules.d/z25_persistent-net.rules
     fi
 
+	if [ ! -e /etc/postfix/bubbadomains ]; then
+			touch /etc/postfix/bubbadomains;
+	fi
+
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.distrib /etc/bubba/dhclient.conf false;
     divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.distrib /etc/bubba/dnsmasq.conf dnsmasq;
