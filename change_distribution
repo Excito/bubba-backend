@@ -14,35 +14,35 @@ use File::Slurp;
 my $old_args = join ' ', @ARGV;
 
 my $upstream_url = "http://ftp.se.debian.org/debian";
-my $excito_url = "http://update.excito.org/";
+my $excito_url = "http://b3.update.excito.org/";
 
 my %distributions = (
-	'claire' => 1,
-	'marielle' => 1,
-	'estelle' => 1,
+	'vincent' => 1,
+	'elvin' => 1,
+	'hugo' => 1,
 );
 
 my %snapshotable = (
-	'marielle' => 1
+	'elvin' => 1
 );
 
 my %upstream_archives = (
-	'claire' => 'upstream_etch_forclaire',
-	'estelle' => 'upstream_etch_forestelle',
-	'marielle' => 'upstream_etch',
+	'vincent' => 'upstream_squeeze_forvincent',
+	'hugo' => 'upstream_squeeze_forhugo',
+	'elvin' => 'upstream_squeeze',
 );
 
 my %upstream_archives_raliases = (
-	'claire' => 'upstream_stable_forclaire',
-	'estelle' => 'upstream_stable_forestelle',
-	'marielle' => 'upstream_stable',
+	'vincent' => 'upstream_stable_forvincent',
+	'hugo' => 'upstream_stable_forhugo',
+	'elvin' => 'upstream_stable',
 );
 
 # sources can contain both codename and aliases
 my %aliases = (
-	'unstable' => 'claire',
-	'testing' => 'estelle',
-	'stable' => 'marielle',
+	'unstable' => 'vincent',
+	'testing' => 'hugo',
+	'stable' => 'elvin',
 );
 
 # reverse aliases, needed for preferences
@@ -96,8 +96,8 @@ if( $upstream ) {
 	push @suits, 'non-free' if $nonfree;
 	push @suits, 'contrib' if $contrib;
 
-	push @sources_list, "deb $upstream_url etch " . join( ' ', @suits );
-	push @sources_list, "deb-src $upstream_url etch " . join( ' ', @suits ) if $source;
+	push @sources_list, "deb $upstream_url squeeze " . join( ' ', @suits );
+	push @sources_list, "deb-src $upstream_url squeeze " . join( ' ', @suits ) if $source;
 
 	push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=main\nPin-Priority: 500\n";
 	push @preferences, "Package: *\nPin:\n release o=Debian, a=stable, c=contrib\nPin-Priority: 400\n" if $contrib;
@@ -123,11 +123,11 @@ foreach my $distribution ( @ARGV ) {
 
 	push @sources_list, "deb $excito_url $real_distribution main";
 	push @sources_list, "deb-src $excito_url $real_distribution main" if $source;
-	push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 999\n";
+	push @preferences, "Package: *\nPin:\n release o=Excito, a=$raliases{$distribution},\n origin=\"b3.update.excito.org\"\nPin-Priority: 999\n";
 
 	push @sources_list, "deb $excito_url $real_upstream main";
 	push @sources_list, "deb-src $excito_url $real_upstream main" if $source;
-	push @preferences, "Package: *\nPin:\n release o=Excito, a=$upstream_archives_raliases{$distribution},\n origin=\"update.excito.org\"\nPin-Priority: 600\n";
+	push @preferences, "Package: *\nPin:\n release o=Excito, a=$upstream_archives_raliases{$distribution},\n origin=\"b3.update.excito.org\"\nPin-Priority: 600\n";
 }
 
 move('/etc/apt/sources.list', '/etc/apt/sources.list.bkup') or die "couldn't move /etc/apt/sources.list: $!";
@@ -156,12 +156,12 @@ change_distribution [options] I<distribution> ...
 
 =head1 EXAMPLES
 
-change_distribution claire # changes distribution to claire
+change_distribution vincent # changes distribution to vincent
 
-change_distribution claire estelle # changes distribution to claire and estelle
+change_distribution vincent hugo # changes distribution to vincent and hugo
 
-change_distribution claire --upstream --source --nonfree --contrib # changes distribution to claire with full upstream and source
-change_distribution -usnc claire # same, but using short options
+change_distribution vincent --upstream --source --nonfree --contrib # changes distribution to vincent with full upstream and source
+change_distribution -usnc vincent # same, but using short options
 
-change_distribution marielle --upstream # changes distribution to stable default layout
+change_distribution elvin --upstream # changes distribution to stable default layout
 =cut
