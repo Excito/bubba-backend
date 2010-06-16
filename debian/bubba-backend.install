@@ -16,6 +16,7 @@ dhclient-fallback/fallback /etc/dhcp3/dhclient-exit-hooks.d/
 dhclient-fallback/firewall_rewrite /etc/dhcp3/dhclient-exit-hooks.d/
 
 default_web /usr/share/bubba-backend
+auth_template.xml /usr/share/bubba-backend
 iptables.xslt /usr/share/bubba-backend
 bubba-notify.conf /etc/bubba-notify
 

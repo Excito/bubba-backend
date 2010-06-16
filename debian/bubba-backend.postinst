@@ -47,6 +47,10 @@ invoke-rc.d --quiet $5 restart || true;
 case "$1" in
     configure)
 
+	if [ ! -e /etc/bubba_auth.xml ];  then
+		cp /usr/share/bubba-backend/auth_template.xml /etc/bubba_auth.xml;
+	fi
+
 	# Move startup of mediatomb to somewhat later due to ifplugd
 	if dpkg --compare-versions "$2" lt 1.3; then
 		update-rc.d -f mediatomb remove

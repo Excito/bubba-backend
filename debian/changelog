@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre8) vincent; urgency=low
+
+  * adding bubba auth template and installation 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 16 Jun 2010 15:32:01 +0200
+
 bubba-backend (2.1~pre7) vincent; urgency=low
 
   * adding divert for ifplugd 
