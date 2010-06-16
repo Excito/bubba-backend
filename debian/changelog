@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre7) vincent; urgency=low
+
+  * adding divert for ifplugd 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 16 Jun 2010 15:01:09 +0200
+
 bubba-backend (2.1~pre6) vincent; urgency=low
 
   * etch → squeeze; claire & C:o → vincent & C:o 

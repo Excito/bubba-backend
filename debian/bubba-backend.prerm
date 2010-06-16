@@ -44,6 +44,7 @@ case "$1" in
     undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib cups;
     undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.distrib dovecot;
     undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.distrib proftpd;
+    undivert bubba-backend /etc/default/ifplugd.conf /etc/default/ifplugd.conf.distrib ifplugd;
     undivert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.distrib postfix;
     undivert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.distrib ssh;
     undivert bubba-backend /etc/ntp.conf /etc/ntp.conf.distrib ntp;

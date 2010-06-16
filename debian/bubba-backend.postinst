@@ -128,6 +128,7 @@ root@$MAILNAME
     divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.distrib /etc/bubba/dnsmasq.conf dnsmasq;
     divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.distrib /etc/bubba/dovecot.conf dovecot;
     divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.distrib /etc/bubba/proftpd.conf proftpd;
+    divert bubba-backend /etc/default/ifplugd.conf /etc/default/ifplugd.conf.distrib /etc/bubba/ifplugd.conf ifplugd;
     divert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.distrib /etc/bubba/postfix.conf postfix;
     divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.distrib /etc/bubba/sshd_config ssh;
     divert bubba-backend /etc/ntp.conf /etc/ntp.conf.distrib /etc/bubba/ntp.conf ntp;
