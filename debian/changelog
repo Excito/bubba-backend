@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre9) vincent; urgency=low
+
+  * adding fetchmail
+  * fix ifplugd default
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 12:56:59 +0200
+
 bubba-backend (2.1~pre8) vincent; urgency=low
 
   * adding bubba auth template and installation 
