@@ -1,3 +1,12 @@
+bubba-backend (2.1~pre13) vincent; urgency=low
+
+  * maintscript fix 
+  * dovecot, fix sieve
+  * proftpd, fix DisplayChdir
+  * firewall, fix rc.d
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 15:01:43 +0200
+
 bubba-backend (2.1~pre9) vincent; urgency=low
 
   * adding fetchmail

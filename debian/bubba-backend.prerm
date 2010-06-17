@@ -23,7 +23,7 @@ diverted=$3;
 rc_d=$4;
 rm -f $file;
 dpkg-divert --remove --package $package --rename --divert $diverted $file;
-if [ -e $file && x$rc_d != xfalse ]; then
+if [ -e $file ] && [ "$rc_d" != "false" ]; then
     invoke-rc.d --quiet $rc_d restart || true;
 fi
 }
