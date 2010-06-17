@@ -148,7 +148,7 @@ root@$MAILNAME
     divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.distrib /etc/bubba/AppleVolumes.default netatalk;
     divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib /etc/bubba/cupsd.conf cups;
     divert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib /etc/bubba/smb.conf samba;
-    divert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/bubba/samba-dhcp3.hook.distrib false false;
+    divert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/dhcp3/dhclient-exit-hooks.d/samba false false;
 
 	# Set mdadm default values
 	if [ -f /etc/default/mdadm ]; then

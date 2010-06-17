@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre14) vincent; urgency=low
+
+  * proftpd and samba 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 18:06:39 +0200
+
 bubba-backend (2.1~pre13) vincent; urgency=low
 
   * maintscript fix 
