@@ -1,8 +1,9 @@
 bubba-backend (2.1~pre15) vincent; urgency=low
 
   * fix for package versions 
+  * add user fix
 
- -- Carl Fürstenberg <carl@excito.com>  Fri, 18 Jun 2010 15:07:47 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 18 Jun 2010 15:46:19 +0200
 
 bubba-backend (2.1~pre14) vincent; urgency=low
 

@@ -469,24 +469,25 @@ sub update_user {
 # Return :  status of operations
 #
 sub add_user {
-   my ($rname, $group, $shell, $pwd, $uname)=@_;
-   my $ret;
+	my ($rname, $group, $shell, $pwd, $uname)=@_;
+	my $ret;
 
-   use Crypt::PasswdMD5;
-   my $c_pwd=quotemeta unix_md5_crypt($pwd);
+	use Crypt::PasswdMD5;
+	my $c_pwd=quotemeta unix_md5_crypt($pwd);
 
-   $ret=system("useradd -m -c \"$rname\" -g \"$group\" -s $shell -p $c_pwd $uname");
-   if ($ret==0) {
-      $ret=system("echo -e \"$pwd\n$pwd\" | smbpasswd -s -a $uname");
-   }
+	$ret=system("useradd -m -c \"$rname\" -g \"$group\" -s $shell -p $c_pwd $uname");
+	if ($ret==0) {
+		my $qpwd = quotemeta($pwd);
+		$ret=system("(echo $qpwd; echo $qpwd) | smbpasswd -s -a $uname");
+	}
 
-   # if user existed before, make sure his directory is left accessible to new user
-   # This is however a security risk. But we trust the admin to do the right thing.   
-   if($ret==0){
-	  $ret=system("chown -R $uname:$group /home/$uname");
-   }
+	# if user existed before, make sure his directory is left accessible to new user
+	# This is however a security risk. But we trust the admin to do the right thing.   
+	if($ret==0){
+		$ret=system("chown -R $uname:$group /home/$uname");
+	}
 
-   return $ret;
+	return $ret;
 }
 
 # Restart avahi
