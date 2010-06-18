@@ -1909,21 +1909,18 @@ sub easyfind {
 }
 
 sub do_get_version {
-use IPC::Open3;
+	use IPC::Open3;
 
-	 my $package = shift;
-	 if ($package !~ m/[;\n:]/) { # make some sanity check
-	   my($wtr, $rdr, $err);
-	   $err = 1; # we want to dump errors here
-	   my $pid = open3($wtr, $rdr, $err,"/usr/bin/dpkg -l $package");
-	   my @rt=<$rdr>;
-	   my @err=<$err>;
-	   waitpid($pid,0);
-	   
-	   print @rt;
-	} else {
-		return 0;
-	}
+	my @package = split /,/, shift;
+	chomp @package;
+	my($wtr, $rdr, $err);
+	$err = 1; # we want to dump errors here
+	my $pid = open3($wtr, $rdr, $err, 'dpkg-query', '--showformat','${Package} ${Version}\n', '--show', @package);
+	my @rt=<$rdr>;
+	my @err=<$err>;
+	waitpid($pid,0);
+
+	print @rt;
 }
 
 sub get_link{

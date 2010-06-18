@@ -770,7 +770,7 @@ function list_disks(){
 	exec($cmd,$out,$ret);
 	$res=array();
 	foreach( $out as $line){
-		list($device,$status,$path,$model,$vendor)=split(":",$line,5);
+		list($device,$status,$path,$model,$vendor)=explode(":",$line,5);
 		$res[]=array(
 			"device" => $device,
 			"status" => $status,
@@ -797,7 +797,7 @@ function get_installed_printers(){
    exec($cmd,$out,$ret);
    $res=array();
    foreach( $out as $line){
-		list($name,$key,$value)=split(" ",$line,3);
+		list($name,$key,$value)=explode(" ",$line,3);
 		$res[$name][$key]=$value;
    }
    
@@ -1254,22 +1254,22 @@ function configure_dnsmasq($dnsmasq) {
 }
 
 function get_package_version($package="bubba-frontend") {
+	if( !is_array( $package ) ) {
+		$package = array( $package );
+	}
 	
-	$cmd = BACKEND." get_version " . escapeshellarg($package);
+	$cmd = BACKEND." get_version " . escapeshellarg(implode(',',$package));
 	exec($cmd,$out,$ret);
-	$data = implode("\n",$out);
-	$a_package = split(" ",$package);
-	
-	if(sizeof($a_package)>1) {
-		foreach($a_package as $name) {
-			preg_match("/$name\s*([\d\w\.\-\+]+)\s/",$data,$matches);
-			$versions[$name] = $matches[1];
+	$versions = array();
+	foreach( $out as $line ) {
+		list( $name, $version ) = explode( ' ', $line );
+		$versions[$name] = $version;
+	}
+
+	if( count($versions) == 1 ) {
+		return current(array_values($versions));
 		}
 		return $versions;
-	} else {			
-		preg_match("/$package\s*([\d\w\.\-\+]+)\s/",$data,$matches);
-		return $matches[1];	
-	}
 }
 
 function update_bubbacfg($user,$param,$value) {

@@ -50,8 +50,8 @@ case "$1" in
     undivert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.distrib ssh;
     undivert bubba-backend /etc/ntp.conf /etc/ntp.conf.distrib ntp;
     undivert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.distrib netatalk;
-    undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib samba;
     undivert bubba-backend /etc/dhcp3/dhclient-enter-hooks.d/samba /etc/dhcp3/dhclient-exit-hooks.d/samba false;
+    undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib samba;
 	
 	for i in ui.pl led.pl; do
 		[ -L /etc/bubba-notify/enabled/$i ] && rm -f /etc/bubba-notify/enabled/$i
