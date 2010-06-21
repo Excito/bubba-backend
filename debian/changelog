@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre17) vincent; urgency=low
+
+  * remove divert of samba dhcp script as it will bork bork 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:14:41 +0200
+
 bubba-backend (2.1~pre16) vincent; urgency=low
 
   * custom check for squeezecenter 
