@@ -645,8 +645,12 @@ function remove_service($name){
 
 function query_service($name){
 
-   $res=glob("/etc/rc2.d/S??$name");
-   return $res?true:false;
+	if( $name == 'squeezecenter' ) {
+		return preg_match("#^RUN\s*=\s*yes\s*$#m",file_get_contents("/etc/default/$name")) >= 1;
+	} else {
+		$res=glob("/etc/rc2.d/S??$name");
+		return $res?true:false;
+	}
 
 }
 
