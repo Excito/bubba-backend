@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre19) vincent; urgency=low
+
+  * extra special for squeezecenter 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:43:12 +0200
+
 bubba-backend (2.1~pre18) vincent; urgency=low
 
   * fixup query_service again 

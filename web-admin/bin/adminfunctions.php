@@ -625,7 +625,26 @@ function stop_service($name){
 
 }
 
+function enable_service($name) {
+	if( $name == 'squeezecenter' ) {
+		$content=file_get_contents("/etc/default/$name");
+		preg_replace("#^RUN\s*=\s*\S+\s*$#m", 'RUN=yes', $content );
+		file_put_contents( "/etc/default/$name", $content );
+	}
+}
+
+function disable_service($name) {
+	if( $name == 'squeezecenter' ) {
+		$content=file_get_contents("/etc/default/$name");
+		preg_replace("#^RUN\s*=\s*\S+\s*$#m", 'RUN=no', $content );
+		file_put_contents( "/etc/default/$name", $content );
+	}
+}
+
 function add_service($name, $level=0){
+	if( $name == 'squeezecenter' ) {
+		return enable_service( $name );
+	}
    
 	if($level==0){
 		$cmd=BACKEND." add_service $name";
@@ -638,7 +657,10 @@ function add_service($name, $level=0){
 
 
 function remove_service($name){
-   
+   	if( $name == 'squeezecenter' ) {
+		return disable_service( $name );
+	}
+
 	$cmd=BACKEND." remove_service $name";
 	$result=shell_exec($cmd);
 }
