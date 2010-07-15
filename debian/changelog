@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre21) vincent; urgency=low
+
+  * some stuff can't be diverted 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 15 Jul 2010 14:55:03 +0200
+
 bubba-backend (2.1~pre20) voncent; urgency=low
 
   * undo previous attempts 

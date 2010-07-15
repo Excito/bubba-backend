@@ -135,19 +135,33 @@ root@$MAILNAME
 			touch /etc/postfix/bubbadomains;
 	fi
 
-    divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.distrib /etc/bubba/hostapd.conf hostapd;
-    divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.distrib /etc/bubba/dhclient.conf false;
-    divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.distrib /etc/bubba/dnsmasq.conf dnsmasq;
-    divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.distrib /etc/bubba/dovecot.conf dovecot;
-    divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.distrib /etc/bubba/proftpd.conf proftpd;
-    divert bubba-backend /etc/default/ifplugd /etc/default/ifplugd.distrib /etc/bubba/ifplugd.default ifplugd;
-    divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.distrib /etc/bubba/fetchmail.default fetchmail;
-    divert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.distrib /etc/bubba/postfix.conf postfix;
-    divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.distrib /etc/bubba/sshd_config ssh;
-    divert bubba-backend /etc/ntp.conf /etc/ntp.conf.distrib /etc/bubba/ntp.conf ntp;
-    divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.distrib /etc/bubba/AppleVolumes.default netatalk;
-    divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.distrib /etc/bubba/cupsd.conf cups;
-    divert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.distrib /etc/bubba/smb.conf samba;
+    divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
+    divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
+    divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.bubba-distrib /etc/bubba/dnsmasq.conf dnsmasq;
+    divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
+    divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
+    divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
+    divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib /etc/bubba/sshd_config ssh;
+    divert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib /etc/bubba/ntp.conf ntp;
+    divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default netatalk;
+    divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
+
+	# things that cant be diverted
+	if [ ! -f /etc/default/ifplugd.bubba-distrib ]; then
+		cp --archive --backup --suffix=.bubba-distrib /etc/bubba/ifplugd.default /etc/default/ifplugd;
+		invoke-rc.d --quiet ifplugd restart
+	fi
+
+	if [ ! -f /etc/samba/smb.conf.bubba-distrib ]; then
+		cp --archive --backup --suffix=.bubba-distrib /etc/bubba/smb.conf /etc/samba/smb.conf;
+		invoke-rc.d --quiet samba restart
+	fi
+
+	if [ ! -f /etc/postfix/main.cf.bubba-distrib ]; then
+		cp --archive --backup --suffix=.bubba-distrib /etc/bubba/postfix.conf /etc/postfix/main.cf;
+		invoke-rc.d --quiet postfix restart
+	fi
+
 
 	# Set mdadm default values
 	if [ -f /etc/default/mdadm ]; then
