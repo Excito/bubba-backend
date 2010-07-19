@@ -386,7 +386,7 @@ sub postcheck {
 		my $parser = new XML::LibXML();
 		my $doc;
 		my $broken_file_firewall = 0;
-		my $file_fw = qx{/usr/sbin/iptables-xml /etc/network/firewall.conf};
+		my $file_fw = qx{/usr/bin/iptables-xml /etc/network/firewall.conf};
 		try {
 			$doc = $parser->parse_string( $file_fw );
 		} catch {
@@ -400,7 +400,7 @@ sub postcheck {
 
 		if( $broken_file_firewall || !$self->firewallcheck( $doc ) ) {
 			# our firewall config is broken, testing live fw
-			my $current_fw = qx{/sbin/iptables-save | /usr/sbin/iptables-xml};
+			my $current_fw = qx{/sbin/iptables-save | /usr/bin/iptables-xml};
 			$doc = $parser->parse_string( $current_fw );
 			if(  $self->firewallcheck( $doc ) ) {
 
@@ -422,7 +422,7 @@ sub postcheck {
 				system("/sbin/iptables-restore /etc/network/firewall.conf");
 			}
 		} else {
-			my $current_fw = qx{/sbin/iptables-save | /usr/sbin/iptables-xml};
+			my $current_fw = qx{/sbin/iptables-save | /usr/bin/iptables-xml};
 			$doc = $parser->parse_string( $current_fw );
 			unless(  $self->firewallcheck( $doc ) ) { 
 				push @local_errors, shared_clone({

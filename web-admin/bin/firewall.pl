@@ -7,7 +7,7 @@ $XML::Simple::PREFERRED_PARSER = 'XML::Parser';
 
 use constant WAN_IF=>"eth0";
 use constant IPTABLES=>"/sbin/iptables";
-use constant IPTABLES_XML=>"/usr/sbin/iptables-xml";
+use constant IPTABLES_XML=>"/usr/bin/iptables-xml";
 use constant DEBUG=>0;
 
 use vars qw($ruleset);
@@ -494,7 +494,7 @@ sub do_set_lanif {
 		system("/sbin/iptables-save > /etc/network/firewall.conf");
 	}
 	my $parser = new XML::LibXML();
-	my $file_fw = qx{/usr/sbin/iptables-xml /etc/network/firewall.conf};
+	my $file_fw = qx{/usr/bin/iptables-xml /etc/network/firewall.conf};
 	my $doc = $parser->parse_string( $file_fw );
 	foreach my $context( $doc->findnodes("//match/i[. = \"$old_if\"]/text()")->get_nodelist() ) {
 		$context->setData( $if );

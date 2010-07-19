@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre22) vincent; urgency=low
+
+  * iptables-xml is in /usr/bin now 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Jul 2010 14:30:02 +0200
+
 bubba-backend (2.1~pre21) vincent; urgency=low
 
   * some stuff can't be diverted 
