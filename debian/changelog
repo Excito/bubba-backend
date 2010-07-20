@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre24) vincent; urgency=low
+
+  * host creation in Bubba.pm seems to not work any more, rewrite to use
+    template instead. 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Jul 2010 15:07:35 +0200
+
 bubba-backend (2.1~pre23) vincent; urgency=low
 
   * creating empty wpa-psk file (dunno if it's config value should be removed

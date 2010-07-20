@@ -533,22 +533,13 @@ sub reload_samba {
 
 sub write_hostsfile {
 
-my ($lanip,$name) = @_;	
-my $cmd = <<END;
-127.0.0.1	localhost.localdomain localhost
-$lanip	$name.localdomain $name
+	my ($lanip,$name) = @_;	
+	use File::Slurp;
+	my $hosts = read_file('/usr/bubba-backend/hosts.in');
+	$hosts =~ s/\@LANIP\@/$lanip/g;
+	$hosts =~ s/\@NAME\@/$name/g;
+	write_file( '/etc/hosts', $hosts );
 
-# The following lines are desirable for IPv6 capable hosts
-::1     ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
-ff02::3 ip6-allhosts
-END
-      $ret=system("echo -ne \"$cmd\">/etc/hosts");
-
-	
 }
 
 # Change hostname
