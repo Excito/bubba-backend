@@ -34,5 +34,6 @@ AppleVolumes.default /etc/bubba
 
 ifplugd.default /etc/bubba
 fetchmail.default /etc/bubba
+hostapd.default /etc/bubba
 
 change_distribution /usr/sbin

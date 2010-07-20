@@ -40,9 +40,9 @@ fi
 }
 
 divert_cb_hostapd() {
-echo "setting default AP SSID"
-sed -i "s/ssid=.*\$/ssid=$(hostname)/" $2
-invoke-rc.d --quiet $5 restart || true;
+	echo "setting default AP SSID"
+	sed -i "s/ssid=.*\$/ssid=$(hostname)/" $2
+	invoke-rc.d --quiet $5 restart || true;
 }
 
 divert_cb_dnsmasq() {
@@ -54,6 +54,10 @@ divert_cb_dnsmasq() {
 }
 case "$1" in
     configure)
+
+	if [ ! -f /etc/hostapd/hostapd.wpa_psk ]; then
+		touch /etc/hostapd/hostapd.wpa_psk
+	fi
 
 	if [ ! -e /etc/bubba_auth.xml ];  then
 		cp /usr/share/bubba-backend/auth_template.xml /etc/bubba_auth.xml;
@@ -135,6 +139,7 @@ root@$MAILNAME
 			touch /etc/postfix/bubbadomains;
 	fi
 
+    divert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib /etc/bubba/hostapd.default false;
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
     divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.bubba-distrib /etc/bubba/dnsmasq.conf dnsmasq;

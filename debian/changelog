@@ -1,3 +1,11 @@
+bubba-backend (2.1~pre23) vincent; urgency=low
+
+  * creating empty wpa-psk file (dunno if it's config value should be removed
+    instead)
+  * diverting hostapd.default
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Jul 2010 13:37:42 +0200
+
 bubba-backend (2.1~pre22) vincent; urgency=low
 
   * iptables-xml is in /usr/bin now 
