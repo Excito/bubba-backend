@@ -21,4 +21,5 @@ override_dh_install:
 	install -m 644 apt/apt.conf debian/bubba-backend/etc/apt/bubba-apt.conf
 	install -m 755 bubba-easyfind.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/bubba-easyfind
 	install -m 755 samba-dhcp3.hook debian/bubba-backend/etc/dhcp3/dhclient-exit-hooks.d/samba
+	install -m 644 dnsmasq.conf debian/bubba-backend/etc/dnsmasq.d/bubba.conf
 	$(foreach notifier, $(wildcard notifiers/*),$(call install_notifier, $(value notifier)))

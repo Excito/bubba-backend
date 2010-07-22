@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre25) vincent; urgency=low
+
+  * install dnsmasq.conf to correct place (Closes: #1492) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 13:57:34 +0200
+
 bubba-backend (2.1~pre24) vincent; urgency=low
 
   * host creation in Bubba.pm seems to not work any more, rewrite to use

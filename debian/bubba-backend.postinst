@@ -142,7 +142,6 @@ root@$MAILNAME
     divert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib /etc/bubba/hostapd.default false;
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
-    divert bubba-backend /etc/dnsmasq.conf /etc/dnsmasq.conf.bubba-distrib /etc/bubba/dnsmasq.conf dnsmasq;
     divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
     divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
     divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
@@ -215,6 +214,10 @@ root@$MAILNAME
 		rm -f /etc/init.d/firewall
 		update-rc.d -f disable-offload remove
 		rm -f /etc/init.d/disable-offload
+	fi
+
+	if dpkg --compare-versions "$2" lt "2.1~pre25"; then
+		invoke-rc.d dnsmasq restart
 	fi
 
 	if [ ! -e /etc/network/firewall.conf ]; then

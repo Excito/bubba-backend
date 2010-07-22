@@ -25,7 +25,6 @@ cupsd.conf /etc/bubba
 smb.conf /etc/bubba
 hostapd.conf /etc/bubba
 dhclient.conf /etc/bubba
-dnsmasq.conf /etc/bubba
 dovecot.conf /etc/bubba
 ntp.conf /etc/bubba
 proftpd.conf /etc/bubba
