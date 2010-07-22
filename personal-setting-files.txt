@@ -2,7 +2,7 @@
 /etc/network/interfaces
 /etc/network/firewall.conf
 /etc/network/easyfind.conf
-/etc/dnsmasq.conf
+/etc/dnsmasq.d/bubba.conf
 /etc/hostname
 /etc/hosts
 /etc/proftpd/proftpd.conf

@@ -1121,7 +1121,7 @@ function get_dnsmasq_settings() {
 	$dhcpd["netmask"]="n/a";
 	$dhcpd["leasetime"]="n/a";
 
-	$conf_file="/etc/dnsmasq.conf";
+	$conf_file="/etc/dnsmasq.d/bubba.conf";
 	if (file_exists($conf_file)) {
 		$arr = file($conf_file);
 		$lanif=_getlanif();

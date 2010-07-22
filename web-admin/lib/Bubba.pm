@@ -1865,7 +1865,7 @@ sub do_echo{
 
 sub dnsmasq_config {
 	my ($dhcpd,$range_start,$range_end,$ifs) = @_;
-	open(FILE, "/etc/dnsmasq.conf") or die "Failed to open file";
+	open(FILE, "/etc/dnsmasq.d/bubba.conf") or die "Failed to open file";
 	my @data=<FILE>;
 	chomp(@data);
 	close(FILE);
@@ -1882,7 +1882,7 @@ sub dnsmasq_config {
 	$file =~ s/[\s\n]*$//;
 	$file .= "\n";
 
-	open(FILE, ">/etc/dnsmasq.conf") or die "Failed to open file for writing";
+	open(FILE, ">/etc/dnsmasq.d/bubba.conf") or die "Failed to open file for writing";
 	print FILE $file;
 	close(FILE);
 }

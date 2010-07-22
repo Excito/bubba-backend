@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre26) vincent; urgency=emergency
+
+  * sort of whoooops (dnsmasq config wasn't fully updated) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:08:46 +0200
+
 bubba-backend (2.1~pre25) vincent; urgency=low
 
   * install dnsmasq.conf to correct place (Closes: #1492) 
