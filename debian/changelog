@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre28) vincent; urgency=low
+
+  * a semicolon! 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:36:26 +0200
+
 bubba-backend (2.1~pre27) vincent; urgency=low
 
   * adding libtry-tiny-perl as dependicy 

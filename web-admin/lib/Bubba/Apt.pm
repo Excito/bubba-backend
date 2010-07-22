@@ -396,7 +396,7 @@ sub postcheck {
 				});			
 				system("/sbin/iptables-save > /etc/network/firewall.conf");
 				$broken_file_firewall = 1;
-		}
+		};
 
 		if( $broken_file_firewall || !$self->firewallcheck( $doc ) ) {
 			# our firewall config is broken, testing live fw
