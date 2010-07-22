@@ -61,6 +61,7 @@ Depends: ${misc:Depends}, bubba,
  libconfig-tiny-perl,
  liblist-moreutils-perl,
  xsltproc,
- bubba-networkmanager
+ bubba-networkmanager,
+ libtry-tiny-perl
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

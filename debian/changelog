@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre27) vincent; urgency=low
+
+  * adding libtry-tiny-perl as dependicy 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:15:11 +0200
+
 bubba-backend (2.1~pre26) vincent; urgency=emergency
 
   * sort of whoooops (dnsmasq config wasn't fully updated) 
