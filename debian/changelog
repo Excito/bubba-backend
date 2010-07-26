@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre29) vincent; urgency=low
+
+  * runtime detection of ioc bit sizes for printer detection (Closes: #1462) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Jul 2010 17:26:15 +0200
+
 bubba-backend (2.1~pre28) vincent; urgency=low
 
   * a semicolon! 

@@ -1,11 +1,17 @@
 #! /usr/bin/perl -w
 
 use strict;
+use Bubba::Info;
 
 use constant IOC_NRBITS=>8;
 use constant IOC_TYPEBITS=>8;
+if( isB1() || isB3() ) {
+use constant IOC_SIZEBITS=>14;
+use constant IOC_DIRBITS=>2;
+} else { # isB2()
 use constant IOC_SIZEBITS=>13;
 use constant IOC_DIRBITS=>3;
+}
 use constant IOC_NRSHIFT=>0;
 use constant IOC_TYPESHIFT=>(IOC_NRSHIFT+IOC_NRBITS);
 use constant IOC_SIZESHIFT=>(IOC_TYPESHIFT+IOC_TYPEBITS);
