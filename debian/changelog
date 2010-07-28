@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre31) vincent; urgency=low
+
+  * Fix service running for dnsmasq (Changed location od pidfile)
+  * Implement shut down for Bubba|3 (Using magic-write) 
+
+ -- Tor Krill <tor@excito.com>  Wed, 28 Jul 2010 23:40:38 +0200
+
 bubba-backend (2.1~pre30) vincent; urgency=low
 
   * fix skel/downloads (was pointing to private) (Closes: #1499)

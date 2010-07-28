@@ -602,16 +602,22 @@ sub change_hostname {
 #
 # Return : Status of operation.
 sub power_off{
-   if( -e "/sys/devices/platform/bubbatwo/magic" ){
-   
-      open(MAGIC, ">/sys/devices/platform/bubbatwo/magic") or die "Failed to open magic";
-      print MAGIC "3735928559\n";
-      close(MAGIC);
-      return system("/sbin/reboot");
-         
-   }else{
-      return system("/sbin/poweroff");
-   }
+	use Bubba::Info;
+	if(isB3()){
+		system("/sbin/write-magic 0xdeadbeef");
+		return system("/sbin/reboot");
+	}elsif(isB2()){
+		if( -e "/sys/devices/platform/bubbatwo/magic" ){
+			open(MAGIC, ">/sys/devices/platform/bubbatwo/magic") or die "Failed to open magic";
+			print MAGIC "3735928559\n";
+			close(MAGIC);
+			return system("/sbin/reboot");
+		}else{
+			return system("/sbin/poweroff");
+		}
+	}else{
+		return system("/sbin/poweroff");
+	}
 }
 
 # Reboot system
@@ -794,21 +800,20 @@ sub service_running{
 	my $pidfile;
 	
 	if ($service eq "fetchmail"){
-	   $service="fetchmail/.fetchmail";
-  }
-   
-	if ($service eq "avahi-daemon"){
-	  $pidfile="/var/run/avahi-daemon/pid";
-  } else {
+		$pidfile="/var/run/fetchmail/.fetchmail";
+	} elsif ($service eq "dnsmasq") {
+		$pidfile="/var/run/dnsmasq/dnsmasq.pid";
+	} elsif ($service eq "avahi-daemon"){
+		$pidfile="/var/run/avahi-daemon/pid";
+	} else {
 		$pidfile = "/var/run/$service.pid";
 	}
-	
+
 	if(-e $pidfile){
-	   
-	   $pid=`cat /var/run/$service.pid`;
-	   my @ln=split(/ /,$pid);
-	   chomp(@ln);
-      $pid=@ln[0];
+		$pid=`cat $pidfile`;
+		my @ln=split(/ /,$pid);
+		chomp(@ln);
+		$pid=@ln[0];
 		if(-e "/proc/$pid"){
 			return 1;
 		}else{
