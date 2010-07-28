@@ -306,42 +306,15 @@ root@$MAILNAME
 		echo "Adding admin user to samba"
 		printf "admin\nadmin" | smbpasswd -sa admin
 	fi
-	if [ ! -d /etc/skel/private ]; then
-		echo "Creating directory /etc/skel/private"
-		install --directory --owner=root   --group=root  --mode=0700 /etc/skel/private
-	fi
-	if [ ! -d /etc/skel/downloads ]; then
-		echo "Creating directory /etc/skel/private"
-		install --directory --owner=root   --group=root  --mode=0750 /etc/skel/private
-	fi
-	if [ ! -d /etc/skel/torrents ]; then
-		echo "Creating directory /etc/skel/torrents"
-		install --directory --owner=root   --group=root  --mode=0700 /etc/skel/torrents
-	fi
-	if [ ! -e /home/storage ]; then
-		echo "Creating directory /home/storage"
-		install --directory --owner=root   --group=users --mode=1777 /home/storage
-	fi
-	if [ ! -e /home/storage/music ]; then
-		echo "Creating directory /home/storage/music"
-		install --directory --owner=nobody --group=users --mode=1777 /home/storage/music
-	fi
-	if [ ! -e /home/storage/video ]; then
-		echo "Creating directory /home/storage/video"
-		install --directory --owner=nobody --group=users --mode=1777 /home/storage/video
-	fi
-	if [ ! -e /home/storage/pictures ]; then
-		echo "Creating directory /home/storage/pictures"
-		install --directory --owner=nobody --group=users --mode=1777 /home/storage/pictures
-	fi
-	if [ ! -e /home/storage/extern ]; then
-		echo "Creating directory /home/storage/extern"
-		install --directory --owner=nobody   --group=users --mode=1775 /home/storage/extern
-	fi
-	if [ ! -e /home/web ]; then
-		echo "Creating directory /home/web"
-		install --directory --owner=root   --group=users --mode=0775 /home/web
-	fi
+	install --directory --owner=root   --group=root  --mode=0700 /etc/skel/private
+	install --directory --owner=root   --group=root  --mode=0750 /etc/skel/downloads
+	install --directory --owner=root   --group=root  --mode=0700 /etc/skel/torrents
+	install --directory --owner=root   --group=users --mode=1777 /home/storage
+	install --directory --owner=nobody --group=users --mode=1777 /home/storage/music
+	install --directory --owner=nobody --group=users --mode=1777 /home/storage/video
+	install --directory --owner=nobody --group=users --mode=1777 /home/storage/pictures
+	install --directory --owner=nobody --group=users --mode=1775 /home/storage/extern
+	install --directory --owner=root   --group=users --mode=0775 /home/web
 
 	# install default web if missing
 	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then

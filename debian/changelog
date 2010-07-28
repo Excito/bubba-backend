@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre30) vincent; urgency=low
+
+  * fix skel/downloads (was pointing to private) (Closes: #1499)
+  * remove conditials when creating the default dirs (not needed)
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 28 Jul 2010 15:38:01 +0200
+
 bubba-backend (2.1~pre29) vincent; urgency=low
 
   * runtime detection of ioc bit sizes for printer detection (Closes: #1462) 
