@@ -1,9 +1,13 @@
 bubba-backend (2.1~pre31) vincent; urgency=low
 
+  [ Tor Krill ]
   * Fix service running for dnsmasq (Changed location od pidfile)
   * Implement shut down for Bubba|3 (Using magic-write) 
 
- -- Tor Krill <tor@excito.com>  Wed, 28 Jul 2010 23:40:38 +0200
+  [ Carl Fürstenberg ]
+  * fix bad negation in query_services for proftpd (Closes: #1502) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 29 Jul 2010 15:20:40 +0200
 
 bubba-backend (2.1~pre30) vincent; urgency=low
 
