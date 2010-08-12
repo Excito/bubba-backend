@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre32) vincent; urgency=low
+
+  * Updated fallback script with new paths for pid and config files for dnsmasq (Closes: #1486)
+  * Only starting samba if it is in rc2.d
+
+ -- PA Nilsson <pa@excito.com>  Thu, 12 Aug 2010 10:08:03 +0200
+
 bubba-backend (2.1~pre31) vincent; urgency=low
 
   [ Tor Krill ]

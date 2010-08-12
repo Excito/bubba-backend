@@ -75,7 +75,7 @@ netbios_setup() {
 }
 
 if [ $interface == "eth1" ] || [ $interface == "br0" ] ; then
-	if [ $reason != "PREINIT" ] && [ $reason != "RELEASE" ]; then
+	if [ $reason != "PREINIT" ] && [ $reason != "RELEASE" ] && [ -x /etc/rc2.d/S??samba ]; then
 		echo "Samba restart";
         	netbios_setup
 	fi
