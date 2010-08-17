@@ -409,7 +409,7 @@ sub set_workgroup {
 sub set_samba_password {
    my ($name, $old_pwd, $new_pwd)=@_;
 
-   system("echo -e \"$old_pwd\n$new_pwd\" | smbpasswd  $name");
+   system("echo \"$old_pwd\n$new_pwd\" | smbpasswd -s $name");
 
    return $?;
 
