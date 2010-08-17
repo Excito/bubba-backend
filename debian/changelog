@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre35) vincent; urgency=low
+
+  * Correct repo
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 16:09:39 +0200
+
 bubba-backend (2.1~pre34) lucid; urgency=low
 
   * Removed firewall start dependency of '$network'. (Closes: #1507) 
