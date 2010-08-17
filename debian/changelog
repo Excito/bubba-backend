@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre36) vincent; urgency=low
+
+  * Added dep on uuid-runtime
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 16:33:40 +0200
+
 bubba-backend (2.1~pre35) vincent; urgency=low
 
   * Correct repo
