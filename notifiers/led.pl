@@ -3,6 +3,11 @@
 use strict;
 use warnings;
 
+use constant BLUE => 0;
+use constant RED => 1;
+use constant GREEN => 2;
+
+
 use JSON;
 use Data::Dumper;
 use Fcntl ':flock';
@@ -43,6 +48,7 @@ foreach my $entry ( @$decoded ) {
 	if( $entry->{Action} eq 'OFF' ) {
 		unlink $cache_file;
 		system( 'echo lit > /sys/devices/platform/bubbatwo/ledmode' );
+		system( 'echo ' . BLUE . '> /sys/devices/platform/bubbatwo/color' );
 		exit;
 	}
 	unless( exists $entry->{UUID} ) {
@@ -68,10 +74,12 @@ foreach my $entry ( @$decoded ) {
 }
 
 if( scalar map { $_ > 0 } values %$cache ) {
-	system( 'echo 4096 > /sys/devices/platform/bubbatwo/ledfreq' );
+	system( 'echo 12000 > /sys/devices/platform/bubbatwo/ledfreq' );
 	system( 'echo blink > /sys/devices/platform/bubbatwo/ledmode' );
+	system( 'echo '. RED .' > /sys/devices/platform/bubbatwo/color' );
 } else {
 	system( 'echo lit > /sys/devices/platform/bubbatwo/ledmode' );
+	system( 'echo ' . BLUE . ' > /sys/devices/platform/bubbatwo/color' );
 }
 
 open CACHE, '>', $cache_file;
