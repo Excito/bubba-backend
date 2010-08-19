@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre39) vincent; urgency=low
+
+  * Fixed FTP status indication / reload problems. (Closes:# 1502) 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 19 Aug 2010 14:29:29 +0200
+
 bubba-backend (2.1~pre38) vincent; urgency=low
 
   * Fix path to hosts template file fixing /etc/hosts not being 

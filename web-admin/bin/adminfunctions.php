@@ -442,25 +442,20 @@ function restart_network($interface){
 	$cmd=BACKEND." restart_network $interface";
 	$result=shell_exec($cmd);
 	if(query_service("proftpd")) {
-		stop_service("proftpd");
-		start_service("proftpd");	
+		restart_service("proftpd");	
 	}
 	if( strcmp($interface,_getlanif()) == 0 ) {
 		if(query_service("avahi-daemon")){
-			stop_service("avahi-daemon");
-			start_service("avahi-daemon");
+			restart_service("avahi-daemon");
 		}
 		if(query_service("samba")){
 			restart_samba();
 		}
 		if(query_service("mt-daapd")){
-			stop_service("mt-daapd");
-			sleep(1);
-			start_service("mt-daapd");
+			restart_service("mt-daapd");
 		}  
 		if(query_service("mediatomb")){
-			stop_service("mediatomb");
-			start_service("mediatomb");
+			restart_service("mediatomb");
 		}
 	}
 }
@@ -611,18 +606,25 @@ function service_running($service){
    return $ret == 1;   
 }
 
+function restart_service($name){
+   
+	$cmd=BACKEND." restart_service $name";
+	return shell_exec($cmd);
+	
+}
+
 function start_service($name){
    
 	$cmd=BACKEND." start_service $name";
-	$result=shell_exec($cmd);
-
+	return shell_exec($cmd);
+	
 }
 
 function stop_service($name){
    
-   $cmd=BACKEND." stop_service $name";
-	$result=shell_exec($cmd);
-
+  	$cmd=BACKEND." stop_service $name";
+	return shell_exec($cmd);
+	
 }
 
 function add_service($name, $level=0){
@@ -1231,8 +1233,7 @@ function configure_dnsmasq($dnsmasq) {
 				add_service("dnsmasq");
 			}
 			// restart
-			stop_service("dnsmasq");
-			start_service("dnsmasq");
+			restart_service("dnsmasq");
 		} else {
 			// start service
 			add_service("dnsmasq");
