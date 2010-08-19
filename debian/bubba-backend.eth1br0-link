@@ -4,15 +4,15 @@ MODE=`grep $LANIF /etc/network/interfaces | cut -d" " -f4`
 
 echo "Running eth1 br0 link script: $LANIF $MODE"
 
-if [ $1 == 'eth1' ] && [ $2 == 'up' ] && [ $LANIF == 'br0' ] && [ $MODE == "dhcp" ] && [ ! -f "/var/lib/initscripts/nologin" ] ; then
+if [ "$1" == 'eth1' ] && [ "$2" == 'up' ] && [ $LANIF == 'br0' ] && [ $MODE == "dhcp" ] && [ ! -f "/var/lib/initscripts/nologin" ] ; then
 	# nologin file is removed by initscripts last in init process.
-	if [ -f "/var/run/dnsmasq.pid" ]; then
+	if [ -f "/var/run/dnsmasq/dnsmasq.pid" ]; then
 		echo "Stopping dnsmasq";
-    /etc/init.d/dnsmasq stop;
-    RESTART_DNSMASQ=1;
-  fi
+		/etc/init.d/dnsmasq stop;
+		RESTART_DNSMASQ=1;
+	fi
 
-	
+
 	if true; then
 	#if /usr/sbin/dhcpping -i $LANIF; then
 		echo "DHCP server on br0";
@@ -22,8 +22,8 @@ if [ $1 == 'eth1' ] && [ $2 == 'up' ] && [ $LANIF == 'br0' ] && [ $MODE == "dhcp
 		echo "No DHCP server on $LANIF";
 		if [ $RESTART_DNSMASQ ]; then
 			echo "Restart dnsmasq";
-      /etc/init.d/dnsmasq start;
-    fi
+			/etc/init.d/dnsmasq start;
+		fi
 	fi
 else
 	echo "Exit link script"
