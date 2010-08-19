@@ -535,7 +535,7 @@ sub write_hostsfile {
 
 	my ($lanip,$name) = @_;	
 	use File::Slurp;
-	my $hosts = read_file('/usr/bubba-backend/hosts.in');
+	my $hosts = read_file('/usr/share/bubba-backend/hosts.in');
 	$hosts =~ s/\@LANIP\@/$lanip/g;
 	$hosts =~ s/\@NAME\@/$name/g;
 	write_file( '/etc/hosts', $hosts );

@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre38) vincent; urgency=low
+
+  * Fix path to hosts template file fixing /etc/hosts not being 
+    updated on hostname change.
+
+ -- Tor Krill <tor@excito.com>  Thu, 19 Aug 2010 13:01:04 +0200
+
 bubba-backend (2.1~pre37) vincent; urgency=low
 
   * Setting LED notify to change color (to blink red).
