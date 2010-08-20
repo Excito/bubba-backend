@@ -1,8 +1,12 @@
 bubba-backend (2.1~pre40) vincent; urgency=low
 
+  [ Tor Krill ]
   * Update pid path for dnsmasq in eth1br0-link script
 
- -- Tor Krill <tor@excito.com>  Thu, 19 Aug 2010 22:59:49 +0200
+  [ PA Nilsson ]
+  * Fixed ifup-br0 script not to bail out. 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 20 Aug 2010 16:15:25 +0200
 
 bubba-backend (2.1~pre39) vincent; urgency=low
 

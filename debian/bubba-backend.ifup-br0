@@ -13,6 +13,7 @@
 
 # Do NOT "set -e"
 PATH=/usr/sbin:/usr/bin:/sbin:/bin
+LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
 DESC="Start $LANIF"
 NAME=ifup-br0
 SCRIPTNAME=/etc/init.d/$NAME
@@ -23,16 +24,15 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Function to bring up bridge interface
 do_start() {
 	
-	LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
 	
-	if [ $LANIF == 'br0' ]; then
+	if [ "$LANIF" = "br0" ]; then
 		echo "Bringing up $LANIF";
 		ifup $LANIF
 		ifconfig eth1 promisc
 	fi
 }
 
-do_stio() {
+do_stop() {
 	echo "Bringing down $LANIF";
 	ifdown $LANIF;
 }
