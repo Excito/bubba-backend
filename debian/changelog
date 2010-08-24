@@ -1,8 +1,9 @@
 bubba-backend (2.1~pre41) vincent; urgency=low
 
-  * Added "" on 'provides' in eth1-br0 init-script.
+  * Added "" on 'provides' in br0 init-script.
+  * Changed "provides" string in br0 init-script. 
 
- -- PA Nilsson <pa@excito.com>  Mon, 23 Aug 2010 11:36:37 +0200
+ -- PA Nilsson <pa@excito.com>  Tue, 24 Aug 2010 09:42:49 +0200
 
 bubba-backend (2.1~pre40) vincent; urgency=low
 
