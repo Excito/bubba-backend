@@ -4,7 +4,7 @@
 /etc/apt
 /etc/ifplugd/action.d
 /etc/dnsmasq.d
-/etc/dhcp3/dhclient-exit-hooks.d
+/etc/dhcp/dhclient-exit-hooks.d
 /usr/share/bubba-backend
 
 /etc/bubba-notify/available

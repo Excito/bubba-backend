@@ -569,9 +569,9 @@ sub change_hostname {
 	}
 
 
-	system("grep -v \"send host-name\" /etc/dhcp3/dhclient.conf > /etc/dhcp3/dhclient.conf.new");
-	system("echo send host-name \\\"$name\\\"\\\; >> /etc/dhcp3/dhclient.conf.new");
-	system("mv /etc/dhcp3/dhclient.conf.new /etc/dhcp3/dhclient.conf");
+	system("grep -v \"send host-name\" /etc/dhcp/dhclient.conf > /etc/dhcp/dhclient.conf.new");
+	system("echo send host-name \\\"$name\\\"\\\; >> /etc/dhcp/dhclient.conf.new");
+	system("mv /etc/dhcp/dhclient.conf.new /etc/dhcp/dhclient.conf");
 	$lan = _get_lanif;
 	system("/sbin/ifup --force eth0 $lan");
 
@@ -2235,7 +2235,7 @@ sub set_interface {
     }
 
     {
-        my $config = '/etc/dhcp3/dhclient.conf';
+        my $config = '/etc/dhcp/dhclient.conf';
 
         my $data = read_file( $config );
 

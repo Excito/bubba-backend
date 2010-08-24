@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre45) vincent hugo; urgency=low
+
+  * Fix all paths i could find for dhcp client 
+
+ -- Tor Krill <tor@excito.com>  Tue, 24 Aug 2010 17:48:56 +0200
+
 bubba-backend (2.1~pre44) vincent hugo; urgency=low
 
   * Updated deps for dhcp-client 

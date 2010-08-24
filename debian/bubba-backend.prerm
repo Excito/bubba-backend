@@ -40,7 +40,7 @@ case "$1" in
 
     undivert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib false;
     undivert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib hostapd;
-    undivert bubba-backend /etc/dhcp3/dhclient.conf /etc/dhcp3/dhclient.conf.bubba-distrib false;
+    undivert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib false;
     undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib cups;
     undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib dovecot;
     undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib proftpd;

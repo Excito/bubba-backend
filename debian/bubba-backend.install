@@ -12,8 +12,8 @@ services/ssh.service /usr/share/bubba-configs
 services/webadmin.service /usr/share/bubba-configs
 services/afpd.service /usr/share/bubba-configs
 
-dhclient-fallback/fallback /etc/dhcp3/dhclient-exit-hooks.d/
-dhclient-fallback/firewall_rewrite /etc/dhcp3/dhclient-exit-hooks.d/
+dhclient-fallback/fallback /etc/dhcp/dhclient-exit-hooks.d/
+dhclient-fallback/firewall_rewrite /etc/dhcp/dhclient-exit-hooks.d/
 
 default_web /usr/share/bubba-backend
 auth_template.xml /usr/share/bubba-backend

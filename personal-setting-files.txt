@@ -8,7 +8,7 @@
 /etc/proftpd/proftpd.conf
 /etc/samba/smb.conf
 /etc/postfix/main.cf
-/etc/dhcp3/dhclient.conf
+/etc/dhcp/dhclient.conf
 /etc/cups/printers.conf
 /etc/resolv.conf
 /etc/fetchmailrc
