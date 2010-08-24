@@ -1,0 +1,48 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          firewall
+# Required-Start:
+# Required-Stop:     
+# X-Start-Before:    ifupdown ifplugd
+# X-Stop-After:      ifupdown ifplugd
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Setup firewall
+### END INIT INFO
+
+# Author: Carl Fürstenberg <carl@excito.com>
+
+# Do NOT "set -e"
+
+. /lib/lsb/init-functions 
+
+case "$1" in
+	start)
+	log_action_begin_msg "Setting up firewall"
+
+	modprobe ip_conntrack_ftp
+	modprobe ip_nat_ftp
+	modprobe ip_conntrack_irc
+
+	echo "1" > /proc/sys/net/ipv4/ip_forward
+
+	/sbin/iptables-restore /etc/network/firewall.conf
+
+	log_action_end_msg $?
+	exit 0
+	;;
+
+	stop|restart|force-reload)
+	log_action_begin_msg "Saving firewall"
+
+	iptables-save > /etc/network/firewall.conf
+
+	log_action_end_msg $?
+	exit 0
+	;;
+
+	*)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 3
+	;;
+esac

@@ -1,0 +1,39 @@
+bubbakey /etc/network
+firewall.conf /usr/share/bubba-configs
+personal-setting-files.txt /usr/share/bubba-configs
+apt/preferences apt/sources.list /usr/share/bubba-configs/apt
+
+services/ftp.service /usr/share/bubba-configs
+services/pim.service /usr/share/bubba-configs
+services/publicweb.service /usr/share/bubba-configs
+services/samba.service /usr/share/bubba-configs
+services/sftp.service /usr/share/bubba-configs
+services/ssh.service /usr/share/bubba-configs
+services/webadmin.service /usr/share/bubba-configs
+services/afpd.service /usr/share/bubba-configs
+
+dhclient-fallback/fallback /etc/dhcp3/dhclient-exit-hooks.d/
+dhclient-fallback/firewall_rewrite /etc/dhcp3/dhclient-exit-hooks.d/
+
+default_web /usr/share/bubba-backend
+auth_template.xml /usr/share/bubba-backend
+hosts.in /usr/share/bubba-backend
+iptables.xslt /usr/share/bubba-backend
+bubba-notify.conf /etc/bubba-notify
+
+cupsd.conf /etc/bubba
+smb.conf /etc/bubba
+hostapd.conf /etc/bubba
+dhclient.conf /etc/bubba
+dovecot.conf /etc/bubba
+ntp.conf /etc/bubba
+proftpd.conf /etc/bubba
+postfix.conf /etc/bubba
+sshd_config /etc/bubba
+AppleVolumes.default /etc/bubba
+
+ifplugd.default /etc/bubba
+fetchmail.default /etc/bubba
+hostapd.default /etc/bubba
+
+change_distribution /usr/sbin

@@ -1,0 +1,1767 @@
+bubba-backend (2.1~pre41) vincent; urgency=low
+
+  * Added "" on 'provides' in br0 init-script.
+  * Changed "provides" string in br0 init-script. 
+
+ -- PA Nilsson <pa@excito.com>  Tue, 24 Aug 2010 09:42:49 +0200
+
+bubba-backend (2.1~pre40) vincent; urgency=low
+
+  [ Tor Krill ]
+  * Update pid path for dnsmasq in eth1br0-link script
+
+  [ PA Nilsson ]
+  * Fixed ifup-br0 script not to bail out. 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 20 Aug 2010 16:15:25 +0200
+
+bubba-backend (2.1~pre39) vincent; urgency=low
+
+  * Fixed FTP status indication / reload problems. (Closes:# 1502) 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 19 Aug 2010 14:29:29 +0200
+
+bubba-backend (2.1~pre38) vincent; urgency=low
+
+  * Fix path to hosts template file fixing /etc/hosts not being 
+    updated on hostname change.
+
+ -- Tor Krill <tor@excito.com>  Thu, 19 Aug 2010 13:01:04 +0200
+
+bubba-backend (2.1~pre37) vincent; urgency=low
+
+  * Setting LED notify to change color (to blink red).
+
+ -- PA Nilsson <pa@excito.com>  Wed, 18 Aug 2010 10:47:00 +0200
+
+bubba-backend (2.1~pre36) vincent; urgency=low
+
+  * Added dep on uuid-runtime
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 16:33:40 +0200
+
+bubba-backend (2.1~pre35) vincent; urgency=low
+
+  * Correct repo
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 16:09:39 +0200
+
+bubba-backend (2.1~pre34) lucid; urgency=low
+
+  * Removed firewall start dependency of '$network'. (Closes: #1507) 
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 16:04:27 +0200
+
+bubba-backend (2.1~pre33) vincent; urgency=low
+
+  * Fixed changing smb password. (Closes: #1515)
+
+ -- PA Nilsson <pa@excito.com>  Tue, 17 Aug 2010 13:03:52 +0200
+
+bubba-backend (2.1~pre32) vincent; urgency=low
+
+  * Updated fallback script with new paths for pid and config files for dnsmasq (Closes: #1486)
+  * Only starting samba if it is in rc2.d
+
+ -- PA Nilsson <pa@excito.com>  Thu, 12 Aug 2010 10:08:03 +0200
+
+bubba-backend (2.1~pre31) vincent; urgency=low
+
+  [ Tor Krill ]
+  * Fix service running for dnsmasq (Changed location od pidfile)
+  * Implement shut down for Bubba|3 (Using magic-write) 
+
+  [ Carl Fürstenberg ]
+  * fix bad negation in query_services for proftpd (Closes: #1502) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 29 Jul 2010 15:20:40 +0200
+
+bubba-backend (2.1~pre30) vincent; urgency=low
+
+  * fix skel/downloads (was pointing to private) (Closes: #1499)
+  * remove conditials when creating the default dirs (not needed)
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 28 Jul 2010 15:38:01 +0200
+
+bubba-backend (2.1~pre29) vincent; urgency=low
+
+  * runtime detection of ioc bit sizes for printer detection (Closes: #1462) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Jul 2010 17:26:15 +0200
+
+bubba-backend (2.1~pre28) vincent; urgency=low
+
+  * a semicolon! 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:36:26 +0200
+
+bubba-backend (2.1~pre27) vincent; urgency=low
+
+  * adding libtry-tiny-perl as dependicy 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:15:11 +0200
+
+bubba-backend (2.1~pre26) vincent; urgency=emergency
+
+  * sort of whoooops (dnsmasq config wasn't fully updated) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 16:08:46 +0200
+
+bubba-backend (2.1~pre25) vincent; urgency=low
+
+  * install dnsmasq.conf to correct place (Closes: #1492) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Jul 2010 13:57:34 +0200
+
+bubba-backend (2.1~pre24) vincent; urgency=low
+
+  * host creation in Bubba.pm seems to not work any more, rewrite to use
+    template instead. 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Jul 2010 15:07:35 +0200
+
+bubba-backend (2.1~pre23) vincent; urgency=low
+
+  * creating empty wpa-psk file (dunno if it's config value should be removed
+    instead)
+  * diverting hostapd.default
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Jul 2010 13:37:42 +0200
+
+bubba-backend (2.1~pre22) vincent; urgency=low
+
+  * iptables-xml is in /usr/bin now 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Jul 2010 14:30:02 +0200
+
+bubba-backend (2.1~pre21) vincent; urgency=low
+
+  * some stuff can't be diverted 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 15 Jul 2010 14:55:03 +0200
+
+bubba-backend (2.1~pre20) voncent; urgency=low
+
+  * undo previous attempts 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 22 Jun 2010 10:32:06 +0200
+
+bubba-backend (2.1~pre19) vincent; urgency=low
+
+  * extra special for squeezecenter 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:43:12 +0200
+
+bubba-backend (2.1~pre18) vincent; urgency=low
+
+  * fixup query_service again 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:30:04 +0200
+
+bubba-backend (2.1~pre17) vincent; urgency=low
+
+  * remove divert of samba dhcp script as it will bork bork 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:14:41 +0200
+
+bubba-backend (2.1~pre16) vincent; urgency=low
+
+  * custom check for squeezecenter 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jun 2010 16:12:28 +0200
+
+bubba-backend (2.1~pre15) vincent; urgency=low
+
+  * fix for package versions 
+  * add user fix
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 18 Jun 2010 15:46:19 +0200
+
+bubba-backend (2.1~pre14) vincent; urgency=low
+
+  * proftpd and samba 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 18:06:39 +0200
+
+bubba-backend (2.1~pre13) vincent; urgency=low
+
+  * maintscript fix 
+  * dovecot, fix sieve
+  * proftpd, fix DisplayChdir
+  * firewall, fix rc.d
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 15:01:43 +0200
+
+bubba-backend (2.1~pre9) vincent; urgency=low
+
+  * adding fetchmail
+  * fix ifplugd default
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Jun 2010 12:56:59 +0200
+
+bubba-backend (2.1~pre8) vincent; urgency=low
+
+  * adding bubba auth template and installation 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 16 Jun 2010 15:32:01 +0200
+
+bubba-backend (2.1~pre7) vincent; urgency=low
+
+  * adding divert for ifplugd 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 16 Jun 2010 15:01:09 +0200
+
+bubba-backend (2.1~pre6) vincent; urgency=low
+
+  * etch → squeeze; claire & C:o → vincent & C:o 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 15 Jun 2010 14:37:46 +0200
+
+bubba-backend (2.1~pre5) vincent; urgency=low
+
+  * remove disable offload 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 17:00:51 +0200
+
+bubba-backend (2.1~pre4) vincent; urgency=low
+
+  * depend on proftpd-basic 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 13:12:02 +0200
+
+bubba-backend (2.1~pre3) vincent; urgency=low
+
+  * Adding diverts:
+   - dhclient.conf
+   - dnsmasq.conf
+   - dovecot.conf
+   - AppleVolumes.default
+   - ntp.conf
+   - sshd_config 
+   - postfix main.cf
+   - proftpd.conf
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 14 Jun 2010 10:27:16 +0200
+
+bubba-backend (2.1~pre2) vincent; urgency=low
+
+  * Switch to dpkg-source 3.0 (native) format
+  * modify for squeeze 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 09 Jun 2010 13:12:30 +0200
+
+bubba-backend (2.1~pre1) UNRELEASED; urgency=low
+
+  * Do not fail totally when firewall an file is unpareable (Closes: #1384)
+  * make sure all $err has been set to 1 so IPC::Open3 knows to put error
+    there
+  * update rules
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 23 Apr 2010 17:06:45 +0200
+
+bubba-backend (2.0.0.11) estelle claire; urgency=low
+
+  * Fixed removal of firewall rules when in auto mode. (Closes: #1440) 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 29 Apr 2010 10:39:43 +0200
+
+bubba-backend (2.0.0.10) claire estelle; urgency=low
+
+  * default lanip to 127.0.0.1 if non found 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Apr 2010 15:48:13 +0200
+
+bubba-backend (2.0.0.9) estelle claire; urgency=high
+
+  * fix zip anf firewall error output bug (silently ignore)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 26 Apr 2010 13:03:21 +0200
+
+bubba-backend (2.0.0.8) estelle claire; urgency=low
+
+  [ PA Nilsson ]
+  * Fixed corrupt host file, (Closes: #586)
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 15:35:11 +0200
+
+bubba-backend (2.0.0.7) estelle claire; urgency=low
+
+  * set $err=1 to solve backup error problem 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 13:35:56 +0200
+
+bubba-backend (2.0.0.6) estelle claire; urgency=high
+
+  * readding missing favicon (Closes: #1434)
+  * force $err=1 for all open3 instances,
+  * remove some obsolete commented out code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 22 Apr 2010 12:44:46 +0200
+
+bubba-backend (2.0.0.5) estelle claire; urgency=low
+
+  * seems we need to do an manual restart and not rely on shipped helpers 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 21 Apr 2010 11:10:26 +0200
+
+bubba-backend (2.0.0.4) estelle claire; urgency=low
+
+  * ignore return values in backend change_hostname 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 16:40:09 +0200
+
+bubba-backend (2.0.0.3) estelle claire; urgency=low
+
+  * fix samba restart and proftpd on restart_network 
+  * add avahi restart function 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 16:03:40 +0200
+
+bubba-backend (2.0.0.2) estelle claire; urgency=high
+
+  * increase timeout tenfold, to reduce risk of timing out whne lacking FQDN 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Apr 2010 14:41:14 +0200
+
+bubba-backend (2.0.0.1) estelle claire; urgency=high
+
+  * make default firewall obey current LAN and WAN (Closes: #1358)
+  * make creation of new certificate non-crashable (Touches: #586)
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 16 Apr 2010 14:23:34 +0200
+
+bubba-backend (1.9.16) karmic; urgency=low
+
+  * Fixed restart of samba in "auto" profile. Closes #1399 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 14 Apr 2010 14:24:42 +0200
+
+bubba-backend (1.9.15) estelle claire; urgency=low
+
+  * chomp $LAN (Closes: #1394) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 13 Apr 2010 11:34:53 +0200
+
+bubba-backend (1.9.14) estelle claire; urgency=high
+
+  * was a missing change from $public to $SSL_CERT in postinst
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Apr 2010 17:46:02 +0200
+
+bubba-backend (1.9.13) estelle claire; urgency=low
+
+  * readding missing change in Bubba/Apt.pm to remove usage of Bubba::Worker
+    (Closes: #1323)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Apr 2010 14:34:14 +0200
+
+bubba-backend (1.9.12) karmic; urgency=low
+
+  * Do not restart samba on "DHCP RELEASE"
+
+ -- PA Nilsson <pa@excito.com>  Tue, 06 Apr 2010 10:17:43 +0200
+
+bubba-backend (1.9.11) karmic; urgency=low
+
+  * Updated default web. 
+
+ -- PA Nilsson <pa@excito.com>  Mon, 05 Apr 2010 16:16:57 +0200
+
+bubba-backend (1.9.10) claire; urgency=low
+
+  * Fixed update of easyfind with no name set. (Closes #1318)
+
+ -- PA Nilsson <pa@excito.com>  Mon, 05 Apr 2010 15:25:25 +0200
+
+bubba-backend (1.9.9) karmic; urgency=low
+
+  * Updated default webpage, closes 1281. 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 01 Apr 2010 22:18:22 +0200
+
+bubba-backend (1.9.8) karmic; urgency=low
+
+  * correct invocation of test "=" instead of "-eq", and take only first
+    column from sha1sum 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 30 Mar 2010 17:05:06 +0200
+
+bubba-backend (1.9.7) claire; urgency=low
+
+  * updating default web to be a redirect 
+  * fix bashism 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 29 Mar 2010 15:06:13 +0200
+
+bubba-backend (1.9.6) karmic; urgency=low
+
+  * Increased timeout on ncftpput for backup. 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 25 Mar 2010 21:15:44 +0100
+
+bubba-backend (1.9.5) karmic; urgency=low
+
+  * Fixed easyfind enable bug. 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 19 Mar 2010 16:11:10 +0100
+
+bubba-backend (1.9.4) claire; urgency=low
+
+  * added user_exists command 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 12 Mar 2010 16:16:08 +0100
+
+bubba-backend (1.9.3) claire; urgency=low
+
+  * Added reboot command 
+
+ -- Tor Krill <tor@excito.com>  Fri, 12 Mar 2010 14:20:20 +0100
+
+bubba-backend (1.9.2) claire; urgency=low
+
+  * recursive 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Mar 2010 12:16:54 +0100
+
+bubba-backend (1.9.1) claire; urgency=low
+
+  * Adding cp function 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Mar 2010 12:12:39 +0100
+
+bubba-backend (1.9.0) claire; urgency=low
+
+  * First build for UI rework.
+
+ -- PA Nilsson <pa@excito.com>  Mon, 01 Mar 2010 11:29:28 +0100
+
+bubba-backend (1.3.3) karmic; urgency=emergency
+
+  * force promisc on eth1 if br0 after ethtool due to buggy ethtool 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 22 Feb 2010 15:25:32 +0100
+
+bubba-backend (1.3.2) claire estelle; urgency=low
+  [PA Nilsson]
+  * Fixed issue with dhcpd being disabled when wlan enabled.
+
+  [Carl Fürstenberg]
+  * create new cert instead of updating old one for dovecot
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 17 Feb 2010 22:29:47 +0100
+
+bubba-backend (1.3.1) claire estelle; urgency=low
+
+  * setting default network profile to auto instead of server 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 11 Feb 2010 13:20:04 +0100
+
+bubba-backend (1.3.0) claire estelle; urgency=low
+
+  * Updated version number.
+
+ -- PA Nilsson <pa@excito.com>  Wed, 10 Feb 2010 15:27:15 +0100
+
+bubba-backend (1.2.4.51) claire estelle; urgency=low
+
+  * Fixed lookup when accessing networkmanager from dhclient exit script. 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 10 Feb 2010 12:04:10 +0100
+
+bubba-backend (1.2.4.50) claire estelle; urgency=low
+
+  * Restarting samba when adding and deleting printers
+  * Only restart samba on dhclient LAN events.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 09 Feb 2010 22:37:30 +0100
+
+bubba-backend (1.2.4.49) claire estelle; urgency=low
+
+  * redivert samba dhcp3 hook, and install an own to exit hooks to enable
+    restart instead of reload 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 08 Feb 2010 12:54:32 +0100
+
+bubba-backend (1.2.4.48) claire estelle; urgency=low
+
+  * resolve long lived bug in the new "old" config restore code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 08 Feb 2010 12:38:17 +0100
+
+bubba-backend (1.2.4.47) claire estelle; urgency=low
+
+  * missing comma 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 18:50:40 +0100
+
+bubba-backend (1.2.4.46) claire estelle; urgency=low
+
+  * restore 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 18:39:00 +0100
+
+bubba-backend (1.2.4.45) claire estelle; urgency=emergency
+
+  * sheck for scalar of array for old backups (Closes: #1156) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 17:07:53 +0100
+
+bubba-backend (1.2.4.44) claire estelle; urgency=low
+
+  * return 0 instead of 1 from restore_backup 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 16:56:30 +0100
+
+bubba-backend (1.2.4.43) claire estelle; urgency=low
+
+  * Move initialization of mediatomb to start at 26 instead of 20 (Closes:
+    #1141) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 07 Feb 2010 12:35:40 +0100
+
+bubba-backend (1.2.4.42) claire estelle; urgency=low
+
+  [ Carl Fürstenberg ]
+  * Old wizard created localtime to utilize TAI instead of UTC (Closes: #1087) 
+  * diverting samba dhclient script from enter hook to exit hook (Closes: #1053) 
+
+  [ PA Nilsson ]
+  * Added ifup rc2.d link to backup.
+
+ -- Carl Fürstenberg <carl@excito.com>  Sat, 06 Feb 2010 16:14:47 +0100
+
+bubba-backend (1.2.4.41) claire estelle; urgency=low
+
+  [ PA Nilsson ]
+  * Updated to allow access from @LOCAL. (Closes: #1142)
+
+ -- Carl Fürstenberg <carl@excito.com>  Sat, 06 Feb 2010 14:34:40 +0100
+
+bubba-backend (1.2.4.40) claire estelle; urgency=low
+
+  * adding --create-home to resture backup user 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 05 Feb 2010 20:44:53 +0100
+
+bubba-backend (1.2.4.39) estelle claire; urgency=low
+
+  * removing MDADM from personal-settings-file 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 05 Feb 2010 10:21:55 +0100
+
+bubba-backend (1.2.4.38) estelle claire; urgency=low
+
+  * Fixed setting workgroup.
+
+ -- PA Nilsson <pa@excito.com>  Thu, 04 Feb 2010 14:49:35 +0100
+
+bubba-backend (1.2.4.37) estelle claire; urgency=low
+
+  * Adding bubba-host to hold hostname when starting dnsmasq from fallback script. Closes #1136
+
+ -- PA Nilsson <pa@excito.com>  Wed, 03 Feb 2010 21:09:43 +0100
+
+bubba-backend (1.2.4.36) estelle calire; urgency=low
+
+  * enable per default notifications 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 02 Feb 2010 22:41:04 +0100
+
+bubba-backend (1.2.4.35) estelle calire; urgency=low
+
+  * setting delaylogin 
+  * adding bubba diverted configs to backup
+  * including links into backup
+  * remove usage of Bubba::Worker as it's broken at the moment (only used for
+    getlanif, and bubba-networkmanger-cli handles that)
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 02 Feb 2010 14:57:26 +0100
+
+bubba-backend (1.2.4.34) claire estelle; urgency=low
+
+  * Added hostapd and network manager to config backup.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 02 Feb 2010 08:46:39 +0100
+
+bubba-backend (1.2.4.33) claire estelle; urgency=low
+
+  * To correct repos
+
+ -- PA Nilsson <pa@excito.com>  Mon, 01 Feb 2010 14:26:55 +0100
+
+bubba-backend (1.2.4.32) karmic; urgency=low
+
+  * Fixed incorrect negation for test of "nologin". 
+
+ -- PA Nilsson <pa@excito.com>  Mon, 01 Feb 2010 14:24:37 +0100
+
+bubba-backend (1.2.4.31) claire estelle; urgency=low
+
+  * removing TKIP as it can't be used with N at all 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 29 Jan 2010 16:14:03 +0100
+
+bubba-backend (1.2.4.30) claire estelle; urgency=low
+
+  * Changed bringup of br0 during boot.
+  * Manually setting eth1 to promisc during boot.
+
+ -- PA Nilsson <pa@excito.com>  Fri, 29 Jan 2010 15:35:16 +0100
+
+bubba-backend (1.2.4.29) claire estelle; urgency=high
+
+  * adding default wmm_ac and tx_queue_data parameters to hostapd.conf
+  * adding dh_installudeb compat due to change in usev installation 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 28 Jan 2010 17:47:45 +0100
+
+bubba-backend (1.2.4.28) claire; urgency=low
+
+  * Added functions to bring up bridge interface during boot.
+
+ -- PA Nilsson <pa@excito.com>  Thu, 28 Jan 2010 12:57:43 +0100
+
+bubba-backend (1.2.4.27) claire; urgency=low
+
+  [ Carl Fürstenberg ]
+  * add samba-common-bin to depends 
+
+  [ PA Nilsson ]
+  * Detecting error  when using empty targetpath with FTP connction
+    and incorrect user/pass combination.   (Closes: #1060)
+  * Extended error check to not trigger on filenames with "error".
+    (Closes: #1078)
+  * Changed servicename "cupsys"->"cups" to reflect changes in init-
+    scripts.   (Closes: #1093).
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 21 Jan 2010 18:01:05 +0100
+
+bubba-backend (1.2.4.26) claire; urgency=low
+
+  * use bubba-networkmanager-cli instead of worker for hotfix 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 19 Jan 2010 16:27:09 +0100
+
+bubba-backend (1.2.4.25) claire; urgency=low
+
+  [ PA Nilsson ]
+  * Reworked IP auto-magic.
+  * Added ifplugd-script to link eth1-up to br0 actions
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 19 Jan 2010 15:45:47 +0100
+
+bubba-backend (1.2.4.24) claire estelle; urgency=low
+
+  * update postinst to set hostname in hostapd on first install 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 13 Jan 2010 16:34:22 +0100
+
+bubba-backend (1.2.4.23) claire estelle; urgency=low
+
+  * missed one little foo (had an foo file while testing) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 11 Jan 2010 19:34:35 +0100
+
+bubba-backend (1.2.4.22) claire estelle; urgency=low
+
+  * fix syntax error in postinst 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 11 Jan 2010 19:26:30 +0100
+
+bubba-backend (1.2.4.21) claire estelle; urgency=low
+
+  * only extend if it has allready expired 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 11 Jan 2010 16:47:01 +0100
+
+bubba-backend (1.2.4.20) claire; urgency=low
+
+  * extend dovecot certificate to 10 years 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 11 Jan 2010 16:23:07 +0100
+
+bubba-backend (1.2.4.19) claire estelle; urgency=low
+
+  * adding diversion on hostapd.conf, cleaned up divert code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 05 Jan 2010 18:09:18 +0100
+
+bubba-backend (1.2.4.18) claire estelle; urgency=low
+
+  * reduce to single function 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 05 Jan 2010 17:09:27 +0100
+
+bubba-backend (1.2.4.17) claire estelle; urgency=low
+
+  * adding more interface set funtions 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 05 Jan 2010 16:45:03 +0100
+
+bubba-backend (1.2.4.16) claire estelle; urgency=low
+
+  * changing logic of change_distribution to allow multiple distributions,
+    removing the -d option to set dists as argv instead
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 17:09:09 +0100
+
+bubba-backend (1.2.4.15) claire estelle; urgency=low
+
+  * non-free instead of nonfree
+  * remove v=* as it's difficult as best
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:30:51 +0100
+
+bubba-backend (1.2.4.14) karmic; urgency=low
+
+  * bugfix 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:23:29 +0100
+
+bubba-backend (1.2.4.13) estelle claire; urgency=low
+
+  * adding change_distribution script 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jan 2010 16:15:49 +0100
+
+bubba-backend (1.2.4.12) claire; urgency=low
+
+  * Refactored query_service to return true if service is enabled 
+
+ -- Tor Krill <tor@excito.com>  Sun, 03 Jan 2010 15:40:38 +0100
+
+bubba-backend (1.2.4.11) karmic; urgency=low
+
+  * Remove the old and glory persistent rules bugger 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Dec 2009 09:59:40 +0100
+
+bubba-backend (1.2.4.10) claire; urgency=low
+
+  [ Carl Fürstenberg ]
+  * updating cupsd.conf, chainging @LOCAL to @IF(eth1) (Closes: #1071)
+  * evil '==' changed to non-evil 'eq' in firewall.pl 
+
+  [ Tor Krill ]
+  * Save firewall rules to local file after changing lan if
+  * Trim return value when retrieving lan if from networkmanager 
+  * Add interface argument to dnsmasq config 
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Nov 2009 23:17:38 +0100
+
+bubba-backend (1.2.4.9) claire; urgency=low
+
+  * adding divert for smb.conf 
+  * bumping depends on samba to 3.4
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 Nov 2009 12:55:36 +0100
+
+bubba-backend (1.2.4.8) claire; urgency=low
+
+  * divert 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 19 Nov 2009 13:07:54 +0100
+
+bubba-backend (1.2.4.7) claire; urgency=low
+
+  * updating cups dependices to allow future use of cups instead of cupsys 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 19 Nov 2009 12:43:55 +0100
+
+bubba-backend (1.2.4.6) claire; urgency=low
+
+  * Remove usage of LANINTERFACE constant
+  * Some code cleanups
+
+ -- Tor Krill <tor@excito.com>  Wed, 18 Nov 2009 23:30:20 +0100
+
+bubba-backend (1.2.4.5) claire; urgency=low
+
+  * Bump version
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Nov 2009 17:57:27 +0100
+
+bubba-backend (1.2.2.5) claire; urgency=low
+
+  * change many eth1 to utilize networkmanager
+  * adding netowkrmanager client script for temporary use
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Nov 2009 14:11:11 +0100
+
+bubba-backend (1.2.2.4) karmic; urgency=low
+
+  * dev rel 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 05 Nov 2009 16:42:15 +0100
+
+bubba-backend (1.2.2.3) claire; urgency=low
+
+  * Fix regex i get_package_versions to allow + in version 
+
+ -- Tor Krill <tor@excito.com>  Wed, 04 Nov 2009 23:00:41 +0100
+
+bubba-backend (1.2.2.2) claire; urgency=low
+
+  * change default ui notify level from 3 to 2 
+  * double freq 
+  * updated mdadm event messages 
+  * modify user management in systembackup to add and remove users and groups
+    dynamically
+  * rewriting the sysbackup system
+  * adding rudimentary user handling for old backups
+  * changing in postinst so that checks for directories under /home only
+    checks for existance, and ignore if they are dirs or not. (people might
+    have moved them and symlinked them)
+  * move bubbasocket to frontend helper 
+  * adding function in firewall.pl to update lan IP eth1 ←→ br0 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 29 Oct 2009 18:10:14 +0100
+
+bubba-backend (1.2.2.1) claire; urgency=low
+
+  * devel release 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 29 Sep 2009 12:51:41 +0200
+
+bubba-backend (1.2.2.0.7) estelle; urgency=low
+
+  * decreasing MAX progress 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 25 Sep 2009 13:52:21 +0200
+
+bubba-backend (1.2.2.0.6) estelle; urgency=emergency
+
+  * one "1" for partition was readded to external partition path, regression
+    error from update in bubba-frontend to pass disk instead of "device".
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 24 Sep 2009 18:19:43 +0200
+
+bubba-backend (1.2.2.0.1) estelle; urgency=emergency
+
+  * sleep after partition update
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 24 Sep 2009 14:05:15 +0200
+
+bubba-backend (1.2.2) estelle; urgency=emergency
+
+  * initialize MAX_PROGRESS to 1 to avoid division by zero
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 23 Sep 2009 13:51:58 +0200
+
+bubba-backend (1.2.1.2) claire; urgency=low
+
+  * Adding RAID monitor for notifier
+  * Add UI notifier backend 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 18 Sep 2009 16:58:39 +0200
+
+bubba-backend (1.2.1.1) claire; urgency=low
+
+  * Notification dispatcher framework; Led blink notifier.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 11 Sep 2009 17:42:46 +0200
+
+bubba-backend (1.2.0.44) estelle claire; urgency=low
+
+  *  Removed plaintext fetchmail accounts password.
+
+ -- PA Nilsson <pa@excito.com>  Wed,  2 Sep 2009 08:55:10 +0200
+
+bubba-backend (1.2.0.43) estelle claire; urgency=low
+
+  * applaing previous fix by PA 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 01 Sep 2009 13:28:20 +0200
+
+bubba-backend (1.2.0.42) estelle claire; urgency=low
+
+  * Fixed that update of fetchmail passwords did not "take"* 
+
+ -- PA Nilsson <pa@excito.com>  Tue,  1 Sep 2009 12:51:36 +0200
+
+bubba-backend (1.2.0.41) estelle claire; urgency=low
+
+  * and again sadly 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 31 Aug 2009 13:01:45 +0200
+
+bubba-backend (1.2.0.40) estelle claire; urgency=low
+
+  * chaning to disk only 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 31 Aug 2009 12:41:24 +0200
+
+bubba-backend (1.2.0.39) estelle claire; urgency=low
+
+  * my $disk 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 31 Aug 2009 12:38:56 +0200
+
+bubba-backend (1.2.0.38) estelle claire; urgency=low
+
+  * change partition to disk (Closes: #1022) 
+  * make sure hotfix key is not blank (Closes: #1029)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 31 Aug 2009 11:43:15 +0200
+
+bubba-backend (1.2.0.37) eatelle claire; urgency=low
+
+  * changing set_partition_type for external disk on raid restore to plain
+    partition instead, as we can't be sure we have an partition table at all.
+    (Closes: #1022)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 31 Aug 2009 09:39:29 +0200
+
+bubba-backend (1.2.0.36) estelle claire; urgency=low
+
+  * Revert part of #3809 method renamed back to add_to_lvm hopefully
+    fixing rt #1027 
+
+ -- Tor Krill <tor@excito.com>  Fri, 28 Aug 2009 10:12:36 +0200
+
+bubba-backend (1.2.0.35) estelle claire; urgency=low
+
+  * Fixed texts in recover raid status message.
+  * Fixed corrupt merge on "read_fetchmailaccounts"
+
+ -- PA Nilsson <pa@excito.com>  Tue, 25 Aug 2009 16:08:14 +0200
+
+bubba-backend (1.2.0.34) estelle claire; urgency=low
+
+  * Adding anexplicit probe sync after format 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 24 Aug 2009 14:10:14 +0200
+
+bubba-backend (1.2.0.33) karmic; urgency=low
+
+  * Changing order for RAID creation, to work as much as possible with
+    external disk before doing anything with the internal disk. So if
+    the action on the external disk fails, it will not affect the running
+    system. This includes eventual unmounting and fstab-removal of the 
+    external disk, and the repartition of the external disk.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 21 Aug 2009 16:31:05 +0200
+
+bubba-backend (1.2.0.32) estelle claire; urgency=low
+
+  * Fully functional format disk (Closes: #1004) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 20 Aug 2009 17:42:55 +0200
+
+bubba-backend (1.2.0.31) estelle; urgency=low
+
+  * Adding check to handle when firewall.conf is missing (Closes: #1015)
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 20 Aug 2009 11:14:43 +0200
+
+bubba-backend (1.2.0.30) estelle; urgency=low
+
+  [ PA Nilsson ]
+  * Updated user feedback texts in updater and hotfix backends. 
+
+  [ Carl Fürstenberg ]
+  * adding sysv shared mem lookup for format status
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 19 Aug 2009 15:58:07 +0200
+
+bubba-backend (1.2.0.29) estelle; urgency=low
+
+  * enable deps on bubba version pkg and includes version information to
+    hotfix.
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 17 Aug 2009 16:57:44 +0200
+
+bubba-backend (1.2.0.28) estelle; urgency=low
+
+  * added query_bubbacfg function
+  * modified update_bubbacfg to use a more safe tiny lib
+  * Fixed stupid bug in Bubba::Apt module (variable in single quote string) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 17 Aug 2009 11:40:35 +0200
+
+bubba-backend (1.2.0.27) estelle; urgency=low
+
+  * format disk updates progress status
+  * undid most changes made in 1.2.0.26
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 13 Aug 2009 17:58:44 +0200
+
+bubba-backend (1.2.0.26) estelle; urgency=low
+
+  * rewrote parts of format disk to relay more information 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 10 Aug 2009 10:43:54 +0200
+
+bubba-backend (1.2.0.25) claire; urgency=low
+
+  [ Tor Krill ]
+  * Added afpd avahi service
+
+  [ Carl Fürstenberg ]
+  * Format disk adding custom label support 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 06 Aug 2009 15:11:31 +0200
+
+bubba-backend (1.2.0.24) claire; urgency=low
+
+  * Format disk fuctionallity (Closes: #1004)
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 05 Aug 2009 18:03:45 +0200
+
+bubba-backend (1.2.0.23) claire; urgency=low
+
+  * Checking error code from system call during hotfix appliance; Notifies
+    syslog.
+  * Logging all hotfix actions to syslog;
+  * exctract eth0 and eth1 to variables for easier change in the future.
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 05 Aug 2009 12:45:03 +0200
+
+bubba-backend (1.2.0.22) claire; urgency=low
+
+  * reorganize post/pre check code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 31 Jul 2009 16:11:01 +0200
+
+bubba-backend (1.2.0.21) claire; urgency=low
+
+  * bumping für test 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 31 Jul 2009 15:33:25 +0200
+
+bubba-backend (1.2.0.20) claire; urgency=low
+
+  [ Carl Fürstenberg ]
+  * adding serial, cpu model and ram to hotfix data
+  * make sure mac_1 and ip_1 are for eth0 etc. for hotfix
+  * send free space in KiB for hotfix
+  * inserting number of upgrade packages in ending string. 
+
+  [ PA Nilsson ]
+  * Changed to showing full path in backup and restore views. Altered
+    backup.pl to accept full file path. (Closes: #931).
+  * Added error detection for backup using FTP when "no route to host".
+  * Fixed issue with time being 23s "off".
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 30 Jul 2009 17:57:59 +0200
+
+bubba-backend (1.2.0.19) claire; urgency=low
+
+  * Updated UI for showing update results.
+    Added "Current package versions" to update page.
+  * Checking if dnsmasq is running before restarting when changing hostname.
+    Closes: #592
+  * Added "Leave email on server" checkbox.
+    Closes #479.
+
+ -- PA Nilsson <pa@excito.com>  Wed, 29 Jul 2009 16:10:58 +0200
+
+bubba-backend (1.2.0.18) claire; urgency=low
+
+  * Added more data to be sent to server during hotfixes 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 24 Jul 2009 18:11:07 +0200
+
+bubba-backend (1.2.0.17) claire; urgency=low
+
+  * better handling of files and system keys for hotfixes 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 23 Jul 2009 18:27:20 +0200
+
+bubba-backend (1.2.0.16) karmic; urgency=low
+
+  [ Carl Fürstenberg ]
+  * adding file and script handling 
+
+  [ PA Nilsson ]
+  * Fixed that client side does not update config file if update on
+    server fails.
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 23 Jul 2009 17:15:42 +0200
+
+bubba-backend (1.2.0.15) claire; urgency=low
+
+  * adding some logic to the hotfix system 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 23 Jul 2009 14:01:54 +0200
+
+bubba-backend (1.2.0.14) claire; urgency=low
+
+  * more hotfix upgrades 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 23 Jul 2009 12:58:16 +0200
+
+bubba-backend (1.2.0.13) claire; urgency=low
+
+  * middle button error 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 22 Jul 2009 17:36:15 +0200
+
+bubba-backend (1.2.0.12) claire; urgency=low
+
+  * forgot adding hotfix to makefile 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 22 Jul 2009 17:33:52 +0200
+
+bubba-backend (1.2.0.11) claire; urgency=low
+
+  * adding own socket for hotfix 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 22 Jul 2009 17:11:26 +0200
+
+bubba-backend (1.2.0.10) claire; urgency=low
+
+  * initial addition of hotfix system
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 22 Jul 2009 16:59:24 +0200
+
+bubba-backend (1.2.0.9) claire; urgency=low
+
+  * undo supposed fix from 1.2.0.8 as Thread::Tie is old and didn't work when
+    daemonized.
+  * made all pather absolute in upgradebackend.pl
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 17 Jul 2009 13:20:50 +0200
+
+bubba-backend (1.2.0.8) claire; urgency=low
+
+  * modify firewall check to force rules to be more strict and pristine 
+  * cleaned up bad code in upgrade manager and utilize Thread::Tie instead
+    of manually serialized JSON strings as hashes
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 16 Jul 2009 11:56:00 +0200
+
+bubba-backend (1.2.0.7) claire; urgency=low
+
+  *fix the million bugs introduced in 1.2.0.6 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 15 Jul 2009 18:17:31 +0200
+
+bubba-backend (1.2.0.6) claire; urgency=low
+
+  * finalize upgrade notify 
+  * firewall checks 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 15 Jul 2009 15:21:54 +0200
+
+bubba-backend (1.2.0.5) claire; urgency=low
+
+  * developer made error 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 15 Jul 2009 14:47:41 +0200
+
+bubba-backend (1.2.0.4) claire; urgency=low
+
+  * identify whenever there is any upgrades to be done 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 15 Jul 2009 14:26:53 +0200
+
+bubba-backend (1.2.0.3) claire; urgency=low
+
+  * more notification upgrades to upgrade process 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 10 Jul 2009 16:04:07 +0200
+
+bubba-backend (1.2.0.2) claire; urgency=low
+
+  * Adding ntp to personal settings file (closes: #968) 
+  * Adding notification code after upgrade process 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 09 Jul 2009 13:11:56 +0200
+
+bubba-backend (1.2.0.1) claire; urgency=low
+
+  * Pre and postchecks for upgrade/install 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 08 Jul 2009 17:49:26 +0200
+
+bubba-backend (1.2) estelle; urgency=low
+
+  * Bumping version to 1.2 for release
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 03 Jul 2009 11:42:54 +0200
+
+bubba-backend (1.1.147) estelle; urgency=low
+
+  * Clean up logic for backup/restore, closes: #693
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 02 Jul 2009 16:25:38 +0200
+
+bubba-backend (1.1.146) estelle; urgency=emergency
+
+  * Error in communication, new fix for RAID users, closes: #963 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 02 Jul 2009 14:27:06 +0200
+
+bubba-backend (1.1.145) estelle; urgency=low
+
+  * perserve users and perms  while "backup" before RAID creation, closes: #963 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 02 Jul 2009 14:22:02 +0200
+
+bubba-backend (1.1.144) estelle; urgency=low
+
+  * Added connection test for ftp. Closes: #842
+  * Unmounting disk after restoring backup info files from target. Closes: #938
+
+ -- PA Nilsson <pa@excito.com>  Wed,  1 Jul 2009 13:59:52 +0200
+
+bubba-backend (1.1.143) estelle; urgency=low
+
+  * Fixed file permissions on restore to dir target. Closes: #934
+  * Fixed restore from wrong backup set. Closes: #937
+
+ -- PA Nilsson <pa@excito.com>  Tue, 30 Jun 2009 16:03:32 +0200
+
+bubba-backend (1.1.142) estelle; urgency=low
+
+  * Relativelty large rewrite of backup backend to produce more and better
+    error messages.
+    Includes adding json output to parts of restore-process.
+    Added a function to use for ssh "test connection" (currently only used to
+    solve ssh errors during restore operations).
+
+    Closes: #760, #785, #842, #925
+
+ -- PA Nilsson <pa@excito.com>  Tue, 30 Jun 2009 14:15:24 +0200
+
+bubba-backend (1.1.141) estelle; urgency=low
+
+  * Solving error on first encrypted backup job, closes: #899 
+
+ -- PA Nilsson <pa@excito.com>  Mon, 29 Jun 2009 15:40:50 +0200
+
+bubba-backend (1.1.140) estelle; urgency=low
+
+  * Escaping restore arguments.
+    Closes: #913.
+  * Fixed restore to dir path (Belongs to #819)
+
+
+ -- PA Nilsson <pa@excito.com>  Mon, 29 Jun 2009 11:46:28 +0200
+
+bubba-backend (1.1.139) estelle; urgency=low
+
+  * Removing the first job from backup que-list instead of the last job. 
+    Closes: #918.
+
+ -- PA Nilsson <pa@excito.com>  Sun, 28 Jun 2009 01:20:27 +0200
+
+bubba-backend (1.1.138) estelle; urgency=low
+
+  * Creating 'target_path' not 'target_host' on ssh target... 
+
+ -- PA Nilsson <pa@excito.com>  Sun, 28 Jun 2009 01:01:22 +0200
+
+bubba-backend (1.1.137) estelle; urgency=low
+
+  * Limited backup to be in a subdirectory to where the users is logged in
+    (for ssh and ftp) due to duplicity stripping leading "/" in path for ftp.
+    Closes: #905, #913
+  * Updated error message on illegal characters in job settings. Closes: #867.
+
+ -- PA Nilsson <pa@excito.com>  Sat, 27 Jun 2009 23:59:17 +0200
+
+bubba-backend (1.1.136) estelle; urgency=low
+
+  [ PA Nilsson ]
+  * Fixed bug with creating restore file path (restore to dir).
+  * using 'echo' instead of 'cat', Closes: #761.
+  * Fixed problems with "/", Closes: #912. Restoring full path for when
+    restoring to dir, Closes: #879.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 26 Jun 2009 15:08:30 +0200
+
+bubba-backend (1.1.135) estelle; urgency=low
+
+  * Removed "/." and "/admin" from restore view if files in admin home dir was
+    not explicitly selected to be included in backup. Closes: #904.
+
+ -- PA Nilsson <pa@excito.com>  Wed, 24 Jun 2009 20:57:57 +0200
+
+bubba-backend (1.1.134) estelle; urgency=low
+
+  * Fixed to allow relative target_paths for ssh. Closes: #905.
+
+ -- PA Nilsson <pa@excito.com>  Wed, 24 Jun 2009 09:23:22 +0200
+
+bubba-backend (1.1.133) estelle; urgency=low
+
+  [ PA Nilsson ]
+  * Moved sshmkdri to perl backup-script. Closes: #873.
+
+  [ Tor Krill ]
+  * Added sshmkdir for usage by backup backend.
+
+ -- PA Nilsson <pa@excito.com>  Wed, 24 Jun 2009 07:04:11 +0200
+
+bubba-backend (1.1.132) estelle; urgency=low
+
+  [ Tor Krill ]
+  * Adapted namechange of ftd->filetransferdaemon
+
+  [ PA Nilsson ]
+  * Fixed writing timezone-info to /etc/timezone.
+  * Creating FTP-backup directories. Related to discussion in FS# 873.
+  * handle exception for location of pid-file for avahi-daemon. Closes 514.
+
+ -- PA Nilsson <pa@excito.com>  Mon, 22 Jun 2009 00:13:48 +0200
+
+bubba-backend (1.1.131) estelle; urgency=low
+
+  [ Carl Fürstenberg ]
+  * Must have been smokoing crack :( swapping && and 'and'  
+
+  [ PA Nilsson ]
+  * Impreoved error message in backup script. Explains FS873.
+  * Missed check-in of changed file delimiter for backup.
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 17 Jun 2009 15:14:39 +0200
+
+bubba-backend (1.1.130) estelle; urgency=emergency
+
+  * might still have been a bug in update manager, trying to solve it now 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 16 Jun 2009 18:01:15 +0200
+
+bubba-backend (1.1.129) estelle; urgency=low
+
+  * adding link to photo album from default web 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 16 Jun 2009 17:18:19 +0200
+
+bubba-backend (1.1.128) estelle; urgency=low
+
+  * changing regex in get_mailcfg to minimize borkage when embedding @ in
+    usernames, would still semibork when embedding ':', which seems
+    be not valid generally, so code added to remove all ':' from the
+    username. Closes: #743
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 16 Jun 2009 17:09:04 +0200
+
+bubba-backend (1.1.127) estelle; urgency=low
+
+  * add admin to group users if not in it allready 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 16 Jun 2009 14:02:47 +0200
+
+bubba-backend (1.1.126) estelle; urgency=low
+
+  * change stupid code in postinst. Closes: #859 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 16 Jun 2009 12:55:38 +0200
+
+bubba-backend (1.1.125) estelle; urgency=low
+
+  * escaping file-arguments for backup "addfile".
+    Changed delimiter from " " to ";"
+    Closes 857
+
+ -- PA Nilsson <pa@excito.com>  Mon, 15 Jun 2009 15:28:45 +0200
+
+bubba-backend (1.1.124) estelle; urgency=low
+
+  * Add writable info from ls command
+  * Change dep from ftd to filetransfer daemon 
+
+ -- Tor Krill <tor@excito.com>  Fri, 12 Jun 2009 19:38:56 +0200
+
+bubba-backend (1.1.123) estelle; urgency=low
+
+  * disable debug for updatebackend 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 12 Jun 2009 17:47:15 +0200
+
+bubba-backend (1.1.122) estelle; urgency=low
+
+  [ Carl Fürstenberg ]
+  * Only copy the content of default_web (Closes: #855) 
+  * install default web is missing 
+  * Add StopOnError false to apt.conf, will hopefully minimise overly broken
+    installs.
+  * fix so recovered users doesn't include nobody 
+  * Fixes that seems to resolve the upgrade problem (Closes: #839)
+
+  [ PA Nilsson ]
+  * Changed to have "1000B" as an option to size2human.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 12 Jun 2009 12:36:29 +0200
+
+bubba-backend (1.1.121) estelle; urgency=low
+
+  * Updates to backup backend, new error messages added. (Closes 847, 849) 
+
+
+ -- PA Nilsson <pa@excito.com>  Fri, 12 Jun 2009 09:10:27 +0200
+
+bubba-backend (1.1.120) estelle; urgency=low
+
+  [ Carl Fürstenberg ]
+  * clean up updatebacken.pl, testing semiconfirm it might resolve issue
+  * update mailcfg for plaintext auth (Closes: #839)
+
+  [ PA Nilsson ]
+  * Backup settings should be part of sysbackup (Closes: #844) External
+    disks are moutned as admin/users (Partially closes: #847)
+  * Allow '-' in backupname.
+  * Running duplicity backup as "nice". Improved error message when
+    wrong encryption key is supplied for a restore operation.
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 11 Jun 2009 15:25:47 +0200
+
+bubba-backend (1.1.119) estelle; urgency=low
+
+  * Updating '/etc/timezone' (Closes 761)
+  * Updates to network profiles (Closes 726,695)
+  * Updates to restore operations (Closes 816)
+  * Updates to exit-hook scripts
+
+ -- PA Nilsson <pa@excito.com>  Thu, 11 Jun 2009 10:36:14 +0200
+
+bubba-backend (1.1.118) estelle; urgency=low
+
+  [ PA Nilsson ]
+  * Fixed FS 786, removal of entry in cron-file.
+  * Prevent writing "disabled" in cron-file.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 05 Jun 2009 16:06:11 +0200
+
+bubba-backend (1.1.117) estelle; urgency=low
+
+  * Removing the dreaded .hook suffix from the easyfind hook 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 04 Jun 2009 13:29:16 +0200
+
+bubba-backend (1.1.116) estelle; urgency=low
+
+  * fix error in creation of backup which erroriosly included home 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 03 Jun 2009 16:14:00 +0200
+
+bubba-backend (1.1.115) estelle; urgency=low
+
+  * missing ) in dist-upgrade error handler
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 03 Jun 2009 13:42:46 +0200
+
+bubba-backend (1.1.114) claire; urgency=low
+
+  * RAID backup updates, making it static in the code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 29 May 2009 17:42:37 +0200
+
+bubba-backend (1.1.113) claire; urgency=low
+
+  * LVM single disk first partition only 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 29 May 2009 15:41:40 +0200
+
+bubba-backend (1.1.112) claire; urgency=low
+
+  * make recover of external RAID say on socket after async 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 29 May 2009 15:04:22 +0200
+
+bubba-backend (1.1.111) claire; urgency=low
+
+  * functional code for restoring broken internal raid 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 28 May 2009 17:50:20 +0200
+
+bubba-backend (1.1.110) claire; urgency=low
+
+  * Rogressing work for RAID recovery 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 28 May 2009 14:57:12 +0200
+
+bubba-backend (1.1.109) claire; urgency=low
+
+  * fix order at the end 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 07 May 2009 17:45:08 +0200
+
+bubba-backend (1.1.108) claire; urgency=low
+
+  * forgot removal of an useless "use" 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 07 May 2009 16:13:11 +0200
+
+bubba-backend (1.1.107) claire; urgency=low
+
+  * Raid upgrades 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 07 May 2009 13:45:40 +0200
+
+bubba-backend (1.1.106) claire; urgency=low
+
+  [ PA Nilsson ]
+  * Rewritten include/exclude file handling in backend
+
+  [ Carl Fürstenberg ]
+  * fix nextmd again 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 18:28:25 +0200
+
+bubba-backend (1.1.105) claire; urgency=low
+
+  * wrong blockification of nextmd statement 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 18:19:11 +0200
+
+bubba-backend (1.1.104) claire; urgency=low
+
+  * adding backup code 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 18:11:25 +0200
+
+bubba-backend (1.1.103) jaunty; urgency=low
+
+  * sending an reboot signal 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 15:38:06 +0200
+
+bubba-backend (1.1.102) jaunty; urgency=low
+
+  * Correctify new path to diskmanager 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 14:31:24 +0200
+
+bubba-backend (1.1.101) claire; urgency=low
+
+  * fix minor typo in diskdaemon.pl 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 14:25:32 +0200
+
+bubba-backend (1.1.100) claire; urgency=low
+
+  * added service shutown routines
+  * added bubba-diskmanager as dependency
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Apr 2009 14:02:22 +0200
+
+bubba-backend (1.1.99) claire; urgency=low
+
+  * updated diskdaemon 
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 28 Apr 2009 16:08:01 +0200
+
+bubba-backend (1.1.98) claire; urgency=low
+
+  * Updated UI to present more information about errors. 
+
+ -- PA Nilsson <pa@excito.com>  Tue, 28 Apr 2009 15:36:15 +0200
+
+bubba-backend (1.1.97) claire; urgency=low
+
+  * updated disk management code, experimental RAID support usable
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 24 Apr 2009 17:55:44 +0200
+
+bubba-backend (1.1.96) claire; urgency=low
+
+  * Fixed initial creation of backup directories. 
+
+ -- PA Nilsson <pa@excito.com>  Thu, 23 Apr 2009 10:26:36 +0200
+
+bubba-backend (1.1.95) claire; urgency=low
+
+  * adding disk dæmon 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 22 Apr 2009 17:17:32 +0200
+
+bubba-backend (1.1.94) claire; urgency=low
+
+  * Added backupscript to be installed. 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 22 Apr 2009 14:38:42 +0200
+
+bubba-backend (1.1.93) claire; urgency=low
+
+  * Wrapping all calls to open3 not to hang on large outputs. 
+
+ -- PA Nilsson <pa@excito.com>  Wed, 22 Apr 2009 14:22:32 +0200
+
+bubba-backend (1.1.92) claire; urgency=low
+
+  [pa]
+  * Added support for backup to external disks.
+    - Backup is tied to the selected disk, ie it will only run if that disk is connected. 
+  * Moved ajax functions from "ajax.php" to "ajax_settings.php".
+
+ -- Carl Fürstenberg <carl@excito.com>  Sun, 19 Apr 2009 23:01:20 +0200
+
+bubba-backend (1.1.91) claire; urgency=low
+
+  * Added frontend restore functionality to backup system.
+  	Added removal of logfiles that were associated with removed backup sets.
+ 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 Mar 2009 16:33:11 +0100
+
+bubba-backend (1.1.90) claire; urgency=low
+
+  * Bump version for trunk so not to clash with 1.1 branch
+  * Add add_service_at_level to add a service at a specific "level"
+  * Add dependency on AFP, netatalk 
+  * Make sure all shared vars in updatebackend is locked during use 
+
+ -- Tor Krill <tor@excito.com>  Tue, 24 Mar 2009 22:28:15 +0100
+
+bubba-backend (1.1.12) estelle; urgency=low
+
+  * adding setlocale to adminfunction to circumvent the bug with
+    escapeshellarg.
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 11 Mar 2009 11:41:49 +0100
+
+bubba-backend (1.1.11) claire; urgency=low
+
+  * adding missing routes to postinst
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 16 Feb 2009 17:38:02 +0100
+
+bubba-backend (1.1.10) claire; urgency=low
+
+  * cleaning up the logger 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Feb 2009 15:35:15 +0100
+
+bubba-backend (1.1.9) claire; urgency=low
+
+  * changed back to route to not add new dependices (for the moment at
+    least) 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Feb 2009 15:09:03 +0100
+
+bubba-backend (1.1.8) claire; urgency=low
+
+  * changed multicast ifplugd script to use iproute as a way to make the
+    script more resilient
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Feb 2009 14:20:27 +0100
+
+bubba-backend (1.1.7) claire; urgency=low
+
+  [tor]
+   * Add multicast action that gets triggered by link change. Adding rules for
+     upnp and mdns. Hopefully fixing #724, #725
+ 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 09 Feb 2009 13:11:09 +0100
+
+bubba-backend (1.1.6) estelle; urgency=low
+
+  * adding skeleton for download dir 
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 02 Feb 2009 17:06:25 +0100
+
+bubba-backend (1.1.5) estelle; urgency=low
+
+  * Fixed #706 (users private dirs readable) 
+
+ -- PA Nilsson <pa@excito.com>  Mon,  2 Feb 2009 08:58:16 +0100
+
+bubba-backend (1.1.4) estelle; urgency=low
+
+  * Updated post-inst script to handle wizard dependencies
+  * Fixed license
+
+ -- PA Nilsson <pa@excito.com>  Fri, 30 Jan 2009 10:27:20 +0100
+
+bubba-backend (1.1.3) estelle; urgency=low
+
+  * Fixed start of dnsmasq at reboot when changing profiles. 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 30 Jan 2009 09:43:17 +0100
+
+bubba-backend (1.1.2) estelle; urgency=high
+
+  * Mixed up the conf and the hook file, the conf file shouldn't have to be
+    renamed. 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 28 Jan 2009 16:10:10 +0100
+
+bubba-backend (1.1.1) estelle; urgency=high
+
+  * Moving out easyfind.pl to /usr/lib/web-admin and rename easyfind.conf to
+    bubba-easyfind.conf to resolve any old dependency merge problem.
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 28 Jan 2009 15:50:40 +0100
+
+bubba-backend (1.1.0) estelle; urgency=low
+
+  * Updated dhclient fallback script. (Fixed syntax)
+
+ -- PA Nilsson <pa@excito.com>  Tue, 27 Jan 2009 15:59:44 +0100
+
+bubba-backend (1.0.37) estelle; urgency=low
+
+  * Bumped revision number.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 27 Jan 2009 12:04:11 +0100
+
+bubba-backend (1.0.36) estelle; urgency=low
+
+  * Solving:
+    FS#690 Easyfind "enable"
+    FS#686 DHCPd fallback.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 27 Jan 2009 11:18:43 +0100
+
+bubba-backend (1.0.36+nmu1) claire; urgency=low
+
+  * Non-maintainer upload.
+  * fixing error in stop target in the firewall init script where it
+    saves the firewall back to file
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 20 Jan 2009 22:27:55 +0100
+
+bubba-backend (1.0.36) claire; urgency=low
+
+  * Updates for new build
+
+ -- PA Nilsson <pa@excito.com>  Tue, 20 Jan 2009 14:47:07 +0100
+
+bubba-backend (1.0.35) claire; urgency=low
+
+  * Removed trailing '\n' in rewrite_firewall logger msg.
+  * Addes destination address with portworward and dhclient hook to
+    rewrite firewall ruleset.
+
+ -- PA Nilsson <pa@excito.com>  Mon, 19 Jan 2009 14:12:32 +0000
+
+bubba-backend (1.0.34) claire; urgency=low
+
+  * rework the backend to use MakeMaker and AutoLoader to decrease
+    initialization time.
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Jan 2009 17:33:29 +0100
+
+bubba-backend (1.0.33) claire; urgency=low
+
+  * adding code to force removal of leftovers from old install
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Jan 2009 10:35:17 +0100
+
+bubba-backend (1.0.32) claire; urgency=low
+
+  * changing default user and mode for extern to nobody and 1775
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 16 Jan 2009 22:23:34 +0100
+
+bubba-backend (1.0.31) claire; urgency=low
+
+  * add dependices to libfile-slurp-perl
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 14 Jan 2009 17:44:44 +0100
+
+bubba-backend (1.0.30) unstable; urgency=low
+
+  * Initial release of dpkg package
+  * adding DPkg options to apt config
+  * renaming init scripts to begin with "bubba-"
+  * upgrade upgrader to allow more smoothless installation, this include
+    --force-confnew to dpkg. also adding DEBIAN_FRONTEND=noninteractive to
+    script to really force noninteractive.
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 14 Jan 2009 17:20:11 +0100

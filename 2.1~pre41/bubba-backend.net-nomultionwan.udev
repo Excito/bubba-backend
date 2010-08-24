@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="net", KERNEL=="eth0", PROGRAM="/sbin/ifconfig %k -multicast"

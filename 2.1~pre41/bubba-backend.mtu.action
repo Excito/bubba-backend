@@ -1,0 +1,25 @@
+#!/bin/sh
+# vim:ft=sh
+set -e
+
+LANIF=`/usr/bin/bubba-networkmanager-cli getlanif`
+
+if [ $1 != "eth1" ] || [ $LANIF != "eth1" ] || [ $2 != "up" ]; then
+	# no action in bridged mode, nor on any other interface and only on up events
+	exit 0
+fi
+
+# Default settings
+MTU=1500
+
+LINK=`ethtool eth1 | awk '/Speed:/ {print $2}'`
+
+if [ -e /etc/network/mtu-eth1.conf ]; then
+	. /etc/network/mtu-eth1.conf
+fi
+
+if [ $LINK != "1000Mb/s" ] && [ $MTU -gt 1500 ]; then
+	MTU=1500
+fi
+
+echo $MTU > /sys/class/net/eth1/mtu

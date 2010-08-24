@@ -1,0 +1,69 @@
+Source: bubba-backend
+Section: admin
+Priority: required
+Maintainer: Tor Krill <tor@excito.com>
+Uploaders: Carl Fürstenberg <carl@excito.com>
+Build-Depends: debhelper (>= 7.2), cdbs
+Standards-Version: 3.8.4
+Homepage: http://www.excito.com
+
+Package: bubba-backend
+Architecture: all
+Depends: ${misc:Depends}, bubba,
+ bubba-apt,
+ bubba-status,
+ bubba-kernel,
+ bubba-modules,
+ bubba-horde,
+ adduser,
+ php5-cgi (>= 5.2.0) | phpapi-20060613+lfs,
+ dhcp3-client,
+ proftpd-basic,
+ fetchmail,
+ ifplugd,
+ cups | cupsys,
+ cups-client | cupsys-client,
+ openssh-server,
+ file,
+ filetransferdaemon,
+ mt-daapd,
+ mediatomb-daemon,
+ zip,
+ udev,
+ avahi-daemon,
+ samba (>= 3.4),
+ samba-common-bin,
+ postfix,
+ libsasl2-modules,
+ dovecot-imapd,
+ dnsmasq,
+ iptables (>= 1.4.1.1-4ex1),
+ libjson-perl,
+ libjson-xs-perl,
+ lvm2,
+ mdadm,
+ ethtool,
+ libcrypt-passwdmd5-perl,
+ libxml-simple-perl (>= 2.18),
+ libxml-parser-perl,
+ libperl6-say-perl,
+ libnet-daemon-perl (>= 0.43-1ex1),
+ ntp,
+ libfile-slurp-perl,
+ netatalk,
+ duplicity,
+ ncftp,
+ libipc-run3-perl,
+ bubba-diskmanager,
+ libexpect-perl,
+ libparse-debcontrol-perl,
+ libcrypt-ssleay-perl,
+ libconfig-tiny-perl,
+ liblist-moreutils-perl,
+ xsltproc,
+ bubba-networkmanager,
+ libtry-tiny-perl,
+ libbubba-info-perl,
+ uuid-runtime
+Description: The backend of the bubba administration
+ The backend consists of scripts required for the bubba to function.
