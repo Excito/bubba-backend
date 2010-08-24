@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre42) vincent; urgency=low
+
+  * Fixed "==" in ifplugd eth1-br0 script.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 24 Aug 2010 10:18:23 +0200
+
 bubba-backend (2.1~pre41) vincent; urgency=low
 
   * Added "" on 'provides' in br0 init-script.
