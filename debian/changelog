@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre44) vincent hugo; urgency=low
+
+  * Updated deps for dhcp-client 
+
+ -- Tor Krill <tor@excito.com>  Tue, 24 Aug 2010 17:34:38 +0200
+
 bubba-backend (2.1~pre43) vincent; urgency=low
 
   * Modified preferences to match "Debian Squeeze" 
