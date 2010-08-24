@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre46) vincent hugo; urgency=low
+
+  * Fix renamed samba hook 
+
+ -- Tor Krill <tor@excito.com>  Tue, 24 Aug 2010 17:52:42 +0200
+
 bubba-backend (2.1~pre45) vincent hugo; urgency=low
 
   * Fix all paths i could find for dhcp client 
