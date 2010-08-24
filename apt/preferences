@@ -26,21 +26,21 @@ Pin-Priority: 1000
 # Stable bubba stable debian upstream, currently squeeze
 Package: *
 Pin: 
- release o=Debian Etch, a=upstream_stable, v=1.0,
+ release o=Debian Squeeze, a=upstream_stable, v=1.0,
  origin "b3.update.excito.org"
 Pin-Priority: 600
 
 # Unstable bubba stable debian upstream, currently squeeze
 Package: *
 Pin: 
- release o=Debian Etch, a=upstream_stable_forvincent,
+ release o=Debian Squeeze, a=upstream_stable_forvincent,
  origin "b3.update.excito.org"
 Pin-Priority: 600
 
 # Stable bubba debian upstream, currently vacant
 Package: *
 Pin:
- release o=Debian Etch, a=upstream_oldstable, v=1.0,
+ release o=Debian Squeeze, a=upstream_oldstable, v=1.0,
  origin "b3.update.excito.org"
 Pin-Priority: 601
 

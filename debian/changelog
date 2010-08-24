@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre43) vincent; urgency=low
+
+  * Modified preferences to match "Debian Squeeze" 
+
+ -- PA Nilsson <pa@excito.com>  Tue, 24 Aug 2010 13:47:22 +0200
+
 bubba-backend (2.1~pre42) vincent; urgency=low
 
   * Fixed "==" in ifplugd eth1-br0 script.
