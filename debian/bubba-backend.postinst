@@ -130,9 +130,9 @@ root@$MAILNAME
 	set -e
 
     # for the last time, get rid of this bugger
-    if [ -e /etc/udev/rules.d/z45_persistent-net-generator.rules ]; then
-        rm -f /etc/udev/rules.d/z45_persistent-net-generator.rules
-        rm -f /etc/udev/rules.d/z25_persistent-net.rules
+    if [ -e /lib/udev/rules.d/75-persistent-net-generator.rules ]; then
+        rm -f /lib/udev/rules.d/75-persistent-net-generator.rules
+        rm -f /etc/udev/rules.d/70-persistent-net.rules
     fi
 
 	if [ ! -e /etc/postfix/bubbadomains ]; then
@@ -143,7 +143,8 @@ root@$MAILNAME
     divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
     divert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
     divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
-    divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
+    # proftpd has excito packaging with config in that
+    #divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
     divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
     divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib /etc/bubba/sshd_config ssh;
     divert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib /etc/bubba/ntp.conf ntp;

@@ -27,7 +27,6 @@ hostapd.conf /etc/bubba
 dhclient.conf /etc/bubba
 dovecot.conf /etc/bubba
 ntp.conf /etc/bubba
-proftpd.conf /etc/bubba
 postfix.conf /etc/bubba
 sshd_config /etc/bubba
 AppleVolumes.default /etc/bubba

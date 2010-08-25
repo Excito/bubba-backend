@@ -43,7 +43,8 @@ case "$1" in
     undivert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib false;
     undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib cups;
     undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib dovecot;
-    undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib proftpd;
+    # proftpd has excito packaging with config in that
+    #undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib proftpd;
     undivert bubba-backend /etc/default/ifplugd /etc/default/ifplugd.bubba-distrib ifplugd;
     undivert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib fetchmail;
     undivert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.bubba-distrib postfix;
