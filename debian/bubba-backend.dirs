@@ -4,6 +4,7 @@
 /etc/apt
 /etc/ifplugd/action.d
 /etc/dnsmasq.d
+/var/lib/dnsmasq
 /etc/dhcp/dhclient-exit-hooks.d
 /usr/share/bubba-backend
 

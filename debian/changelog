@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre48) hugo vincent; urgency=low
+
+  * Creating '/var/lib/dnsmasq' in postinst
+
+ -- PA Nilsson <pa@excito.com>  Thu, 26 Aug 2010 10:14:49 +0200
+
 bubba-backend (2.1~pre47) vincent hugo; urgency=low
 
   * Remove divert from proftpd
