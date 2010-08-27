@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre49) lucid; urgency=low
+
+  * Not including local archive info in config-backup. (Closes: #1522) 
+
+ -- PA Nilsson <pa@excito.com>  Fri, 27 Aug 2010 13:40:09 +0200
+
 bubba-backend (2.1~pre48) hugo vincent; urgency=low
 
   * Creating '/var/lib/dnsmasq' in postinst
