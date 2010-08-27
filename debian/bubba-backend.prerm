@@ -38,20 +38,21 @@ case "$1" in
 	;;
 	remove)
 
-    undivert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib false;
-    undivert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib hostapd;
-    undivert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib false;
-    undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib cups;
-    undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib dovecot;
-    # proftpd has excito packaging with config in that
-    #undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib proftpd;
-    undivert bubba-backend /etc/default/ifplugd /etc/default/ifplugd.bubba-distrib ifplugd;
-    undivert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib fetchmail;
-    undivert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.bubba-distrib postfix;
-    undivert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib ssh;
-    undivert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib ntp;
-    undivert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib netatalk;
-    undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.bubba-distrib samba;
+	undivert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib false;
+	undivert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib hostapd;
+	undivert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib false;
+	undivert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib cups;
+	undivert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib dovecot;
+	# proftpd has excito packaging with config in that
+	#undivert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib proftpd;
+	undivert bubba-backend /etc/default/ifplugd /etc/default/ifplugd.bubba-distrib ifplugd;
+	undivert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib fetchmail;
+	undivert bubba-backend /etc/postfix/main.cf /etc/postfix/main.cf.bubba-distrib postfix;
+	undivert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib ssh;
+	undivert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib ntp;
+	undivert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib false;
+	undivert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib netatalk;
+	undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.bubba-distrib samba;
 
 	mv /etc/postfix/main.cf.bubba-distrib /etc/postfix/main.cf;
 	mv /etc/samba/smb.conf.bubba-distrib /etc/samba/smb.conf;

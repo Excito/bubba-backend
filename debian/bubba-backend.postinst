@@ -148,7 +148,8 @@ root@$MAILNAME
     divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
     divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib /etc/bubba/sshd_config ssh;
     divert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib /etc/bubba/ntp.conf ntp;
-    divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default netatalk;
+    divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default false;
+    divert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib /etc/bubba/afpd.conf netatalk;
     divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
 
 	# things that cant be diverted

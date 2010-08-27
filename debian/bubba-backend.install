@@ -21,6 +21,7 @@ hosts.in /usr/share/bubba-backend
 iptables.xslt /usr/share/bubba-backend
 bubba-notify.conf /etc/bubba-notify
 
+afpd.conf /etc/bubba
 cupsd.conf /etc/bubba
 smb.conf /etc/bubba
 hostapd.conf /etc/bubba

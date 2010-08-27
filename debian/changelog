@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre50) vincent hugo; urgency=low
+
+  * Added divert for afpd.conf enabling guest shares 
+
+ -- Tor Krill <tor@excito.com>  Fri, 27 Aug 2010 14:00:14 +0200
+
 bubba-backend (2.1~pre49) lucid; urgency=low
 
   * Not including local archive info in config-backup. (Closes: #1522) 
