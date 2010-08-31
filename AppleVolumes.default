@@ -171,7 +171,7 @@
 #
 
 # The line below sets some DEFAULT, starting with Netatalk 2.1.
-:DEFAULT: options:upriv,usedots
+:DEFAULT: options:upriv,usedots,tm
 
 # By default all users have access to their home directories.
 /home/  "User share" cnidscheme:dbd dbpath:/var/lib/netatalk allow:@users

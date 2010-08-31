@@ -1,9 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 # postinst script for bubba-backend
 #
 # see: dh_installdeb(1)
 
-set -e
+#dont set -e
+
+#Debug
+#exec 2>>/tmp/bubba_backend.log
+#set -x
+
 
 # summary of how this script can be called:
 #        * <postinst> `configure' <most-recently-configured-version>
@@ -18,24 +23,24 @@ set -e
 # the debian-policy package
 
 divert() {
-package=$1;
-file=$2;
-diverted=$3;
-source_file=$4;
-rc_d=$5;
-if [ x$(dpkg-divert --truename $file) = x$file ]; then # we are not diverted at all
-    dpkg-divert --add --package $package --rename --divert $diverted $file;
-    if [ ! -e $file ]; then
-		if [ "false" != "$source_file" ]; then
-			ln -sf $source_file $file;
+	package=$1;
+	file=$2;
+	diverted=$3;
+	source_file=$4;
+	rc_d=$5;
+	if [ x$(dpkg-divert --truename $file) = x$file ]; then # we are not diverted at all
+		dpkg-divert --add --package $package --rename --divert $diverted $file;
+		if [ ! -e $file ]; then
+			if [ "false" != "$source_file" ]; then
+				ln -sf $source_file $file;
+			fi
+			if $(command -v "divert_cb_$rc_d" >/dev/null); then 
+				divert_cb_$rc_d "$@";
+			elif [ "$rc_d" != "false" ]; then
+				invoke-rc.d --quiet $rc_d restart || true;
+			fi
 		fi
-		if $(command -v "divert_cb_$rc_d" >/dev/null); then 
-			divert_cb_$rc_d "$@";
-		elif [ "$rc_d" != "false" ]; then
-			invoke-rc.d --quiet $rc_d restart || true;
-		fi
-    fi
-fi
+	fi
 
 }
 
@@ -52,6 +57,7 @@ divert_cb_dnsmasq() {
 	fi
 	invoke-rc.d --quiet $5 restart || true;
 }
+
 case "$1" in
     configure)
 
@@ -89,16 +95,13 @@ case "$1" in
 
 	# Create a new dovecot certificate if it's due to expire
 	
-	set +e # non-important
 	# Certs and key file (most faithfully stolen from dovecot postinst)
 	SSL_CERT="/etc/ssl/certs/dovecot.pem"
 	SSL_KEY="/etc/ssl/private/dovecot.pem"
 	current_enddate=$(date --date="$(openssl x509 -in $SSL_CERT -enddate -noout | sed -n 's/.*\?=\(.*\)/\1/p') - 6 months" +%s);
 	current_serial=$(openssl x509 -in $SSL_CERT -serial -noout | sed -n 's/.*\?=\(.*\)/\1/p');
 	
-    if \
-		[ "$current_enddate" -lt "$(date +%s)" ] || \
-		[ "$current_serial" = "C2FAB6C937D57722" ] || \
+	if [ "$current_enddate" -lt "$(date +%s)" ] || [ "$current_serial" = "C2FAB6C937D57722" ] || \
 		[ "$current_serial" = "8DFFAC7F75252659" ]; then
 		echo "Creating new generic self-signed certificate: $SSL_CERT"
 		echo "(replace with hand-crafted or authorized one if needed)."
@@ -126,31 +129,30 @@ root@$MAILNAME
 			chmod 0600 $SSL_KEY || true
 		fi
 		
-    fi
-	set -e
+	fi
 
-    # for the last time, get rid of this bugger
-    if [ -e /lib/udev/rules.d/75-persistent-net-generator.rules ]; then
-        rm -f /lib/udev/rules.d/75-persistent-net-generator.rules
-        rm -f /etc/udev/rules.d/70-persistent-net.rules
-    fi
+	# for the last time, get rid of this bugger
+	if [ -e /lib/udev/rules.d/75-persistent-net-generator.rules ]; then
+		rm -f /lib/udev/rules.d/75-persistent-net-generator.rules
+		rm -f /etc/udev/rules.d/70-persistent-net.rules
+	fi
 
 	if [ ! -e /etc/postfix/bubbadomains ]; then
 			touch /etc/postfix/bubbadomains;
 	fi
 
-    divert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib /etc/bubba/hostapd.default false;
-    divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
-    divert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
-    divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
-    # proftpd has excito packaging with config in that
-    #divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
-    divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
-    divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib /etc/bubba/sshd_config ssh;
-    divert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib /etc/bubba/ntp.conf ntp;
-    divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default false;
-    divert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib /etc/bubba/afpd.conf netatalk;
-    divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
+	divert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib /etc/bubba/hostapd.default false;
+	divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
+	divert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
+	divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
+	# proftpd has excito packaging with config in that
+	#divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
+	divert bubba-backend /etc/default/fetchmail /etc/default/fetchmail.bubba-distrib /etc/bubba/fetchmail.default fetchmail;
+	divert bubba-backend /etc/ssh/sshd_config /etc/ssh/sshd_config.bubba-distrib /etc/bubba/sshd_config ssh;
+	divert bubba-backend /etc/ntp.conf /etc/ntp.conf.bubba-distrib /etc/bubba/ntp.conf ntp;
+	divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default false;
+	divert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib /etc/bubba/afpd.conf netatalk;
+	divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
 
 	# things that cant be diverted
 	if [ ! -f /etc/default/ifplugd.bubba-distrib ]; then
@@ -311,12 +313,12 @@ root@$MAILNAME
 	install --directory --owner=root   --group=root  --mode=0700 /etc/skel/private
 	install --directory --owner=root   --group=root  --mode=0750 /etc/skel/downloads
 	install --directory --owner=root   --group=root  --mode=0700 /etc/skel/torrents
-	install --directory --owner=root   --group=users --mode=1777 /home/storage
-	install --directory --owner=nobody --group=users --mode=1777 /home/storage/music
-	install --directory --owner=nobody --group=users --mode=1777 /home/storage/video
-	install --directory --owner=nobody --group=users --mode=1777 /home/storage/pictures
-	install --directory --owner=nobody --group=users --mode=1775 /home/storage/extern
-	install --directory --owner=root   --group=users --mode=0775 /home/web
+	install --directory --owner=root   --group=users --mode=2777 /home/storage
+	install --directory --owner=nobody --group=users --mode=2777 /home/storage/music
+	install --directory --owner=nobody --group=users --mode=2777 /home/storage/video
+	install --directory --owner=nobody --group=users --mode=2777 /home/storage/pictures
+	install --directory --owner=nobody --group=users --mode=2775 /home/storage/extern
+	install --directory --owner=root   --group=users --mode=2775 /home/web
 
 	# install default web if missing
 	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then

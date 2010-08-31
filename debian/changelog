@@ -1,3 +1,35 @@
+bubba-backend (2.1~pre55) vincent hugo; urgency=low
+
+  * Fix permissions on storage directory
+  * Add timemachine flags on afp config
+  * Change some occurrencies of bubba (More ones left)
+
+ -- Tor Krill <tor@excito.com>  Tue, 31 Aug 2010 11:20:14 +0200
+
+bubba-backend (2.1~pre54) vincent hugo; urgency=low
+
+  * Remove _all_ instances of set -e 
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Aug 2010 17:06:26 +0200
+
+bubba-backend (2.1~pre53) vincent hugo; urgency=low
+
+  * More debug 
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Aug 2010 16:45:25 +0200
+
+bubba-backend (2.1~pre52) vincent hugo; urgency=low
+
+  * Really remove errexit from postinst script 
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Aug 2010 16:32:48 +0200
+
+bubba-backend (2.1~pre51) vincent hugo; urgency=low
+
+  * Remove errexit from postinst script
+
+ -- Tor Krill <tor@excito.com>  Mon, 30 Aug 2010 15:31:41 +0200
+
 bubba-backend (2.1~pre50) vincent hugo; urgency=low
 
   * Added divert for afpd.conf enabling guest shares 
