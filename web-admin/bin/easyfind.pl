@@ -83,7 +83,7 @@ sub get_mac {
 	my($wtr, $rdr, $err);
 	$err = 1; # we want to dump errors here
 
-	my $pid = open3($wtr,$rdr,$err,"ifconfig " . WAN_IF);
+	my $pid = open3($wtr,$rdr,$err,"/sbin/ifconfig " . WAN_IF);
 	my @if_a = <$rdr>;
 	my $errmsg = <$err>;
 	waitpid($pid,0);

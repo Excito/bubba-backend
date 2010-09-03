@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre56) vincent hugo; urgency=low
+
+  * Fixed easyfind update when changing WAN IP. (Closes: #1559)
+
+ -- PA Nilsson <pa@excito.com>  Fri, 03 Sep 2010 20:48:13 +0200
+
 bubba-backend (2.1~pre55) vincent hugo; urgency=low
 
   * Fix permissions on storage directory
