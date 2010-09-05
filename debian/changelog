@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre57) vincent hugo; urgency=low
+
+  * Fix constants from clashing with perl ones. 
+    (Closes:  #1544) 
+
+ -- Tor Krill <tor@excito.com>  Sun, 05 Sep 2010 23:00:29 +0200
+
 bubba-backend (2.1~pre56) vincent hugo; urgency=low
 
   * Fixed easyfind update when changing WAN IP. (Closes: #1559)
