@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre58) vincent hugo; urgency=low
+
+  * Really fixing constants. (Replace by variables)
+    (Closes: #1544) 
+
+ -- Tor Krill <tor@excito.com>  Tue, 07 Sep 2010 17:51:40 +0200
+
 bubba-backend (2.1~pre57) vincent hugo; urgency=low
 
   * Fix constants from clashing with perl ones. 

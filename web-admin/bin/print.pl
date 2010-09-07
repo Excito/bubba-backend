@@ -3,19 +3,24 @@
 use strict;
 use Bubba::Info;
 
-use constant IOC_NRBITS=>8;
-use constant IOC_TYPEBITS=>8;
+my $IOC_NRBITS=8;
+my $IOC_TYPEBITS=8;
+
+my $_IOC_SIZEBITS;
+my $_IOC_DIRBITS;
+
 if( isB1() || isB3() ) {
-use constant _IOC_SIZEBITS=>14;
-use constant _IOC_DIRBITS=>2;
+	$_IOC_SIZEBITS=14;
+	$_IOC_DIRBITS=2;
 } else { # isB2()
-use constant _IOC_SIZEBITS=>13;
-use constant _IOC_DIRBITS=>3;
+	$_IOC_SIZEBITS=13;
+	$_IOC_DIRBITS=3;
 }
-use constant IOC_NRSHIFT=>0;
-use constant IOC_TYPESHIFT=>(IOC_NRSHIFT+IOC_NRBITS);
-use constant IOC_SIZESHIFT=>(IOC_TYPESHIFT+IOC_TYPEBITS);
-use constant IOC_DIRSHIFT=>(IOC_SIZESHIFT+_IOC_SIZEBITS);
+
+my $IOC_NRSHIFT=0;
+my $IOC_TYPESHIFT=($IOC_NRSHIFT+$IOC_NRBITS);
+my $IOC_SIZESHIFT=($IOC_TYPESHIFT+$IOC_TYPEBITS);
+my $IOC_DIRSHIFT=($IOC_SIZESHIFT+$_IOC_SIZEBITS);
 
 # Direction bits.
 use constant IOC_NONE=>0; 
@@ -26,10 +31,10 @@ use constant IOCNR_GET_DEVICE_ID=>1;
 
 sub ioc{
 	my ($dir,$type,$nr,$size)=@_;
-	return( (($dir)  << IOC_DIRSHIFT)|
-			(($type) << IOC_TYPESHIFT) | 
-			(($nr)   << IOC_NRSHIFT) | 
-			(($size) << IOC_SIZESHIFT));
+	return( (($dir)  << $IOC_DIRSHIFT)|
+			(($type) << $IOC_TYPESHIFT) | 
+			(($nr)   << $IOC_NRSHIFT) | 
+			(($size) << $IOC_SIZESHIFT));
 }
 
 sub ioc_get_device_id{
