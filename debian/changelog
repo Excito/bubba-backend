@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre59) vincent hugo; urgency=low
+
+  * Update cups config 
+
+ -- Tor Krill <tor@excito.com>  Thu, 09 Sep 2010 17:41:25 +0200
+
 bubba-backend (2.1~pre58) vincent hugo; urgency=low
 
   * Really fixing constants. (Replace by variables)
