@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre60) vincent hugo; urgency=low
+
+  * Reload cups after add/remove printer 
+
+ -- Tor Krill <tor@excito.com>  Thu, 09 Sep 2010 18:16:41 +0200
+
 bubba-backend (2.1~pre59) vincent hugo; urgency=low
 
   * Update cups config 
