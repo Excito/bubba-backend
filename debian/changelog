@@ -1,3 +1,10 @@
+bubba-backend (2.1~pre61) lucid; urgency=low
+
+  * Don't reload apache when restoring config.
+    (At least temporarily fixes: #1555) 
+
+ -- Tor Krill <tor@excito.com>  Sun, 12 Sep 2010 23:30:51 +0200
+
 bubba-backend (2.1~pre60) vincent hugo; urgency=low
 
   * Reload cups after add/remove printer 

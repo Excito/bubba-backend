@@ -1677,7 +1677,9 @@ sub restore_config{
 		$lan = _get_lanif;
 		restart_network($lan);
 		reload_service("samba");
-		reload_service("apache2");
+		# Dont reload apache for now, it breaks connection with fcgi
+		# Resulting in an internal server error.
+		#reload_service("apache2");
 
 		# start or stop services
 		while( my( $service, $status ) = each( %{$meta->{services}} ) ) {
@@ -1856,7 +1858,9 @@ sub restore_config{
 
 			reload_service("samba");
 
-			reload_service("apache2");
+			# Dont reload apache for now, it breaks connection with fcgi
+			# Resulting in an internal server error.
+			#reload_service("apache2");
 
 		}else{
 			return -1;
