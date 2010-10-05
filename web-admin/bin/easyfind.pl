@@ -1,12 +1,42 @@
 #!/usr/bin/perl
+
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 use IPC::Open3;
 use CGI;
+use JSON;
 
 use strict;
 use constant WAN_IF => "eth0";
 use constant EASYFIND_CONF => "/etc/network/easyfind.conf";
 use constant KEY => "/etc/network/bubbakey";
 use constant BOOTARGS => "/proc/cmdline";
+
+sub decode_response {
+	my $response = shift;
+	my %resp;
+	my $data;
+
+ 	if ($response->is_success) {
+ 		my $content = $response->decoded_content;
+ 		$content =~ /(\{.*\})/;
+ 		eval {
+	 		$data = decode_json($1);
+	    	%resp = %$data;
+ 			1;
+ 		} or do {
+	    	$resp{'error'} = "true";
+	    	$resp{'msg'} = "Caught JSON error, failed to decode server answer";
+	    	return %resp;
+ 		};
+ 		
+ 	} else {
+    	$resp{'error'} = "true";
+    	$resp{'msg'} = "Failed to connect to database server";
+    	print STDERR $resp{'msg'}; 
+ 	}
+ 	return %resp;
+}
 
 sub parse_boot{
 	my $res={};
@@ -41,7 +71,7 @@ sub read_config() {
 		if($file =~ m/ip\s*=\s*(\d+\.\d+\.\d+\.\d+)/) {
 			$conf{'ip'} = $1;
 		}
-		if($file =~ m/name\s*=\s*([\w\d-_]+)/) {
+		if($file =~ m/name\s*=\s*([\w\d\-_\.]+)/) {
 			$conf{'name'} = $1;
 		}
 	}
@@ -57,25 +87,21 @@ sub write_config {
 		print INFILE "$key = $$p_config{$key}\n";
 	} 
 	close INFILE;
-	print("Wrote config to file\n");
+	print STDERR ("Wrote config to file\n");
 
 }
 
 sub get_extip {
-	my($wtr, $rdr, $err);
-	$err = 1; # we want to dump errors here
-
-	my $pid = open3($wtr,$rdr,$err,"wget -q -O - http://update.excito.net/extip.php");
-	my $curr_ip = <$rdr>;
-	my $errmsg = <$err>;
-	waitpid($pid,0);
-
-	if ($errmsg) {
-		print("wget error: $errmsg\n");
-		return 0;
-	} else {
-		return $curr_ip;	
-	}
+	use LWP::Simple;
+	my $url = "https://easyfind.excito.org/extip.php"; 
+	my $response = get($url);
+	
+    if ($response) {
+        return $response;
+    } else {
+        print STDERR "Failed to get external ip";
+        return 0;
+    }
 }
 
 sub get_mac {
@@ -116,7 +142,7 @@ sub get_key{
 		$key=~s/\s//g;
 		return $key;
 	} else {
-		print("Error, no keyfile\n");
+		print STDERR ("Error, no keyfile\n");
 		return 0;
 	}	
 }
@@ -125,191 +151,148 @@ sub update_dblink{
 	my ($ip) = @_;
 	my $mac;
 	my $key;
-	my $disable;
 
 	$mac=get_mac();
 	$key=get_key();
 
 	if ($ip == -1) {
-		$disable = "&disable=1";
+		# disable easyfind
 	}
-	my($wtr, $rdr, $err);
-	$err = 1; # we want to dump errors here
-
-	my $cmd = "wget --no-check-certificate --timeout=5 -q -O - --post-data=\"id=$mac&pwd=$key$disable\" \"https://www.bubbaserver.com/name_update.php\"";
-	my $pid = open3($wtr,$rdr,$err,$cmd);
-	my $errmsg = <$err>;
-	my $retval = <$rdr>;
-	waitpid($pid,0);
-	if($retval eq "") {
-		$retval = 1; # An empty string is a failure. $err always seem to be empty.
-	}
-	return $retval;
-
 }
 
 sub update_ip{
 
-	my ($extip) = @_;
-	my $err;
-	my $res=0;
-
-	if ($extip==0) {
-		print("Update error\n");
-		return 1;
-	} else {
-		#update database with new ip.
-		return update_dblink($extip);
-	}
 }
 
 sub print_name {
 
 	my $p_config = shift;
-	if ($$p_config{'name'}) {
-		print $$p_config{'name'}."\n";
-	} else {
-		print "No name set\n";
+	my %resp;
+	if ($$p_config{'ip'}) {
+		$resp{'ip'} = $$p_config{'ip'};
 	}
+	if ($$p_config{'name'}) {
+		$resp{'name'} = $$p_config{'name'};
+		$resp{'error'} = "false";
+	} else {
+		$resp{'msg'} = "No name set";
+		$resp{'error'} = "true";
+		print STDERR "(print_name): No name set\n";
+	}
+	return %resp;
 }
 
 sub set_name {
-
-	my $p_config = shift;
+	use URI::Escape;
+	require LWP::UserAgent;
+	
 	my $key=get_key();
 	my $mac=get_mac();
-	my $name = $ARGV[1];
-	my $res;
-	my $success = 0;
-
-	my($wtr, $rdr, $err);
-	$err = 1; # we want to dump errors here
-
-	#
-	#if there is no name in the config file, check if there is something registered on the server.
-	if(!$$p_config{name}) {
-		print "DB-name: ";
-		my $db_name = print_db_name();
-		if($db_name =~ m/$name/i) {
-			# The new name is already registerd and should be treated as a succussful call.
-			$success = 1;
-			$name = $db_name;
-		}
-	}
-	if(!$success) {	# php already checks that the name does not match the name in config.
-
-		my $cmd = "wget --no-check-certificate --timeout=2 -q -O - --post-data=\"id=$mac&pwd=$key&setname=$name\" \"https://www.bubbaserver.com/name_update.php\"";
-		#print "$cmd\n";
-		my $pid = open3($wtr,$rdr,$err,$cmd);
-		my $errmsg = <$err>;
-		my @retval = <$rdr>;
-		waitpid($pid,0);
-		my $response = join("\n",@retval);
-		if($response =~ /Name updated/) {
-			$success = 1;
-		}
-	}
-
-	if($success) {
-		$$p_config{'name'} = $name;
-		$$p_config{'enable'} = "yes";
-		print "Name updated\n";
-		$res = 1;		
-	}	else {
-		print "Name not available\n";
-		$res = 0;
-	}
-	return $res;
+	my ($name) = @_;
+	
+	my $ua = LWP::UserAgent->new;
+ 	$ua->timeout(2);
+ 	
+ 	# set name on server.
+	my $response = $ua->post('https://easyfind.excito.org/',
+		[ 
+			'key' => get_key(),
+			'mac0' => get_mac(),
+			'newname' => uri_escape($name),
+			'oldname' => "",
+			
+		]
+	);
+ 
+ 	return decode_response($response);
 }
 
 sub print_db_name {
-
-	my $p_config = shift;
-	my $key=get_key();
-	my $mac=get_mac();
-
-	my($wtr, $rdr, $err);
-	my $cmd = "wget --no-check-certificate --timeout=2 -q -O - --post-data=\"id=$mac&pwd=$key&getname=1\" \"https://www.bubbaserver.com/name_update.php\"";
-	my $pid = open3($wtr,$rdr,$err,$cmd);
-	my $errmsg = <$err>;
-	my @retval = <$rdr>;
-	my $response = join("\n",@retval);
-	waitpid($pid,0);
-	if($response =~ /name\s*=\s*(\w+)/) {
-		print "$1\n";
-		$$p_config{name} = $1;
-	}
-	return $1;
+	require LWP::UserAgent;
+	
+	my $ua = LWP::UserAgent->new;
+ 	$ua->timeout(2);
+ 	
+ 	# get record data from server.
+	my $response = $ua->post('https://easyfind.excito.org/',
+		[ 
+			'key' => get_key(),
+			'mac0' => get_mac(),
+		]
+	);
+ 
+ 	return decode_response($response);
 }
+
 ##### start code #####
 
 my $extip;
 my %config = read_config();
 my $cmd = $ARGV[0];
-
+my %response;
 if ($cmd) {
 	if ($cmd eq "getname") {
-		if($config{name}) {
-			print_name(\%config);
-		} else {
-			print_db_name(\%config);
+		if($config{'enable'}) {
 			if($config{name}) {
-				# Name was found on server but not in config file.
-				write_config(\%config);
+				%response=print_name(\%config);
+			} else {				
+				%response = print_db_name();
+				if($response{'error'} eq "false") {
+					$config{name} = $response{'record'}{'name'};
+					$config{ip} = $response{'record'}{'content'};
+					write_config(\%config);	
+				} else {
+					#server returned failure
+					print STDERR $response{'msg'},"\n";
+				}
+				
 			}
+		} else {
+			# not enabled
+			$response{'error'} = 'false';
+			$response{'msg'} = 'Not enabled';
+			$response{'name'} = '';
 		}
-	} elsif ($cmd eq "setname") {
-		if(set_name(\%config)) {
-			$extip = get_extip();
-			if(update_ip($extip)) {
-				$config{'ip'} = $extip;
-			}
-			write_config(\%config);
-		} 
-	} elsif ($cmd eq "disable") {
-		if(update_ip(-1)) {
-			$config{'ip'} = "";
-			$config{'enable'} = "no";
-		}
-		write_config(\%config);
-
-	} elsif ($cmd eq "enable") {
-		$extip = get_extip();
-		if(update_ip($extip) == 0) {
-			$config{'ip'} = $extip;
+	} elsif ( $cmd eq "setname" ) {
+		%response = set_name($ARGV[1]);
+		if($response{'error'} eq "false") {
+			$config{name} = $response{'record'}{'name'};
+			$config{ip} = $response{'record'}{'content'};
 			$config{'enable'} = "yes";
+			write_config(\%config);	
+		} else {
+			#server returned failure
+			print STDERR $response{'msg'},"\n";
 		}
-		write_config(\%config);
-
+	} elsif ($cmd eq "disable") {
+		%response = set_name("");
+		if($response{'error'} eq "false") {
+			$config{name} = "";
+			$config{ip} = "";
+			$config{'enable'} = "no";
+			write_config(\%config);	
+		} else {
+			#server returned failure
+			print STDERR $response{'msg'},"\n";
+		}
 	} else {
 		print "Unknown parameter\n";
-		exit 0; # wrong parameter
+		exit 1; # wrong parameter
 	}
 } else {	
 	if($config{'enable'}) { # only run updates if enabled.
-		$extip = get_extip();
-		if($config{'ip'}) {
-			if($config{'ip'} eq $extip) {
-				#do nothing.
-				exit 1;
-			} else {
-				print("IP has changed, updating.\n");
-				if(update_ip($extip) ne "0") {
-					print "Error updating IP on server.\n";
-				} else {
-					print "IP on server updated.\n";
-					$config{'ip'} = $extip;
-					write_config(\%config);
-				}
-			}
-		} else { # no external IP file found.
-			print "No extip\n";
-			update_ip($extip);
+		%response = print_db_name();
+		$extip = $response{'record'}{'content'};
+		if($config{'ip'} ne $extip) {
+			print STDERR "Updating IP on file.\n";
 			$config{'ip'} = $extip;
 			write_config(\%config);
 		}
 	} else {
-		print "Easyfind not enabled.\n";
-	}	
-	exit 1;
+		print STDERR "Easyfind not enabled.\n";
+		$response{'error'} = 'true';
+		$response{'msg'} = 'Easyfind not enabled.';
+	}
 }
+print encode_json(\%response),"\n";	
+exit 0;

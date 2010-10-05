@@ -203,69 +203,32 @@ function ls($uname, $path){
 }
 
 function get_easyfind() {
-  
-  $retval = array("",0,"");
-	if(file_exists(BUBBA_EASYFIND_CONF)) {
-		$arr = file(BUBBA_EASYFIND_CONF);
-		foreach($arr as $line){
-			$line=trim($line);
-	
-			if($line==""){
-				continue;
-			}
-			if($line[0]=='#' || $line[0]==';'){
-					continue;
-			}	
-			if(preg_match("/^enable\s*=\s*yes/i",$line)) {
-			  $retval[0] = "checked";
-			}
-			
-			if(preg_match("/^ip\s*=\s*([\d\.]*)/i",$line,$matches)){
-			  $retval[1] = $matches[1];
-			}
-			if(preg_match("/^name\s*=\s*(.*)$/i",$line,$matches)){
-			  $retval[2] = $matches[1];
-			}
-			
-		}
+
+	$cmd=BACKEND." easyfind getname 0";
+	exec($cmd,$out,$ret);
+	if($ret) {
+		$res['error'] = true;
+		$res['msg'] = "Error retreiving name";
+//		print_r($res);
+		return $res; 
 	}
-	if (!$retval[2]) {
-		if($retval[0]) {
-    	$cmd=BACKEND." easyfind getname 0";
-		  exec($cmd,$out,$ret);
-		  if(sizeof($out)) {
-		  	$retval[2] = $out[0];
-		  } else {
-			  $retval[2] = "No name set";
-			}
-	  } else {
-		  $retval[2] = "";
-		}
-	}
-	return $retval;
-   
+	return json_decode($out[0],true);
 }
 
-function enable_easyfind($enable) {
-  
-  if($enable) {
-		$cmd=BACKEND." easyfind enable 0";
-		exec($cmd,$out,$res);
+function set_easyfind($name) {
+
+	if($name) {
+		$cmd=BACKEND." easyfind setname $name";
 	} else {
 		$cmd=BACKEND." easyfind disable 0";
-		exec($cmd,$out,$res);
 	}
-}
-
-function setname_easyfind($name) {
-
-	$cmd=BACKEND." easyfind setname $name";
-	exec($cmd,$out,$res);
-	$res = implode("\n",$out);
-	if(preg_match("/Name updated/",$res)) {
-		return 1;
+	exec($cmd,$out,$ret);
+	if($ret > 0) {
+		$res['error'] = true;
+		$res['msg'] = "Error retreiving name";
+		return $res; 
 	} else {
-		return 0;
+		return json_decode($out[0],true);
 	}
 }
 
