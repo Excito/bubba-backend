@@ -1,8 +1,9 @@
-bubba-backend (2.1~pre64) lucid; urgency=low
+bubba-backend (2.1~pre64) vincent hugo; urgency=low
 
   * Easyfind updates 
+  * 
 
- -- PA Nilsson <pa@excito.com>  Tue, 05 Oct 2010 12:06:34 +0200
+ -- PA Nilsson <pa@excito.com>  Tue, 05 Oct 2010 12:07:11 +0200
 
 bubba-backend (2.1~pre63) lucid; urgency=low
 
