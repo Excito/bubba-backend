@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre65) vincent hugo; urgency=low
+
+  * Removed unused sub routines.
+
+ -- PA Nilsson <pa@excito.com>  Thu, 21 Oct 2010 15:39:19 +0200
+
 bubba-backend (2.1~pre64) vincent hugo; urgency=low
 
   * Easyfind updates 

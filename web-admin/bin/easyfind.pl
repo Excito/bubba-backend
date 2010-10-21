@@ -147,23 +147,6 @@ sub get_key{
 	}	
 }
 
-sub update_dblink{
-	my ($ip) = @_;
-	my $mac;
-	my $key;
-
-	$mac=get_mac();
-	$key=get_key();
-
-	if ($ip == -1) {
-		# disable easyfind
-	}
-}
-
-sub update_ip{
-
-}
-
 sub print_name {
 
 	my $p_config = shift;
