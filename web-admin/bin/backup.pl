@@ -1526,9 +1526,10 @@ sub write_schedule {
 			push(@cronfile, $new_line);
 		}
 
-		if(open(CRON,">",CRON_FILE)) {
-			print CRON  @cronfile;
-			close(CRON);
+		if(open(my $cron,">",CRON_FILE)) {
+			chmod(0644, $cron);
+			print $cron  @cronfile;
+			close($cron);
 			print("Cronfile written.\n");
 		} else {
 			print("Error opening cronfile");
@@ -1594,9 +1595,10 @@ sub delete_job {
 		if( $line =~ m/$user\s+$jobname/ ) { 
 			# correct user and jobname
 			$line="";
-			if(open(CRON,">",CRON_FILE)) {
-				print CRON  @cronfile;
-				close(CRON);
+			if(open(my $cron,">",CRON_FILE)) {
+				chmod(0644, $cron);
+				print $cron  @cronfile;
+				close($cron);
 				print("Cronfile written.\n");
 			} else {
 				print("Error opening cronfile");

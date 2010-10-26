@@ -1,3 +1,9 @@
+bubba-backend (2.1~pre66) vincent hugo; urgency=low
+
+  * Make sure cronfile has sane permissions (closes #1591) 
+
+ -- Tor Krill <tor@excito.com>  Tue, 26 Oct 2010 11:19:20 +0200
+
 bubba-backend (2.1~pre65) vincent hugo; urgency=low
 
   * Removed unused sub routines.
