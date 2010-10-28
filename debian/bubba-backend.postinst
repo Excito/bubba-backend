@@ -58,6 +58,28 @@ divert_cb_dnsmasq() {
 	invoke-rc.d --quiet $5 restart || true;
 }
 
+
+fix_postfix_maincf(){
+
+	echo "Checking postfix configuration"
+	SRCFILE=/etc/postfix/main.cf
+	TMPFILE=`mktemp /tmp/bubba-backend.XXXXXXXXXX` || exit 1
+
+	awk '
+	/^\s*mydestination/{
+		if ( $0 ~ /b3\.localdomain/ || $0 ~ /bubba\.localdomain/){
+			print $0; 
+		}else{ 
+			print $0 ", b3.localdomain"
+		}
+		next
+	}
+	{ print }' ${SRCFILE} > ${TMPFILE} && mv ${TMPFILE} ${SRCFILE}
+
+	invoke-rc.d --quiet postfix reload
+}
+
+
 case "$1" in
     configure)
 
@@ -295,6 +317,11 @@ root@$MAILNAME
 		echo "Adding multicast 239.0.0.0 route to eth1";
 		) || true
 	fi
+
+	if dpkg --compare-versions "$2" lt 2.2.1; then
+		fix_postfix_maincf
+	fi
+
 
 	if ! getent passwd admin >/dev/null; then
 		echo "Adding administrator user \"admin\"";

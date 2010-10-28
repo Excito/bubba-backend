@@ -1,3 +1,9 @@
+bubba-backend (2.2.1) vincent hugo; urgency=low
+
+  * Fix "faulty" postfix conf (Closes: #1595)  
+
+ -- Tor Krill <tor@excito.com>  Thu, 28 Oct 2010 14:17:08 +0200
+
 bubba-backend (2.2.0) hugo vincent; urgency=low
 
   * Fixed restore settings. (Closes: #1598)
