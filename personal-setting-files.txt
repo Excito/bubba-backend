@@ -12,12 +12,16 @@
 /etc/cups/printers.conf
 /etc/resolv.conf
 /etc/fetchmailrc
+/etc/postfix/sasl_passwd
+/etc/postfix/sasl_passwd.db
 /etc/ftd/ftdconfig.ini
 /etc/hostapd/hostapd.conf
 /etc/bubba-networkmanager.conf
 
 /etc/mediatomb/config.xml
 
+/etc/timezone
+/etc/localtime
 /etc/ntp.conf
 /etc/cron.d/bubba-backup
 

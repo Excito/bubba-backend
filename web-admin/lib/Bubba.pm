@@ -916,7 +916,7 @@ sub remove_service{
 sub query_service{
    my ($service)=@_;
 
-   return system("ls /etc/rc2.d/S??$service &>/dev/null");
+   return system("ls /etc/rc2.d/S??$service 1>/dev/null 2>/dev/null");
 
 }
 
@@ -1483,7 +1483,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk ifup-br0);
+	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
 
 	my $meta = {
 		version => $revision,
@@ -1503,7 +1503,8 @@ sub backup_config{
 		"--gzip",
 		"--force-local", 
 		"--ignore-failed-read",
-		"--preserve",
+		"--preserve-permissions",
+		"--preserve-order",
 		"--same-owner",
 		"--absolute-names",
 		"--atime-preserve",
@@ -1518,7 +1519,8 @@ sub backup_config{
 		"--gzip",
 		"--force-local", 
 		"--ignore-failed-read",
-		"--preserve",
+		"--preserve-permissions",
+		"--preserve-order",
 		"--same-owner",
 		"--absolute-names",
 		"--atime-preserve",
@@ -1614,17 +1616,32 @@ sub restore_config{
 					);
 				}
 			}
-			system(
-				"/usr/sbin/$action",
-				'--groups', join( ',', @{$user->{groups}}),
-				'--gid', $user->{main_group},
-				'--home', $user->{homedir},
-				'--comment', $user->{comment},
-				'--password', $user->{password},
-				'--shell', $user->{shell},
-				'--create-home',
-				$user->{username}
-			);
+			if($existing_users{$euser}) {
+				# modify user
+				system(
+					"/usr/sbin/$action",
+					'--groups', join( ',', @{$user->{groups}}),
+					'--gid', $user->{main_group},
+					'--home', $user->{homedir},
+					'--comment', $user->{comment},
+					'--password', $user->{password},
+					'--shell', $user->{shell},
+					$user->{username}
+				);
+			} else {
+				# add user
+				system(
+					"/usr/sbin/$action",
+					'--groups', join( ',', @{$user->{groups}}),
+					'--gid', $user->{main_group},
+					'--home', $user->{homedir},
+					'--comment', $user->{comment},
+					'--password', $user->{password},
+					'--shell', $user->{shell},
+					'--create-home',
+					$user->{username}
+				);
+			}
 		}
 
 		foreach my $user( keys %removed_users ) {
@@ -1643,7 +1660,8 @@ sub restore_config{
 			'--directory', '/',
 			'--file', "$tempdir/system.tar.gz",
 			'--atime-preserve',
-			'--preserve',
+			'--preserve-permissions',
+			'--preserve-order',
 			'--same-owner',
 			'--absolute-name'
 		);
@@ -1665,7 +1683,8 @@ sub restore_config{
 			'--directory', '/',
 			'--file', "$tempdir/user.tar.gz",
 			'--atime-preserve',
-			'--preserve',
+			'--preserve-permissions',
+			'--preserve-order',
 			'--same-owner',
 			'--absolute-name'
 		);
@@ -1674,6 +1693,19 @@ sub restore_config{
 		system("/bin/cp","/etc/hostname","/proc/sys/kernel/hostname");
 
 		restart_network("eth0");
+		# hostapd needs to be started prior to restarting LANIF
+		$service = "hostapd";
+		$hostapd_status = ${$meta->{services}}{$service};
+		if($hostapd_status) {
+			unless( query_service( $service ) == 0 ) {
+                        	add_service( $service );
+                        }
+                        if( service_running( $service ) ) {
+                        	restart_service( $service );
+                        } else {
+                        	start_service( $service );
+                        }
+		}
 		$lan = _get_lanif;
 		restart_network($lan);
 		reload_service("samba");
@@ -1683,21 +1715,23 @@ sub restore_config{
 
 		# start or stop services
 		while( my( $service, $status ) = each( %{$meta->{services}} ) ) {
-			if( $status ) {
-				unless( query_service( $service ) == 0 ) {
-					add_service( $service );
-				}
-				if( service_running( $service ) ) {
-					restart_service( $service );
+			unless($service eq "hostapd") {
+				if( $status ) {
+					unless( query_service( $service ) == 0 ) {
+						add_service( $service );
+					}
+					if( service_running( $service ) ) {
+						restart_service( $service );
+					} else {
+						start_service( $service );
+					}
 				} else {
-					start_service( $service );
-				}
-			} else {
-				if( service_running( $service ) ) {
-					stop_service( $service );
-				}
-				if( query_service( $service ) == 0 ) {
-					remove_service( $service );
+					if( service_running( $service ) ) {
+						stop_service( $service );
+					}
+					if( query_service( $service ) == 0 ) {
+						remove_service( $service );
+					}
 				}
 			}
 		}
