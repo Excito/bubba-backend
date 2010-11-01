@@ -1,3 +1,9 @@
+bubba-backend (2.2.2) vincent hugo; urgency=low
+
+  * Change postfix conf once more. 
+
+ -- Tor Krill <tor@excito.com>  Mon, 01 Nov 2010 16:21:12 +0100
+
 bubba-backend (2.2.1) vincent hugo; urgency=low
 
   * Fix "faulty" postfix conf (Closes: #1595)  

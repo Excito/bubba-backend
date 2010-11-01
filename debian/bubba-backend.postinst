@@ -67,10 +67,10 @@ fix_postfix_maincf(){
 
 	awk '
 	/^\s*mydestination/{
-		if ( $0 ~ /b3\.localdomain/ || $0 ~ /bubba\.localdomain/){
+		if ( $0 ~ /\$myhostname/ ){
 			print $0; 
 		}else{ 
-			print $0 ", b3.localdomain"
+			print $0 ", $myhostname"
 		}
 		next
 	}
@@ -318,7 +318,7 @@ root@$MAILNAME
 		) || true
 	fi
 
-	if dpkg --compare-versions "$2" lt 2.2.1; then
+	if dpkg --compare-versions "$2" lt 2.2.2; then
 		fix_postfix_maincf
 	fi
 

@@ -555,6 +555,7 @@ sub change_hostname {
 
 	system("echo $name > /proc/sys/kernel/hostname");
 	system("echo $name > /etc/hostname");
+	system("echo $name.localdomain > /etc/mailname");
 
 	%ifs = read_interfaces();
 	chomp($lan = _get_lanif);
