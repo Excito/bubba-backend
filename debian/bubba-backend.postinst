@@ -325,11 +325,11 @@ root@$MAILNAME
 	# Notify users that easyfind has migrated
 	if dpkg --compare-versions "$2" lt 2.2.3; then
 		cat >>/tmp/bubba-apt.log << End-of-Message
-Code: WARN
-Desc: Restart required, core system component updated (Kernel).
-Data: Core system component has been updated.
- A restart of the system is required to complete 
- the upgrade.
+Code: INFO
+Desc: Easyfind domain has changed, please re-register your easyfind name.
+Data: In order to provide better name resolution, the easyfind name service has been upgraded to handle all protocols.
+ In order to accomplish this, the domain needed to be changed and your easyfind name needs to be re-registered.
+ Please use the "Settings->Identity" tab to enter your new name.
 
 End-of-Message
 	fi

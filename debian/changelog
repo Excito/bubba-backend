@@ -1,3 +1,9 @@
+bubba-backend (2.2.3) vincent hugo; urgency=low
+
+  * Added postinst message for easyfind domain change.
+
+ -- PA Nilsson <pa@excito.com>  Tue, 02 Nov 2010 09:50:06 +0100
+
 bubba-backend (2.2.2) vincent hugo; urgency=low
 
   * Change postfix conf once more. 
