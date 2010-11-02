@@ -322,6 +322,18 @@ root@$MAILNAME
 		fix_postfix_maincf
 	fi
 
+	# Notify users that easyfind has migrated
+	if dpkg --compare-versions "$2" lt 2.2.3; then
+		cat >>/tmp/bubba-apt.log << End-of-Message
+Code: WARN
+Desc: Restart required, core system component updated (Kernel).
+Data: Core system component has been updated.
+ A restart of the system is required to complete 
+ the upgrade.
+
+End-of-Message
+	fi
+
 
 	if ! getent passwd admin >/dev/null; then
 		echo "Adding administrator user \"admin\"";
