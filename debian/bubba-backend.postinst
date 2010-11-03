@@ -323,9 +323,9 @@ root@$MAILNAME
 	fi
 
 	# Notify users that easyfind has migrated
-	if dpkg --compare-versions "$2" lt 2.2.3; then
+	if dpkg --compare-versions "$2" lt 2.2.4; then
 		cat >>/tmp/bubba-apt.log << End-of-Message
-Code: INFO
+Code: WARN
 Desc: Easyfind domain has changed, please re-register your easyfind name.
 Data: In order to provide better name resolution, the easyfind name service has been upgraded to handle all protocols.
  In order to accomplish this, the domain needed to be changed and your easyfind name needs to be re-registered.

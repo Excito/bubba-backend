@@ -1,3 +1,10 @@
+bubba-backend (2.2.4) vincent hugo; urgency=low
+
+  * Fix severity level on notification to let it show in UI
+  * Change change_distribution to not modify apt preferences 
+
+ -- Tor Krill <tor@excito.com>  Tue, 02 Nov 2010 11:19:50 +0100
+
 bubba-backend (2.2.3) vincent hugo; urgency=low
 
   * Added postinst message for easyfind domain change.
