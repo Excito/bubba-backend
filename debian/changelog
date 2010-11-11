@@ -1,3 +1,10 @@
+bubba-backend (2.2.5) vincent hugo; urgency=low
+
+  * Reenable apt preferences again, with right origin on 
+    upstream
+
+ -- Tor Krill <tor@excito.com>  Thu, 11 Nov 2010 09:36:09 +0100
+
 bubba-backend (2.2.4) vincent hugo; urgency=low
 
   * Fix severity level on notification to let it show in UI
