@@ -1,3 +1,9 @@
+bubba-backend (2.2.6) vincent hugo; urgency=low
+
+  * Update WEP and WPA default password to ExcitoSweden!
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 22 Mar 2011 15:05:24 +0100
+
 bubba-backend (2.2.5) vincent hugo; urgency=low
 
   * Reenable apt preferences again, with right origin on 
