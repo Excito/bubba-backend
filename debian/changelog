@@ -1,8 +1,8 @@
 bubba-backend (2.2.10) vincent hugo; urgency=low
 
-  * Update umask for afp shares to 0000 
+  * Specify permissions for afd shares
 
- -- Carl Fürstenberg <carl@excito.com>  Wed, 30 Mar 2011 15:40:02 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 30 Mar 2011 16:09:26 +0200
 
 bubba-backend (2.2.9) vincent hugo; urgency=low
 
