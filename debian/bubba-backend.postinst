@@ -371,6 +371,12 @@ End-of-Message
 		fi
 	fi
 
+	# switchover to minidlna
+	if dpkg --compare-versions "$2" lt-nl 2.2.8; then
+		invoke-rc.d --quiet mediatomb stop
+		update-rc.d -f mediatomb remove
+	fi
+
 
 	if id -Gn admin | grep -vqE '\busers\b' 2>&-; then
 		adduser admin users
