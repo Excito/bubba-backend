@@ -1,4 +1,4 @@
-bubba-backend (2.2.8) vincent hugo; urgency=low
+bubba-backend (2.2.9) vincent hugo; urgency=low
 
   * Stop mediatomb on update if relevant
   * fix depends for Config::Simple
