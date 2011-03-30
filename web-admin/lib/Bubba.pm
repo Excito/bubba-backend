@@ -587,12 +587,6 @@ sub change_hostname {
 		sleep(1);
 		start_service("mt-daapd");
 	}
-	if(change_upnp_servername($name)){
-		if(!query_service("mediatomb")){
-			stop_service("mediatomb");
-			start_service("mediatomb");
-		}
-	}
 	return 0;
 }
 # Power off
@@ -1321,40 +1315,6 @@ sub ftp_set_anonymous{
    return 0;
 
 }
-# Helper function change mediatomb servername
-#
-# Args   : New servername
-#
-# Outputs: Nothing
-#
-# Return: 0 - Operation failed
-#         1 - Operation ok
-
-sub change_upnp_servername{
-   my $name=shift;
-
-   if(not $name=~ /^[\w-]*$/){
-      return 0;
-   }
- 
-   open( CONF,"/etc/mediatomb/config.xml") or die "Could not open config file";
-   my @data=<CONF>;
-   close(CONF);
-
-   chomp(@data);
-   my $file=join("\n",@data)."\n";
-        
-   if(  $file =~ s/^(\s*)<name>\s*(.*)<\/name>/$1<name>$name<\/name>/mg){
-      open( CONF,">/etc/mediatomb/config.xml") or die "Could not open config file";
-      print CONF $file;
-      close CONF;
-      return 1;
-   }
-        
-   return 0;
-
-}
-
 
 # Helper function change mt-daapd servername
 #
@@ -1484,7 +1444,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail mediatomb dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
+	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail minidlna dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
 
 	my $meta = {
 		version => $revision,
@@ -1831,11 +1791,11 @@ sub restore_config{
 				remove_service("mt-daapd");
 			}
 
-			if($lines=~/mediatomb/){
-				start_service("mediatomb");
+			if($lines=~/minidlna/){
+				start_service("minidlna");
 			}else{
-				stop_service("mediatomb");
-				remove_service("mediatomb");
+				stop_service("minidlna");
+				remove_service("minidlna");
 			}
 
 			if($lines=~/filetransferdaemon/){
@@ -2224,48 +2184,22 @@ sub notify_flush {
 sub set_interface {
 
     use Config::Tiny;
-    use XML::LibXML;
+	use Config::Simple;
     use File::Slurp;
 
     my( $interface ) = @_;
 
     {
-        my $config = '/etc/samba/smb.conf';
-
-        my $cfg = Config::Tiny->read( $config );
-        $cfg->{global}->{interfaces} = $interface;
-        $cfg->write( $config );
+		my $config = new Config::Simple('/etc/samba/smb.conf');
+		$config->param('global.interface', $interface );
+		$config->save();
     }
 
     {
-        my $config = '/etc/mediatomb/config.xml';
-
-        my $parser = new XML::LibXML();
-        my $xpc = new XML::LibXML::XPathContext();
-
-        my $doc = $parser->parse_file( $config );
-        $xpc->registerNs('m', "http://mediatomb.cc/config/1");
-
-        my $nodes = $xpc->findnodes("/m:config/m:server/m:interface", $doc);
-        
-        return 1 if $nodes->size() == 0;
-
-        my $node = $nodes->get_node(1);
-        $node->removeChildNodes();
-        $node->appendTextNode( $interface );
-
-        $doc->toFile( $config, 1 );
-    }
-
-    {
-        my $config = '/etc/default/mediatomb';
-
-        my $data = read_file( $config );
-
-        return 1 unless $data =~ s/^\s*INTERFACE\s*=\s*".*?"\s*?$/INTERFACE="$interface"/m;
-
-        write_file( $config, $data );
-    }
+		my $config = new Config::Simple('/etc/minidlna.conf');
+		$config->param('network_interface', $interface );
+		$config->save();
+	}
 
     {
         my $config = '/etc/cups/cupsd.conf';

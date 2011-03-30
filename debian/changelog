@@ -1,3 +1,9 @@
+bubba-backend (2.2.7) vincent hugo; urgency=low
+
+  * Switch mediatomb to minidlna 
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 30 Mar 2011 12:16:58 +0200
+
 bubba-backend (2.2.6) vincent hugo; urgency=low
 
   * Update WEP and WPA default password to ExcitoSweden!

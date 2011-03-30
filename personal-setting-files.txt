@@ -18,7 +18,7 @@
 /etc/hostapd/hostapd.conf
 /etc/bubba-networkmanager.conf
 
-/etc/mediatomb/config.xml
+/etc/minidlna.conf
 
 /etc/timezone
 /etc/localtime
