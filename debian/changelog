@@ -1,9 +1,9 @@
-bubba-backend (2.2.8) maverick; urgency=low
+bubba-backend (2.2.8) vincent hugo; urgency=low
 
   * Stop mediatomb on update if relevant
   * fix depends for Config::Simple
 
- -- Carl Fürstenberg <carl@excito.com>  Wed, 30 Mar 2011 13:17:35 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 30 Mar 2011 13:20:36 +0200
 
 bubba-backend (2.2.7) vincent hugo; urgency=low
 
