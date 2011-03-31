@@ -238,7 +238,7 @@ sub ftp_mkdir {
 	my $error;
 
 	if(open(MSG,">",MSGFILE)) {
-		print MSG "Created by Bubba|Two backup script.\nhttp://www.excito.com\n";
+		print MSG "Created by B3 backup script.\nhttp://www.excito.com\n";
 		close(MSG);
 	}
 

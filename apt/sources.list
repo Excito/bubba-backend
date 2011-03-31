@@ -1,19 +1,19 @@
-# BUBBA|TWO apt sources.list
+# B3 apt sources.list
 #
 # Changes in this file might break your system
 # 
 # vim: ft=debsources
 
-# The stable BUBBA|TWO repository, is in the suite "stable".
+# The stable B3 repository, is in the suite "stable".
 deb http://b3.update.excito.org/ elvin main
 
-# The stable BUBBA|TWO repository, is in the suite "stable". source packages
+# The stable B3 repository, is in the suite "stable". source packages
 #deb-src http://b3.update.excito.org/ elvin main
 
-# The upstream packages used in BUBBA|TWO, is in the suite "upstream_stable".
+# The upstream packages used in B3, is in the suite "upstream_stable".
 deb http://b3.update.excito.org/ upstream_squeeze main
 
-# The upstream packages used in BUBBA|TWO, is in the suite "upstream_stable". source packages
+# The upstream packages used in B3, is in the suite "upstream_stable". source packages
 #deb-src http://b3.update.excito.org/ upstream_squeeze main
 
 # The debian squeeze repository containing unsupported packages that can be used.
@@ -35,15 +35,15 @@ deb http://ftp.se.debian.org/debian squeeze main
 #deb-src http://ftp.se.debian.org/debian squeeze non-free
 
 
-# The unstable BUBBA|TWO repository, is in the suite "unstable".
+# The unstable B3 repository, is in the suite "unstable".
 #deb http://b3.update.excito.org/ vincent main
 
-# The unstable BUBBA|TWO repository, is in the suite "unstable". source packages
+# The unstable B3 repository, is in the suite "unstable". source packages
 #deb-src http://b3.update.excito.org/ vincent main
 
-# The upstream packages used in unstable BUBBA|TWO, is in the suite "upstream_stable_forvincent".
+# The upstream packages used in unstable B3, is in the suite "upstream_stable_forvincent".
 #deb http://b3.update.excito.org/ upstream_squeeze_forvincent main
 
-# The upstream packages used in unstable BUBBA|TWO, is in the suite "upstream_stable_forvincent". source packages
+# The upstream packages used in unstable B3, is in the suite "upstream_stable_forvincent". source packages
 #deb-src http://b3.update.excito.org/ upstream_squeeze_forvincent main
 

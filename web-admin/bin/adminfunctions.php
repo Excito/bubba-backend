@@ -970,7 +970,7 @@ function get_fwsettings() {
 			if (!strcmp($rule["target"],"ACCEPT")) {
 				$retval["fwports"][$key]=$rule;
 				if(!isset($retval["fwports"][$key]["to_ip"])) {
-					$retval["fwports"][$key]["to_ip"] =  t("Bubba|Two");
+					$retval["fwports"][$key]["to_ip"] =  t("B3");
 				}
 				if(!isset($retval["fwports"][$key]["to_port"])) {
 					$retval["fwports"][$key]["to_port"] = "";

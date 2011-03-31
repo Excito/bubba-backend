@@ -1,3 +1,9 @@
+bubba-backend (2.2.11) vincent hugo; urgency=low
+
+  * Fix Bubba|2/Bubba|Two to B3 strings 
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 31 Mar 2011 11:37:40 +0200
+
 bubba-backend (2.2.10) vincent hugo; urgency=low
 
   * Specify permissions for afd shares
