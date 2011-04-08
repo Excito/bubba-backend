@@ -1,3 +1,9 @@
+bubba-backend (2.2.12) vincent hugo; urgency=low
+
+  * adding igd functionallity 
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 08 Apr 2011 17:11:49 +0200
+
 bubba-backend (2.2.11) vincent hugo; urgency=low
 
   * Fix Bubba|2/Bubba|Two to B3 strings 

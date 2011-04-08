@@ -20,6 +20,7 @@ auth_template.xml /usr/share/bubba-backend
 hosts.in /usr/share/bubba-backend
 iptables.xslt /usr/share/bubba-backend
 bubba-notify.conf /etc/bubba-notify
+bubba-igd.conf /usr/share/bubba-backend
 
 afpd.conf /etc/bubba
 cupsd.conf /etc/bubba

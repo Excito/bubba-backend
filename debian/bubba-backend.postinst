@@ -83,6 +83,11 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
 
+	if [ ! -e /etc/bubba-igd.conf ];  then
+		cp /usr/share/bubba-backend/bubba-igd.conf /etc/bubba-igd.conf;
+        invoke-rc.d --quiet bubba-igd restart
+	fi
+
 	if [ ! -f /etc/hostapd/hostapd.wpa_psk ]; then
 		touch /etc/hostapd/hostapd.wpa_psk
 	fi
