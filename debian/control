@@ -3,7 +3,7 @@ Section: admin
 Priority: required
 Maintainer: Tor Krill <tor@excito.com>
 Uploaders: Carl Fürstenberg <carl@excito.com>
-Build-Depends: debhelper (>= 7.2), cdbs
+Build-Depends: debhelper (>= 7.2)
 Standards-Version: 3.8.4
 Homepage: http://www.excito.com
 
