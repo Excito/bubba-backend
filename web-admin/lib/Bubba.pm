@@ -800,6 +800,8 @@ sub service_running{
 		$pidfile="/var/run/dnsmasq/dnsmasq.pid";
 	} elsif ($service eq "avahi-daemon"){
 		$pidfile="/var/run/avahi-daemon/pid";
+	} elsif ($service eq "tor"){
+		$pidfile="/var/run/tor/tor.pid";
 	} else {
 		$pidfile = "/var/run/$service.pid";
 	}
