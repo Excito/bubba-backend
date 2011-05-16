@@ -174,6 +174,7 @@ root@$MAILNAME
 	divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default false;
 	divert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib /etc/bubba/afpd.conf netatalk;
 	divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
+	divert bubba-backend /etc/tor/torrc /etc/tor/torrc.bubba-distrib /etc/bubba/tor.conf tor;
 
 	# things that cant be diverted
 	if [ ! -f /etc/default/ifplugd.bubba-distrib ]; then

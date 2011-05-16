@@ -65,6 +65,7 @@ Depends: ${misc:Depends}, bubba,
  bubba-networkmanager,
  libtry-tiny-perl,
  libbubba-info-perl,
- uuid-runtime
+ uuid-runtime,
+ tor
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.
