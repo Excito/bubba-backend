@@ -54,6 +54,7 @@ case "$1" in
 	undivert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib netatalk;
 	undivert bubba-backend /etc/samba/smb.conf /etc/samba/smb.conf.bubba-distrib samba;
 	undivert bubba-backend /etc/minidlna.conf /etc/minidlna.conf.bubba-distrib minidlna;
+	undivert bubba-backend /etc/tor/torrc /etc/tor/torrc.bubba-distrib tor;
 
 	mv /etc/postfix/main.cf.bubba-distrib /etc/postfix/main.cf;
 	mv /etc/samba/smb.conf.bubba-distrib /etc/samba/smb.conf;
