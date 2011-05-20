@@ -311,26 +311,20 @@ sub find_disk {
 	my $cmd = DISKMANAGER . " disk list";
 	my @disklist = exec_cmd($cmd);
 	my $disks = from_json($disklist[0]);
-	my $disk_found = 0;
 	my $mountpath = "";
 	my %retval;
 	$retval{"diskfound"} = 0;
 	$retval{"mountpath"} = "";
 	$retval{"dev"} = "";
 
-	print "Find disk: $uuid\n";
 	foreach my $disk (@$disks) {
 		foreach my $partition (@{$disk->{"partitions"}}) {
 			if($partition->{"uuid"} eq $uuid) {
-				print "Disk found,";
 				$retval{"diskfound"} = 1;
 				$retval{"mountpath"} = $partition->{"mountpath"};
 				$retval{"dev"} = $partition->{"dev"};
+                last;
 			}
-			last;
-		}
-		if($disk_found) {
-			last;
 		}
 	}
 	return %retval;
