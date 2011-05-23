@@ -1,3 +1,9 @@
+bubba-backend (2.2.17) vincent hugo; urgency=low
+
+  * convert target ftp to lowercase
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 23 May 2011 17:07:46 +0200
+
 bubba-backend (2.2.16) vincent hugo; urgency=low
 
   * backup password environment fixes

@@ -539,7 +539,7 @@ sub setup_jobinfo {
 		$no_crypt = "--no-encryption";
 	}
 
-	if(($targetdata->{"target_protocol"} eq "scp") or ($targetdata->{"target_protocol"} eq "FTP")) {
+	if(($targetdata->{"target_protocol"} eq "scp") or (lc $targetdata->{"target_protocol"} eq "ftp")) {
 		if($targetdata->{"target_keypath"}) {
 			$ssh_key = "--ssh-options=\"-oIdentityFile=" . $targetdata->{"target_keypath"} . "\" ";
 		} else {
@@ -718,7 +718,7 @@ sub run_now {
 		# Always run this function since error messages are better here.
 		$error = ssh_mkdir($targetdata);
 	}
-	if($targetdata->{"target_protocol"} eq "FTP") {
+	if(lc $targetdata->{"target_protocol"} eq "ftp") {
 		$error = ftp_mkdir($targetdata);
 	}
 
@@ -964,7 +964,7 @@ sub get_lastsetinfo {
 		}
 	}
 
-	if($targetdata->{"target_protocol"} eq "FTP") {
+	if(lc $targetdata->{"target_protocol"} eq "ftp") {
 		$error = test_ftpconnection($targetdata,1);
 		if($error) {
 			$retval{"status"} = $error;
