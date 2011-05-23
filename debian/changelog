@@ -1,3 +1,9 @@
+bubba-backend (2.2.16) vincent hugo; urgency=low
+
+  * backup password environment fixes
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 23 May 2011 16:35:45 +0200
+
 bubba-backend (2.2.13) vincent hugo; urgency=low
 
   * Adding check in dhclient exit hook for samba to not restart if IP hasn't

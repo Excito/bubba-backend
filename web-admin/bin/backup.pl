@@ -534,6 +534,7 @@ sub setup_jobinfo {
 	# --- Get job data ------
 	if($targetdata->{"GPG_key"}) {
 		$key = "PASSPHRASE=\"" . $targetdata->{"GPG_key"} . "\" ";
+        $ENV{'PASSPHRASE'} = $targetdata->{"GPG_key"};
 	} else {
 		$no_crypt = "--no-encryption";
 	}
@@ -542,6 +543,7 @@ sub setup_jobinfo {
 		if($targetdata->{"target_keypath"}) {
 			$ssh_key = "--ssh-options=\"-oIdentityFile=" . $targetdata->{"target_keypath"} . "\" ";
 		} else {
+            $ENV{'FTP_PASSWORD'} = $targetdata->{"target_FTPpasswd"};
 			$key .= "FTP_PASSWORD=\"" . $targetdata->{"target_FTPpasswd"} . "\" ";
 			if($targetdata->{"target_protocol"} eq "scp") {
 				$use_sshpasswd = " --ssh-askpass --ssh-options=\"-oStrictHostKeyChecking='no' -oConnectTimeout='5'\"";
