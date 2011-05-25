@@ -390,6 +390,33 @@ End-of-Message
 	if id -Gn admin | grep -vqE '\blpadmin\b' 2>&-; then
 		adduser admin lpadmin
 	fi
+
+	if dpkg --compare-versions "$2" lt-nl 2.2.18; then
+		bkup=$(tempfile);
+		cfg=/etc/samba/smb.conf
+		cp $cfg $bkup;
+		sed -i "s/workgroup = excito/workgroup = WORKGROUP/" $cfg
+		if ! `cmp --silent $bkup $cfg`; then
+			invoke-rc.d samba restart;
+			cat >>/tmp/bubba-apt.log << End-of-Message
+Code: WARN
+Desc: Windows network workgroup name has been changed
+Data: Due to apparant dificulty to obtain visual acces to network shares when using Windows Vista or
+ Windows 7 it's been identified that the cause is invisibillities of workgroup shares not matching the
+ current workgroup whick isn't trivial to understand and change in Windows.
+ .
+ To resolve this issue it's been decied to change the default workgroup from "excito" to "WORKGROUP",
+ which should work on most newly installed Windows installations. As your current specified workgroup is
+ "excito", we've changed it for you to "WORKGROUP".
+ .
+ If you have in the past changed your computer workgroup to "excito", you sadly need to revert it to WORKGROUP
+ to have the shares visible again.
+End-of-Message
+
+		fi
+		rm -f $bkup;
+	fi
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
