@@ -387,6 +387,9 @@ End-of-Message
 		adduser admin users
 	fi
 
+	if id -Gn admin | grep -vqE '\blpadmin\b' 2>&-; then
+		adduser admin lpadmin
+	fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

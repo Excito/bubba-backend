@@ -1,3 +1,9 @@
+bubba-backend (2.2.18) vincent hugo; urgency=low
+
+  * Printer usabillity change
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 25 May 2011 15:38:14 +0200
+
 bubba-backend (2.2.17) vincent hugo; urgency=low
 
   * convert target ftp to lowercase
