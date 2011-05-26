@@ -1,3 +1,10 @@
+bubba-backend (2.2.19) vincent hugo; urgency=low
+
+  * Change workgroup from "excito" to WORKGROUP
+  * Add missing depends on libconfig-tiny-perl
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 May 2011 16:52:00 +0200
+
 bubba-backend (2.2.18) vincent hugo; urgency=low
 
   * Printer usabillity change
