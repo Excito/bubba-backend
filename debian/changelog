@@ -1,3 +1,9 @@
+bubba-backend (2.2.20) vincent hugo; urgency=low
+
+  * Add ServerAlias *
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 30 May 2011 16:38:42 +0200
+
 bubba-backend (2.2.19) vincent hugo; urgency=low
 
   * Change workgroup from "excito" to WORKGROUP
