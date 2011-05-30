@@ -1,3 +1,9 @@
+bubba-backend (2.2.22) vincent hugo; urgency=low
+
+  * Do not restore firewall in postinst
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 30 May 2011 18:50:56 +0200
+
 bubba-backend (2.2.21) vincent hugo; urgency=low
 
   * Adding python helper to list printers

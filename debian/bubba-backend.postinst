@@ -248,7 +248,6 @@ root@$MAILNAME
 	if [ ! -e /etc/network/firewall.conf ]; then
 		echo "Installing default firewall config"
 		cp /usr/share/bubba-configs/firewall.conf /etc/network/firewall.conf
-		iptables-restore /etc/network/firewall.conf
 	fi
 
 	#
