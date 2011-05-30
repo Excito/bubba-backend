@@ -75,6 +75,7 @@ Depends: ${misc:Depends}, bubba,
  openprinting-ppds,
  foo2zjs,
  hp-ppd,
- splix
+ splix,
+ python (>= 2.6)
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

@@ -1,0 +1,12 @@
+#!/usr/bin/python
+import cups, json
+
+printers = []
+try:
+    for name, queue in cups.Connection().getPrinters().iteritems ():
+        printers.append({'name': name, 'info': queue['printer-info']})
+except:
+    # we just ignore exceptions
+    pass
+
+print json.dumps(printers)

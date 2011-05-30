@@ -38,3 +38,5 @@ fetchmail.default /etc/bubba
 hostapd.default /etc/bubba
 
 change_distribution /usr/sbin
+
+cups-list-printers /usr/bin
