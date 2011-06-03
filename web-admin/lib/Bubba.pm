@@ -1486,11 +1486,11 @@ sub backup_config{
 		"--absolute-names",
 		"--atime-preserve",
 		glob ("/home/*/.bubbacfg"),
-		glob ("/home/*/.backup/jobdata"),
-		glob ("/home/*/.backup/fileinfo"),
-		glob ("/home/*/.backup/includeglob.list"),
-		glob ("/home/*/.backup/excludeglob.list"),
-		glob ("/home/*/.backup/include_childglob.list"),
+		glob ("/home/admin/.backup/*/jobdata"),
+		glob ("/home/admin/.backup/*/fileinfo"),
+		glob ("/home/admin/.backup/*/includeglob.list"),
+		glob ("/home/admin/.backup/*/excludeglob.list"),
+		glob ("/home/admin/.backup/*/include_childglob.list"),
 	) >> 8;
 
 	# We combine the above files into an tar file

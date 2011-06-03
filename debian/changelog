@@ -1,3 +1,9 @@
+bubba-backend (2.2.23) vincent hugo; urgency=low
+
+  * Correctify the system backup of user backup settings
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 03 Jun 2011 14:58:37 +0200
+
 bubba-backend (2.2.22) vincent hugo; urgency=low
 
   * Do not restore firewall in postinst
