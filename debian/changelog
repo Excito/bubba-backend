@@ -1,3 +1,9 @@
+bubba-backend (2.2.24) vincent hugo; urgency=low
+
+  * Change status file descriptor
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 14 Jun 2011 16:21:12 +0200
+
 bubba-backend (2.2.23) vincent hugo; urgency=low
 
   * Correctify the system backup of user backup settings
