@@ -1,3 +1,9 @@
+bubba-backend (2.2.25) vincent hugo; urgency=low
+
+  * Hotfix related changes
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 16 Jun 2011 15:33:01 +0200
+
 bubba-backend (2.2.24) vincent hugo; urgency=low
 
   * Change status file descriptor

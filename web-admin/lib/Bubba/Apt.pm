@@ -466,6 +466,8 @@ sub _calculate_progress {
 
 sub _process_line {
 	my ( $self, $line, $gathered, $usage ) = @_;
+    my @arr = split /\n/, $line;
+    $line = pop @arr;
 	if( $line =~ /:/ ) {
 		my ( $type, $current, $progress, $info ) = split /:/, $line, 4; #/ beats me why this is needed (Eclipse chokes without it)
 		return 0 unless $type =~ /opstatus|dlstatus|pmstatus/;
@@ -558,11 +560,11 @@ sub upgrade_packages {
 	}
 
 
-	my ($h, @cmd, $statusfd);
+	my ($h, @cmd, $statusfd, $outanderr);
 
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
 
-	$h = start \@cmd, '6>', \$statusfd;
+	$h = start \@cmd, '>&', \$outanderr,  '6>', \$statusfd;
 	while($h->pump) {
 		$self->_process_line( $statusfd, 0, 40 );
 		$statusfd = '';
@@ -596,9 +598,12 @@ sub upgrade_packages {
 	}
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
 
-	$h = start \@cmd, '6>', \$statusfd;
+	$h = start \@cmd, '>&', \$outanderr, '6>', \$statusfd, timeout(10);
 	while($h->pump) {
-		$self->_process_line( $statusfd, 40, 60 );
+		if($self->_process_line( $statusfd, 40, 60 )) {
+            $h->kill_kill;
+            return;
+        }
 		$statusfd = '';
 	}
 	$h->finish();
