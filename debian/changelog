@@ -1,3 +1,10 @@
+bubba-backend (2.2.5.1) vincent hugo; urgency=low
+
+  * Hotfix related changes
+  * Change status file descriptor
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 14 Jun 2011 16:21:12 +0200
+
 bubba-backend (2.2.5) vincent hugo; urgency=low
 
   * Reenable apt preferences again, with right origin on 
