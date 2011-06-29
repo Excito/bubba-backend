@@ -1,3 +1,9 @@
+bubba-backend (2.2.26) vincent hugo; urgency=low
+
+  * Forward porting of hotfix for 2.3 release
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 29 Jun 2011 15:37:28 +0200
+
 bubba-backend (2.2.23) vincent hugo; urgency=low
 
   * Correctify the system backup of user backup settings

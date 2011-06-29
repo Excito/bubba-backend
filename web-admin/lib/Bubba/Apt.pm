@@ -12,6 +12,7 @@ use threads::shared;
 use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
+use IPC::Run qw( start pump finish timeout new_chunker );
 use XML::LibXML;
 use Try::Tiny;
 
@@ -539,6 +540,8 @@ sub install_package {
 }
 
 sub upgrade_packages {
+	$ENV{'DEBIAN_FRONTEND'} = 'noninteractive';
+
 	my ($self, $req) = @_;
 
 	{
@@ -554,14 +557,16 @@ sub upgrade_packages {
 		$max_level = 2;
 	}
 
-	open APT, '-|', "DEBIAN_FRONTEND=noninteractive /usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update";
-	while ( <APT> ) {
-		last if $self->_process_line( $_, 0, 40 );
-	}
-	close APT || do {
-		$self->_handle_error( "'bubba-apt update' exited $?" );
-		return;
-	};
+
+	my ($h, @cmd, $outanderr);
+
+	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
+
+	$h = start \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { if($self->_process_line(shift, 0, 40)) {
+        $h->kill_kill;
+        return;
+    }};
+	$h->finish();
 
 	{
 		$main_status = 'Upgrade: Querying available upgrades';
@@ -588,15 +593,12 @@ sub upgrade_packages {
 		$level = 0;
 		$max_level = 3;
 	}
-	open APT, '-|', "DEBIAN_FRONTEND=noninteractive /usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade";
-	while ( <APT> ) {
-		last if $self->_process_line( $_, 40, 60 );
-	}
-	close APT || do {
-		$self->_handle_error( "'bubba-apt update dist-upgrade' exited $?" );
-		return;
-	};
-
+	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
+	$h = start \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { if($self->_process_line(shift, 40, 60)) {
+        $h->kill_kill;
+        return;
+    }};
+	$h->finish();
 }
 
 sub query_progress {
