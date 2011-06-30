@@ -12,7 +12,7 @@ use threads::shared;
 use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
-use IPC::Run qw( start pump finish timeout new_chunker );
+use IPC::Run qw( run new_chunker );
 use XML::LibXML;
 use Try::Tiny;
 
@@ -558,15 +558,11 @@ sub upgrade_packages {
 	}
 
 
-	my ($h, @cmd, $outanderr);
+	my (@cmd, $outanderr);
 
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
 
-	$h = start \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { if($self->_process_line(shift, 0, 40)) {
-        $h->kill_kill;
-        return;
-    }};
-	$h->finish();
+	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { $self->_process_line(shift, 0, 40) };
 
 	{
 		$main_status = 'Upgrade: Querying available upgrades';
@@ -594,11 +590,7 @@ sub upgrade_packages {
 		$max_level = 3;
 	}
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
-	$h = start \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { if($self->_process_line(shift, 40, 60)) {
-        $h->kill_kill;
-        return;
-    }};
-	$h->finish();
+	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\r|\n)), sub { $self->_process_line(shift, 40, 60) };
 }
 
 sub query_progress {
