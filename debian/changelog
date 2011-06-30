@@ -1,3 +1,9 @@
+bubba-backend (2.2.27) vincent hugo; urgency=low
+
+  * updated hotfix
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 30 Jun 2011 16:26:33 +0200
+
 bubba-backend (2.2.26) vincent hugo; urgency=low
 
   * Forward porting of hotfix for 2.3 release
