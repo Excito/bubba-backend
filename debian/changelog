@@ -1,3 +1,9 @@
+bubba-backend (2.2.28) vincent hugo; urgency=low
+
+  * Add some timeout for the hotfix
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 04 Jul 2011 13:21:11 +0200
+
 bubba-backend (2.2.27) vincent hugo; urgency=low
 
   * updated hotfix
