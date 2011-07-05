@@ -488,7 +488,7 @@ sub _process_line {
 		unless( defined $progress and defined $level and defined $max_level ) {
 			return 0;
 		}
-		return $progress eq '100' && $level == $max_level;
+		return $progress >= 100 && $level == $max_level;
 	}
 	return 0;
 }
