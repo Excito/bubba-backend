@@ -1,3 +1,9 @@
+bubba-backend (2.2.29) vincent hugo; urgency=low
+
+  * Script to restart samba when booting is hopefully done
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 05 Jul 2011 16:07:23 +0200
+
 bubba-backend (2.2.28) vincent hugo; urgency=low
 
   * Add some timeout for the hotfix

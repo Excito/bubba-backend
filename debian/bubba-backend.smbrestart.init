@@ -1,0 +1,29 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          smbrestart
+# Required-Start:    $all
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Restart samba to solve ipv4/ipv6 issue
+### END INIT INFO
+
+# Author: Carl Fürstenberg <carl@excito.com>
+
+# Do NOT "set -e"
+
+. /lib/lsb/init-functions
+
+case "$1" in
+        start)
+        log_action_begin_msg "Restarting samba"
+        invoke-rc.d samba restart
+        log_action_end_msg $?
+        exit 0
+        ;;
+        *)
+        echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+        exit 3
+        ;;
+esac
+(END)

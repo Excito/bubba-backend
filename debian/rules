@@ -13,6 +13,7 @@ override_dh_install:
 	dh_installudev --name=rtc --priority=25
 	dh_installudev --name=net-nomultionwan --priority=z70
 	dh_installinit --name=bubba-firewall
+	dh_installinit --name=smbrestart
 	dh_installcron --name=bubba-notify
 	install -m 755 debian/bubba-backend.mtu.action debian/bubba-backend/etc/ifplugd/action.d/mtu
 	install -m 755 debian/bubba-backend.multicast.action debian/bubba-backend/etc/ifplugd/action.d/multicast
