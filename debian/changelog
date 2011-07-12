@@ -1,3 +1,10 @@
+bubba-backend (2.3~rc1) vincent hugo; urgency=low
+
+  * Might need to assume that 100 is not always '100'
+  * Fixing syntax error in samba hook script
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 12 Jul 2011 17:50:35 +0200
+
 bubba-backend (2.2.29) vincent hugo; urgency=low
 
   * Script to restart samba when booting is hopefully done
