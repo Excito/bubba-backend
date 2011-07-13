@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc2) vincent hugo; urgency=low
+
+  * Dovecot restart cronjob
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 13 Jul 2011 16:24:25 +0200
+
 bubba-backend (2.3~rc1) vincent hugo; urgency=low
 
   * Might need to assume that 100 is not always '100'

@@ -15,6 +15,7 @@ override_dh_install:
 	dh_installinit --name=bubba-firewall
 	dh_installinit --name=smbrestart
 	dh_installcron --name=bubba-notify
+	dh_installcron --name=dovecot-timefix
 	install -m 755 debian/bubba-backend.mtu.action debian/bubba-backend/etc/ifplugd/action.d/mtu
 	install -m 755 debian/bubba-backend.multicast.action debian/bubba-backend/etc/ifplugd/action.d/multicast
 	install -m 755 debian/bubba-backend.eth1br0-link debian/bubba-backend/etc/ifplugd/action.d/eth1br0-link
