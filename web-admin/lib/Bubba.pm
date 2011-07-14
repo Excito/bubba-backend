@@ -2191,7 +2191,7 @@ sub set_interface {
 
     {
 		my $config = new Config::Simple('/etc/samba/smb.conf');
-		$config->param('global.interface', $interface );
+		$config->param('global.interfaces', $interface );
 		$config->save();
     }
 
