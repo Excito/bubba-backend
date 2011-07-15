@@ -560,7 +560,7 @@ sub upgrade_packages {
 	my ($h, @cmd, $outanderr);
     $SIG{CHLD} = 'IGNORE';
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
-	run \@cmd, '>&', \$outanderr,  '13>', new_chunker("\n"), sub { $self->_process_line(shift, 0, 40) };
+	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\n|\r)), sub { $self->_process_line(shift, 0, 40) };
 
 	{
 		$main_status = 'Upgrade: Querying available upgrades';
@@ -588,7 +588,7 @@ sub upgrade_packages {
 		$max_level = 3;
 	}
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
-	run \@cmd, '>&', \$outanderr,  '13>', new_chunker("\n"), sub { $self->_process_line(shift, 40, 60) };
+	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\n|\r)), sub { $self->_process_line(shift, 40, 60) };
 }
 
 sub query_progress {
