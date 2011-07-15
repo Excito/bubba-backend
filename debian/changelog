@@ -1,3 +1,10 @@
+bubba-backend (2.3~rc5) vincent hugo; urgency=low
+
+  * Fix syntax error from two years ago :/
+  * Setting $SIG{CHLD} = 'IGNORE' to ignore stale children
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 15 Jul 2011 14:11:51 +0200
+
 bubba-backend (2.3~rc4) vincent hugo; urgency=low
 
   * Remove the timeout, as it seems to do more harm than good
