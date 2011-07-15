@@ -558,7 +558,7 @@ sub upgrade_packages {
 	}
 
 	my ($h, @cmd, $outanderr);
-
+    $SIG{CHLD} = 'IGNORE';
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
 	run \@cmd, '>&', \$outanderr,  '13>', new_chunker("\n"), sub { $self->_process_line(shift, 0, 40) };
 
