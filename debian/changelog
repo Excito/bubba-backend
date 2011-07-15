@@ -1,3 +1,10 @@
+bubba-backend (2.3~rc7) vincent hugo; urgency=low
+
+  * Go back to run an more safe reading, which won't stop at 40%
+  * Must let the init script to be started in a nice way
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 15 Jul 2011 18:42:13 +0200
+
 bubba-backend (2.3~rc6) vincent hugo; urgency=low
 
   * use regexp instead of string for chunker
