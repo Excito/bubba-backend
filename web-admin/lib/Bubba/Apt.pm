@@ -12,7 +12,7 @@ use threads::shared;
 use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
-use IPC::Run qw( run new_chunker );
+use IPC::Run qw( run start pump finish harness new_chunker );
 use XML::LibXML;
 use Try::Tiny;
 
@@ -557,10 +557,23 @@ sub upgrade_packages {
 		$max_level = 2;
 	}
 
-	my ($h, @cmd, $outanderr);
+	my ($h, @cmd, $outanderr, $data);
     $SIG{CHLD} = 'IGNORE';
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
-	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\n|\r)), sub { $self->_process_line(shift, 0, 40) };
+	$h = start  \@cmd, '>&', \$outanderr,  '13>', \$data;
+    eval {
+        while($h->pump) {
+            foreach my $entry (split(/\n|\r|\t/, $data)) {
+                $self->_process_line($entry, 0, 40);
+            }
+            $data = '';
+        }
+        $h->finish;
+    };
+
+    if( $@ ) {
+        $h->kill_kill;
+    }
 
 	{
 		$main_status = 'Upgrade: Querying available upgrades';
@@ -588,7 +601,20 @@ sub upgrade_packages {
 		$max_level = 3;
 	}
 	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
-	run \@cmd, '>&', \$outanderr,  '13>', new_chunker(qr(\n|\r)), sub { $self->_process_line(shift, 40, 60) };
+	$h = start  \@cmd, '>&', \$outanderr,  '13>', \$data;
+    eval {
+        while($h->pump) {
+            foreach my $entry (split(/\n|\r|\t/, $data)) {
+                $self->_process_line($entry, 40, 60);
+            }
+            $data = '';
+        }
+        $h->finish;
+    };
+
+    if( $@ ) {
+        $h->kill_kill;
+    }
 }
 
 sub query_progress {
