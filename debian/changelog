@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc6) vincent hugo; urgency=low
+
+  * use regexp instead of string for chunker
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 15 Jul 2011 14:56:11 +0200
+
 bubba-backend (2.3~rc5) vincent hugo; urgency=low
 
   * Fix syntax error from two years ago :/
