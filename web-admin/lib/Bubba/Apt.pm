@@ -176,7 +176,7 @@ sub Run($) {
 				$sock->flush();
 				$sock->close();
 				# cleaning up
-				-f $self->{'pidftest@192.168.37.26:ile'} and unlink $self->{'pidfile'};
+				-f $self->{'pidfile'} and unlink $self->{'pidfile'};
 				-S $self->{'localpath'} and unlink $self->{'localpath'};
 
 				# and terminate ourself
