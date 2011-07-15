@@ -4,7 +4,7 @@
 # Required-Start:    $all
 # Required-Stop:
 # Default-Start:     2 3 4 5
-# Default-Stop:      0 1 6
+# Default-Stop:
 # Short-Description: Restart samba to solve ipv4/ipv6 issue
 ### END INIT INFO
 
@@ -15,13 +15,16 @@
 . /lib/lsb/init-functions
 
 case "$1" in
-        start)
+    start)
         log_action_begin_msg "Restarting samba"
         invoke-rc.d samba restart
         log_action_end_msg $?
         exit 0
         ;;
-        *)
+    stop|restart|force-reload)
+        exit 0;
+        ;;
+    *)
         echo "Usage: $0 {start|stop|restart|force-reload}" >&2
         exit 3
         ;;

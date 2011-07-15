@@ -13,7 +13,7 @@ override_dh_install:
 	dh_installudev --name=rtc --priority=25
 	dh_installudev --name=net-nomultionwan --priority=z70
 	dh_installinit --name=bubba-firewall
-	dh_installinit --name=smbrestart
+	dh_installinit --name=smbrestart --no-start
 	dh_installcron --name=bubba-notify
 	dh_installcron --name=dovecot-timefix
 	install -m 755 debian/bubba-backend.mtu.action debian/bubba-backend/etc/ifplugd/action.d/mtu
