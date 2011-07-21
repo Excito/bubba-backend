@@ -12,7 +12,6 @@ use threads::shared;
 use base qw(Net::Daemon);
 use Parse::DebControl;
 use IPC::Run3;
-use IPC::Run qw( run start pump finish harness new_chunker );
 use XML::LibXML;
 use Try::Tiny;
 
@@ -163,7 +162,7 @@ sub Run($) {
 							$status{logs} = $logs;
 							$is_running = 0;
 						}
-					}
+					};
 					$sock->say( $to_js->( {response => "upgrade_packages"} ) );
 				}else{
 					$sock->say( $to_js->( {response => "unknown_action"}));
@@ -541,6 +540,7 @@ sub install_package {
 
 sub upgrade_packages {
 	$ENV{'DEBIAN_FRONTEND'} = 'noninteractive';
+    $SIG{CHLD} = 'IGNORE';
 
 	my ($self, $req) = @_;
 
@@ -557,23 +557,14 @@ sub upgrade_packages {
 		$max_level = 2;
 	}
 
-	my ($h, @cmd, $outanderr, $data);
-    $SIG{CHLD} = 'IGNORE';
-	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf update);
-	$h = start  \@cmd, '>&', \$outanderr,  '13>', \$data;
-    eval {
-        while($h->pump) {
-            foreach my $entry (split(/\n|\r|\t/, $data)) {
-                $self->_process_line($entry, 0, 40);
-            }
-            $data = '';
-        }
-        $h->finish;
-    };
-
-    if( $@ ) {
-        $h->kill_kill;
+	open FH, "apt-get --config-file=/etc/apt/bubba-apt.conf update 9>&1 |";
+    while( <FH> ) {
+        $self->_process_line($_, 0, 40);
     }
+    close FH || do {
+		$self->_handle_error( "'bubba-apt update' exited $?" );
+		return;
+	};;
 
 	{
 		$main_status = 'Upgrade: Querying available upgrades';
@@ -600,21 +591,17 @@ sub upgrade_packages {
 		$level = 0;
 		$max_level = 3;
 	}
-	@cmd = qw(/usr/bin/bubba-apt --config-file=/etc/apt/bubba-apt.conf dist-upgrade);
-	$h = start  \@cmd, '>&', \$outanderr,  '13>', \$data;
-    eval {
-        while($h->pump) {
-            foreach my $entry (split(/\n|\r|\t/, $data)) {
-                $self->_process_line($entry, 40, 60);
-            }
-            $data = '';
-        }
-        $h->finish;
-    };
+	my $pid = open FH, "apt-get --config-file=/etc/apt/bubba-apt.conf dist-upgrade 9>&1 |";
+    while( <FH> ) {
+        if($self->_process_line($_, 40, 60)) {
+            last;
 
-    if( $@ ) {
-        $h->kill_kill;
+        }
     }
+    close FH || do {
+		$self->_handle_error( "'bubba-apt dist-upgrade' exited $?" );
+		return;
+	};
 }
 
 sub query_progress {
