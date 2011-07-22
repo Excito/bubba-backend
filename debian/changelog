@@ -1,3 +1,11 @@
+bubba-backend (2.3~rc15) vincent hugo; urgency=low
+
+  * Move up foomatic-db-compressed-ppds and alternate to foomatic-db to solve
+    the dependency problem; while this results in that old user gets
+    foomatic-db and new users gets the compressed variant.
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 22 Jul 2011 15:44:01 +0200
+
 bubba-backend (2.3~rc8) vincent hugo; urgency=low
 
   * Go back to run an more safe reading, which won't stop at 40%
