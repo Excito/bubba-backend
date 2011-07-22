@@ -44,6 +44,10 @@ divert() {
 
 }
 
+divert_cb_minidlna() {
+	invoke-rc.d --quiet $5 restart || true;
+}
+
 divert_cb_hostapd() {
 	echo "setting default AP SSID"
 	sed -i "s/ssid=.*\$/ssid=$(hostname)/" $2
@@ -174,6 +178,7 @@ root@$MAILNAME
 	divert bubba-backend /etc/netatalk/AppleVolumes.default /etc/netatalk/AppleVolumes.default.bubba-distrib /etc/bubba/AppleVolumes.default false;
 	divert bubba-backend /etc/netatalk/afpd.conf /etc/netatalk/afpd.conf.bubba-distrib /etc/bubba/afpd.conf netatalk;
 	divert bubba-backend /etc/cups/cupsd.conf /etc/cups/cupsd.conf.bubba-distrib /etc/bubba/cupsd.conf cups;
+	divert bubba-backend /etc/minidlna.conf /etc/minidlna.conf.bubba-distrib /etc/bubba/minidlna.conf minidlna;
 
 	# things that cant be diverted
 	if [ ! -f /etc/default/ifplugd.bubba-distrib ]; then
@@ -224,6 +229,21 @@ root@$MAILNAME
 		fi
 
 	fi
+
+    # update interface settings
+    lanif=$(bubba-networkmanager-cli getlanif)
+    bkup=$(tempfile);
+    cnf=/etc/minidlna.conf;
+    if [ -f $cnf ]; then
+        cp $cnf $bkup
+        sed -i "s/network_interface=.*\$/network_interface=$lanif/" $cnf
+        if ! `cmp --silent $bkup $cnf`; then
+            mv $bkup $cnf.dpkg-old
+            invoke-rc.d minidlna restart;
+        else
+            rm -f $bkup;
+        fi
+    fi
 
 	# forch upgrade of apt config files from old rc7
 	if dpkg --compare-versions "$2" lt 1.0.11; then

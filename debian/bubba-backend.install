@@ -32,6 +32,7 @@ ntp.conf /etc/bubba
 postfix.conf /etc/bubba
 sshd_config /etc/bubba
 AppleVolumes.default /etc/bubba
+minidlna.conf /etc/bubba
 
 ifplugd.default /etc/bubba
 fetchmail.default /etc/bubba

@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc19) vincent hugo; urgency=low
+
+  * Adding minidlna config file
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 22 Jul 2011 16:44:55 +0200
+
 bubba-backend (2.3~rc15) vincent hugo; urgency=low
 
   * Move up foomatic-db-compressed-ppds and alternate to foomatic-db to solve
