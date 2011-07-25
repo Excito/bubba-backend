@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc23) vincent hugo; urgency=low
+
+  * Reduce printcap cache time and enable spolss
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 25 Jul 2011 17:44:09 +0200
+
 bubba-backend (2.3~rc22) vincent hugo; urgency=low
 
   * Adding more information to cups-list-printer
