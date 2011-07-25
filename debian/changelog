@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc21) vincent hugo; urgency=low
+
+  * Restart instead of reload
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 25 Jul 2011 16:27:44 +0200
+
 bubba-backend (2.3~rc20) vincent hugo; urgency=low
 
   * Reload samba on udev pinter event
