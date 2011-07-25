@@ -4,7 +4,12 @@ import cups, json
 printers = []
 try:
     for name, queue in cups.Connection().getPrinters().iteritems ():
-        printers.append({'name': name, 'info': queue['printer-info']})
+        printers.append({
+            'name': name,
+            'info': queue['printer-info'],
+            'enabled': queue['printer-state'] != cups.IPP_PRINTER_STOPPED,
+            'state': queue['printer-state-message']
+        })
 except:
     # we just ignore exceptions
     pass
