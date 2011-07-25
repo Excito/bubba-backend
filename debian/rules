@@ -12,6 +12,7 @@ override_dh_install:
 	dh_install
 	dh_installudev --name=rtc --priority=25
 	dh_installudev --name=net-nomultionwan --priority=z70
+	dh_installudev --name=samba-printer-reload --priority=71
 	dh_installinit --name=bubba-firewall
 	dh_installinit --name=smbrestart --no-start
 	dh_installcron --name=bubba-notify
