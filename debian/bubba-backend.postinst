@@ -440,7 +440,7 @@ End-of-Message
         if ! grep -q "^vm.min_free_kbytes" /etc/sysctl.conf; then
             echo "Increase allocateable amount of memory to 8192KB";
             echo "vm.min_free_kbytes = 8192" >> /etc/sysctl.conf;
-            syscl -p /etc/sysctl.conf;
+            sysctl -p /etc/sysctl.conf;
         fi
     fi
 
