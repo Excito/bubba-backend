@@ -16,3 +16,5 @@
 
 /usr/share/bubba-configs
 /etc/bubba
+
+/etc/sysctl.d

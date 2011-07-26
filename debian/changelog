@@ -1,8 +1,8 @@
-bubba-backend (2.3~rc25) vincent hugo; urgency=low
+bubba-backend (2.3~rc26) vincent hugo; urgency=low
 
   * Adding postinst code to increase allocateable memory
 
- -- Carl Fürstenberg <carl@excito.com>  Tue, 26 Jul 2011 17:30:49 +0200
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 26 Jul 2011 17:39:52 +0200
 
 bubba-backend (2.3~rc23) vincent hugo; urgency=low
 

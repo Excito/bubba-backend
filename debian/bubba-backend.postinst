@@ -436,12 +436,8 @@ End-of-Message
 		rm -f $bkup;
 	fi
 
-    if dpkg --compare-versions "$2" lt-nl "2.3~rc23"; then
-        if ! grep -q "^vm.min_free_kbytes" /etc/sysctl.conf; then
-            echo "Increase allocateable amount of memory to 8192KB";
-            echo "vm.min_free_kbytes = 8192" >> /etc/sysctl.conf;
-            sysctl -p /etc/sysctl.conf;
-        fi
+    if dpkg --compare-versions "$2" lt-nl "2.3~rc26"; then
+        sysctl -p /etc/sysctl.d/bubba_min_free_kbytes.conf
     fi
 
     ;;
