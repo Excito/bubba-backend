@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc24) vincent hugo; urgency=low
+
+  * Adding postinst code to increase allocateable memory
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 26 Jul 2011 17:30:49 +0200
+
 bubba-backend (2.3~rc23) vincent hugo; urgency=low
 
   * Reduce printcap cache time and enable spolss
