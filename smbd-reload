@@ -1,4 +1,11 @@
 #!/bin/sh
-if pidof smbd >/dev/null 2>&1; then
-    kill -HUP $(pidof smbd)
-fi
+
+# wait 20 seconds and try to reload samba
+do_reload() {
+    sleep 20;
+    if pidof smbd >/dev/null 2>&1; then
+        kill -HUP $(pidof smbd)
+    fi
+}
+
+do_reload&
