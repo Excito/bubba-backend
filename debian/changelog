@@ -1,3 +1,9 @@
+bubba-backend (2.3~rc27) vincent hugo; urgency=low
+
+  * other smbd reload script
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 27 Jul 2011 15:04:16 +0200
+
 bubba-backend (2.3~rc26) vincent hugo; urgency=low
 
   * Adding postinst code to increase allocateable memory

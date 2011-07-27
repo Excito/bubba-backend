@@ -1,0 +1,4 @@
+#!/bin/sh
+if pidof smbd >/dev/null 2>&1; then
+    kill -HUP $(pidof smbd)
+fi
