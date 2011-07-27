@@ -1,3 +1,9 @@
+bubba-backend (2.3) vincent hugo; urgency=low
+
+  * Bumping version for release
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 27 Jul 2011 16:11:27 +0200
+
 bubba-backend (2.3~rc28) vincent hugo; urgency=low
 
   * Wait some seconds bwefore trying to reload samba
