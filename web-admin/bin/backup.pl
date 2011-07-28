@@ -342,7 +342,7 @@ sub get_destinations {
 	# target_user - username to use on the remote system
 	# 		target_user = admin
 	# target_protocol - protocol to use to connect to the remote system
-	# 		target_protocol = scp
+	# 		target_protocol = ssh
 	# target_keypath - the path to the identification key to be used with ssh/scp
 	#     should be left empty for other protocols
 	# target_FTPpasswd - acutal password in plain text for FTP targets
@@ -539,13 +539,13 @@ sub setup_jobinfo {
 		$no_crypt = "--no-encryption";
 	}
 
-	if(($targetdata->{"target_protocol"} eq "scp") or (lc $targetdata->{"target_protocol"} eq "ftp")) {
+	if(($targetdata->{"target_protocol"} eq "ssh") or (lc $targetdata->{"target_protocol"} eq "ftp")) {
 		if($targetdata->{"target_keypath"}) {
 			$ssh_key = "--ssh-options=\"-oIdentityFile=" . $targetdata->{"target_keypath"} . "\" ";
 		} else {
             $ENV{'FTP_PASSWORD'} = $targetdata->{"target_FTPpasswd"};
 			$key .= "FTP_PASSWORD=\"" . $targetdata->{"target_FTPpasswd"} . "\" ";
-			if($targetdata->{"target_protocol"} eq "scp") {
+			if($targetdata->{"target_protocol"} eq "ssh") {
 				$use_sshpasswd = " --ssh-askpass --ssh-options=\"-oStrictHostKeyChecking='no' -oConnectTimeout='5'\"";
 			}
 		}
@@ -714,7 +714,7 @@ sub run_now {
 	my $logfile = $logdir . "/". $now.".log";
 	print("Logging to $logfile\n");
 
-	if($targetdata->{"target_protocol"} eq "scp") {
+	if($targetdata->{"target_protocol"} eq "ssh") {
 		# Always run this function since error messages are better here.
 		$error = ssh_mkdir($targetdata);
 	}
@@ -952,7 +952,7 @@ sub get_lastsetinfo {
 
 	my $targetdata = get_destinations($user,$jobname,1);
 
-	if($targetdata->{"target_protocol"} eq "scp") {
+	if($targetdata->{"target_protocol"} eq "ssh") {
 		$error = test_sshconnection($targetdata,1);
 		if($error) {
 			$retval{"status"} = $error;
