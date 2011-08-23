@@ -1,3 +1,9 @@
+bubba-backend (2.3.0.99.99.29) hugo; urgency=low
+
+  * New update deamon written in python
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Sep 2011 13:08:18 +0200
+
 bubba-backend (2.3.0.1) vincent hugo; urgency=high
 
   * Change scp to ssh

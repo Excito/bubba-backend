@@ -1,21 +1,3 @@
-# B3 apt sources.list
-#
-# Changes in this file might break your system
-# 
-# vim: ft=debsources
-
-# The stable B3 repository, is in the suite "stable".
-deb http://b3.update.excito.org/ elvin main
-
-# The stable B3 repository, is in the suite "stable". source packages
-#deb-src http://b3.update.excito.org/ elvin main
-
-# The upstream packages used in B3, is in the suite "upstream_stable".
-deb http://b3.update.excito.org/ upstream_squeeze main
-
-# The upstream packages used in B3, is in the suite "upstream_stable". source packages
-#deb-src http://b3.update.excito.org/ upstream_squeeze main
-
 # The debian squeeze repository containing unsupported packages that can be used.
 deb http://ftp.se.debian.org/debian squeeze main
 
@@ -33,17 +15,3 @@ deb http://ftp.se.debian.org/debian squeeze main
 
 # The debian squeeze repository containing unsupported packages that can be used. source packages
 #deb-src http://ftp.se.debian.org/debian squeeze non-free
-
-
-# The unstable B3 repository, is in the suite "unstable".
-#deb http://b3.update.excito.org/ vincent main
-
-# The unstable B3 repository, is in the suite "unstable". source packages
-#deb-src http://b3.update.excito.org/ vincent main
-
-# The upstream packages used in unstable B3, is in the suite "upstream_stable_forvincent".
-#deb http://b3.update.excito.org/ upstream_squeeze_forvincent main
-
-# The upstream packages used in unstable B3, is in the suite "upstream_stable_forvincent". source packages
-#deb-src http://b3.update.excito.org/ upstream_squeeze_forvincent main
-

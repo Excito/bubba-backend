@@ -1,7 +1,7 @@
 bubbakey /etc/network
 firewall.conf /usr/share/bubba-configs
 personal-setting-files.txt /usr/share/bubba-configs
-apt/preferences apt/sources.list /usr/share/bubba-configs/apt
+apt/preferences apt/sources.list apt/excito.list /usr/share/bubba-configs/apt
 
 services/ftp.service /usr/share/bubba-configs
 services/pim.service /usr/share/bubba-configs
@@ -42,3 +42,5 @@ change_distribution /usr/sbin
 
 cups-list-printers /usr/bin
 smbd-reload /usr/bin
+
+bubba-aptd /usr/sbin

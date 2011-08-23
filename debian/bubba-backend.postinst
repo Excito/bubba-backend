@@ -86,6 +86,14 @@ fix_postfix_maincf(){
 
 case "$1" in
     configure)
+        if dpkg --compare-versions "$2" lt 2.3.1; then
+            cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences.d/excito
+            cp /usr/share/bubba-configs/apt/excito.list /etc/apt/sources.list.d/excito.list
+            cp --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/sources.list /etc/apt/sources.list
+            if [ -e /etc/apt/preferences ]; then
+                rm -f /etc/apt/preferences
+            fi
+        fi
 
 	if [ ! -e /etc/bubba-igd.conf ];  then
 		cp /usr/share/bubba-backend/bubba-igd.conf /etc/bubba-igd.conf;
@@ -244,14 +252,6 @@ root@$MAILNAME
             rm -f $bkup;
         fi
     fi
-
-	# forch upgrade of apt config files from old rc7
-	if dpkg --compare-versions "$2" lt 1.0.11; then
-		echo "Installing new versions of apt preferences."
-		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/preferences /etc/apt/preferences
-		echo "Installing new versions of apt sources.list."
-		install --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/sources.list /etc/apt/sources.list
-	fi
 
 	# removing leftovers
 	if dpkg --compare-versions "$2" lt 1.0.32; then

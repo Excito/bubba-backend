@@ -3,14 +3,13 @@ Section: admin
 Priority: required
 Maintainer: Tor Krill <tor@excito.com>
 Uploaders: Carl Fürstenberg <carl@excito.com>
-Build-Depends: debhelper (>= 7.2)
+Build-Depends: debhelper (>= 7.2), python-all
 Standards-Version: 3.8.4
 Homepage: http://www.excito.com
 
 Package: bubba-backend
 Architecture: all
 Depends: ${misc:Depends}, bubba,
- bubba-apt,
  bubba-status,
  bubba-kernel,
  bubba-modules,
@@ -77,6 +76,12 @@ Depends: ${misc:Depends}, bubba,
  foo2zjs,
  hp-ppd,
  splix,
- python (>= 2.6)
+ python (>= 2.6),
+ python-apt,
+ python-daemon,
+ python-argparse,
+ python-mysqldb,
+ python-twisted-core,
+ python-pyme
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.
