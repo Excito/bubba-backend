@@ -82,6 +82,7 @@ Depends: ${misc:Depends}, bubba,
  python-argparse,
  python-mysqldb,
  python-twisted-core,
- python-pyme
+ python-pyme,
+ python-netifaces
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

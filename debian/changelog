@@ -1,3 +1,9 @@
+bubba-backend (2.3.1~pre1) hugo; urgency=low
+
+  * Adding missing module netifaces
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 03 Oct 2011 15:32:21 +0200
+
 bubba-backend (2.3.0.99.99.29) hugo; urgency=low
 
   * New update deamon written in python
