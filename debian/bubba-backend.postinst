@@ -86,6 +86,12 @@ fix_postfix_maincf(){
 
 case "$1" in
     configure)
+
+		# Create a dummy fetchmailrc file if it doesn't exists
+		if [ ! -e /etc/fetchmailrc ]; then
+			touch /etc/fetchmailrc
+		fi
+
         if dpkg --compare-versions "$2" lt 2.3.1; then
             cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences.d/excito
             cp /usr/share/bubba-configs/apt/excito.list /etc/apt/sources.list.d/excito.list

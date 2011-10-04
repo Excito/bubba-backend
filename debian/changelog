@@ -1,3 +1,9 @@
+bubba-backend (2.3.1~pre2) hugo; urgency=low
+
+  * Add dummy fetchmailrc
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 04 Oct 2011 13:10:50 +0200
+
 bubba-backend (2.3.1~pre1) hugo; urgency=low
 
   * Adding missing module netifaces
