@@ -44,3 +44,5 @@ cups-list-printers /usr/bin
 smbd-reload /usr/bin
 
 bubba-aptd /usr/sbin
+
+wdtIdle3_ARM.tar.gz /usr/share/bubba-backend

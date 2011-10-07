@@ -87,6 +87,22 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
 
+		# Update idle3 timer on Western Digital (WD) disk drives.
+		if dpkg --compare-versions "$2" lt 2.4 && bubba-info -3; then
+			dir=$(mktemp -d)
+			tar \
+				--gzip \
+				--extract \
+				--strip-components=1 \
+				--file=/usr/share/bubba-backend/wdtIdle3_ARM.tar.gz \
+				--directory=$dir;
+			(
+			cd $dir;
+			./wdSetIdle3To5Min.sh;
+			)
+			rm -rf $dir
+		fi
+
 		# Create a dummy fetchmailrc file if it doesn't exists
 		if [ ! -e /etc/fetchmailrc ]; then
 			touch /etc/fetchmailrc
