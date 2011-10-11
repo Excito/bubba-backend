@@ -109,6 +109,7 @@ sub Run($) {
 						$ERROR = 1;
 						$cmd_str = join( ' ', @{$cmd[0]} );
 						$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                        $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 						$IS_RUNNING = 0;
 						return;
 					}
@@ -126,6 +127,7 @@ sub Run($) {
 						$ERROR = 1;
 						$cmd_str = join( ' ', @{$cmd[0]} );
 						$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                        $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 						$IS_RUNNING = 0;
 						return;
 					}
@@ -142,6 +144,7 @@ sub Run($) {
 						$ERROR = 1;
 						$cmd_str = join( ' ', @{$cmd[0]} );
 						$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                        $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 						$IS_RUNNING = 0;
 						return;
 					}
@@ -158,6 +161,7 @@ sub Run($) {
 						$ERROR = 1;
 						$cmd_str = join( ' ', @{$cmd[0]} );
 						$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                        $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 						$IS_RUNNING = 0;
 						return;
 					}
@@ -174,6 +178,7 @@ sub Run($) {
 						$ERROR = 1;
 						$cmd_str = join( ' ', @{$cmd[0]} );
 						$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                        $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 						$IS_RUNNING = 0;
 						return;
 					}
@@ -242,6 +247,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -257,6 +263,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -277,6 +284,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -382,6 +390,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -397,6 +406,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -417,6 +427,7 @@ sub Run($) {
 									$ERROR = 1;
 									$cmd_str = join( ' ', @{$cmd[0]} );
 									$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                    $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 									$IS_RUNNING = 0;
 									return;
 								};
@@ -432,6 +443,7 @@ sub Run($) {
 									$ERROR = 1;
 									$cmd_str = join( ' ', @{$cmd[0]} );
 									$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                    $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 									$IS_RUNNING = 0;
 									return;
 								};
@@ -454,6 +466,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -473,6 +486,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -493,6 +507,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -513,6 +528,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -534,6 +550,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -547,18 +564,35 @@ sub Run($) {
 					{
 						# Creating RAID array
 						$STATUS_MESSAGE = "Creating RAID array $nextmd";
-						@cmd = [ MANAGER, 'md','create', $level, scalar @$partitions, 0, @$partitions, $nextmd ];
-						run3(@cmd, undef, \$stdout_buf, undef);
 
-						eval { $err = $json->decode($stdout_buf) } || $self->Fatal("Unable to parse \"%s\": %s", $stdout_buf, $!);
+                        # something is fishy down in the diskmanager, do the creation manually for the time beeing
+                        system(
+                            'mdadm',
+                            '--create',
+                            '-e', '0.90',
+                            '--run',
+                            '--force',
+                            '--assume-clean',
+                            $nextmd,
+                            '--level', $level,
+                            '--raid-devices', 2,
+                            '--spare-devices', 0,
+                            $internal,
+                            $external
+                        );
+                        #@cmd = [ MANAGER, 'md','create', $level, scalar @$partitions, 0, @$partitions, $nextmd ];
+                        #run3(@cmd, undef, \$stdout_buf, undef);
 
-						if( exists $err->{status} and $err->{status} == 0 ) {
-							$ERROR = 1;
-							$cmd_str = join( ' ', @{$cmd[0]} );
-							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
-							$IS_RUNNING = 0;
-							return;
-						};
+                        #eval { $err = $json->decode($stdout_buf) } || $self->Fatal("Unable to parse \"%s\": %s", $stdout_buf, $!);
+
+                        #if( exists $err->{status} and $err->{status} == 0 ) {
+                            #	$ERROR = 1;
+                            #$cmd_str = join( ' ', @{$cmd[0]} );
+                            #$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            #$self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
+                            #$IS_RUNNING = 0;
+                            #return;
+                            #};
 
 						++$CURRENT_PROGRESS;
 					}
@@ -579,6 +613,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -597,6 +632,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -614,6 +650,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -698,6 +735,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -719,6 +757,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -829,6 +868,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -844,6 +884,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -864,6 +905,7 @@ sub Run($) {
 									$ERROR = 1;
 									$cmd_str = join( ' ', @{$cmd[0]} );
 									$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                    $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 									$IS_RUNNING = 0;
 									return;
 								};
@@ -879,6 +921,7 @@ sub Run($) {
 									$ERROR = 1;
 									$cmd_str = join( ' ', @{$cmd[0]} );
 									$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                    $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 									$IS_RUNNING = 0;
 									return;
 								};
@@ -901,6 +944,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -916,6 +960,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -936,6 +981,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -954,6 +1000,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -974,6 +1021,7 @@ sub Run($) {
 								$ERROR = 1;
 								$cmd_str = join( ' ', @{$cmd[0]} );
 								$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                                $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 								$IS_RUNNING = 0;
 								return;
 							};
@@ -994,6 +1042,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -1017,6 +1066,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -1036,6 +1086,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -1054,6 +1105,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -1071,6 +1123,7 @@ sub Run($) {
 							$ERROR = 1;
 							$cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						};
@@ -1129,14 +1182,15 @@ sub Run($) {
 							$ERROR = 1;
 							my $cmd_str = join( ' ', @{$cmd[0]} );
 							$STATUS_MESSAGE = "Error: $err->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						}
 						$CURRENT_PROGRESS = 10;
 					}
-					sleep 5; 
+					sleep 5;
 					# while the partitions might have been completed, it can take an second or five to sync it
-					# so we sleep for 5 secs to make sure it's synced. (this will especially happen for small 
+					# so we sleep for 5 secs to make sure it's synced. (this will especially happen for small
 					# USB memory sticks)
 
 					{
@@ -1169,12 +1223,13 @@ sub Run($) {
 							$ERROR = 1;
 							my $cmd_str = join( ' ', @$cmd );
 							$STATUS_MESSAGE = "Error: $json_str->{errmsg}: $cmd_str";
+                            $self->Fatal("Error: %s: %s",$err->{errmsg}, $cmd_str);
 							$IS_RUNNING = 0;
 							return;
 						}
 						$CURRENT_PROGRESS = 90;
 					}
-					sleep 5; 
+					sleep 5;
 					# we'll sleep again before we really sync the new stuff.
 					{
 						system( MANAGER, 'disk', 'probe', $disk );
@@ -1222,8 +1277,8 @@ package main;
 
 
 my $server = new Bubba::Disk({
-		localpath => Bubba::Disk::SOCKNAME, 
+		localpath => Bubba::Disk::SOCKNAME,
 		pidfile => Bubba::Disk::PIDFILE,
-		'loop-timeout' => 30, 
+		'loop-timeout' => 30,
 	}, \@ARGV);
 $server->Bind();
