@@ -25,7 +25,6 @@ import threading
 import urllib
 import urllib2
 import re
-import pyme
 import tempfile
 import shutil
 
@@ -528,22 +527,18 @@ def run_hotfix(status):
         status['status'] = _('Requesting directives from remote hotfix server')
         res = urllib2.urlopen(HOTFIX_URL, urllib.urlencode({'data': json.dumps(args)}))
         data = res.read()
-        from pyme import core, constants, errors
-        from pyme.constants import protocol
+        import gnupg
 
-        status['status'] = _('Verifying authenicity of rquested directives')
-        signed = core.Data(data)
-        plain = core.Data()
-        c = core.Context()
-        c.set_protocol(protocol.OpenPGP)
-        c.op_verify(signed, None, plain)
+        gpg = gnupg.GPG(keyring="/usr/share/keyrings/excito-hotfix-keyring.gpg")
+        verified = gpg.verify(data)
 
-        for sign in c.op_verify_result().signatures:
-            if sign.status != 0:
-                raise errors.GPGMEError(sign.status)
+        if not verified:
+            raise HotfixException('ERROR', 'Was unable to verify the authenticity of the returned data. Aborting upgrade; please contact support')
 
-        plain.seek(0, 0)
-        data = json.loads(plain.read())
+        decrypted = gpg.decrypt(data)
+        raw_data = decrypted.data
+
+        data = json.loads(raw_data)
         if 'status' in data:
             stat = data['status']
             if stat & HotfixStatus.FOUND:
@@ -604,9 +599,6 @@ def run_hotfix(status):
 
     except HotfixException:
         raise
-    except errors.GPGMEError as e:
-        syslog.syslog(syslog.LOG_ERR, "Unable to verify data: " + str(e))
-        raise HotfixException('ERROR', _('Was unable to verify the authenticity of the returned data. Aborting upgrade; please contact support'))
     except urllib2.URLError as e:
         syslog.syslog(syslog.LOG_ERR, "Unable to download data:  " + str(e))
         raise HotfixException('ERROR', _('Was unable to connect to the update server. Aborting upgrade. Please check internet connection.'))
