@@ -313,14 +313,19 @@ def dist_upgrade(status):
 
     if health.precheck():
         status['action'] = _("Step 2: Initiating distribution upgrade")
+        op_progress = BubbaOpProgress(status)
+        aquire_progress = BubbaAcquireProgress(status)
+        install_progress = BubbaInstallProgress(status)
 
-        cache = apt.Cache(BubbaOpProgress(status))
+        cache = apt.Cache(op_progress)
         status['action'] = _("Step 2: Update available sources")
         cache.update(
-            fetch_progress=BubbaAcquireProgress(status)
+            fetch_progress=aquire_progress
         )
 
-        cache.open(BubbaOpProgress(status))
+        cache.open(op_progress)
+        cache._depcache.policy.read_pinfile("/etc/apt/preferences.d/excito")
+        cache._depcache.init(op_progress)
 
         cache.upgrade(True)
 
@@ -334,8 +339,8 @@ def dist_upgrade(status):
 
             try:
                 cache.commit(
-                    BubbaAcquireProgress(status),
-                    BubbaInstallProgress(status)
+                    aquire_progress,
+                    install_progress
                 )
             except SystemError as err:
                 pass
