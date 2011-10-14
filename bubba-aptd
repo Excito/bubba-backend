@@ -327,6 +327,7 @@ def dist_upgrade(status):
         nbr_install = cache.install_count
 
         if nbr_install == 0:
+            status['action'] = _('Upgrade halted')
             status['status'] = _('Nothing to upgrade')
         else:
             status['action'] = _("Step 3: Upgrading")
