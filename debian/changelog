@@ -1,3 +1,10 @@
+bubba-backend (2.3.1~pre5) hugo; urgency=low
+
+  * Update all sources
+  * Change action when nothing to upgrade (Closes: #1749)
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 14 Oct 2011 15:34:07 +0200
+
 bubba-backend (2.3.1~pre4) hugo; urgency=low
 
   * Replace pyme with python-gnupg
