@@ -317,8 +317,7 @@ def dist_upgrade(status):
         cache = apt.Cache(BubbaOpProgress(status))
         status['action'] = _("Step 2: Update available sources")
         cache.update(
-            fetch_progress=BubbaAcquireProgress(status),
-            sources_list='/etc/apt/sources.list.d/excito.list'
+            fetch_progress=BubbaAcquireProgress(status)
         )
 
         cache.open(BubbaOpProgress(status))
@@ -366,8 +365,7 @@ def install_package(package, status):
     status['action'] = _("Update available sources")
 
     cache.update(
-        fetch_progress=BubbaAcquireProgress(status),
-        sources_list='/etc/apt/sources.list.d/excito.list'
+        fetch_progress=BubbaAcquireProgress(status)
     )
 
     cache.update(BubbaAcquireProgress(status))
