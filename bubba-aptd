@@ -321,7 +321,6 @@ def dist_upgrade(status):
         )
 
         cache.open(BubbaOpProgress(status))
-        cache._depcache.read_pinfile("/etc/apt/preferences.d/excito")
 
         cache.upgrade(True)
 
