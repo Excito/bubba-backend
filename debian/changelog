@@ -1,3 +1,9 @@
+bubba-backend (2.3.1~pre6) hugo; urgency=low
+
+  * testing read pinfile
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 17 Oct 2011 13:13:54 +0200
+
 bubba-backend (2.3.1~pre5) hugo; urgency=low
 
   * Update all sources
