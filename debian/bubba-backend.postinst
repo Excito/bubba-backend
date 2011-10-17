@@ -62,6 +62,11 @@ divert_cb_dnsmasq() {
 	invoke-rc.d --quiet $5 restart || true;
 }
 
+divert_cb_dhclient() {
+	echo "setting default dhcp host name"
+    sed -i "s/send host-name \"b3\"/send host-name \"$(hostname)\"/" $2
+}
+
 
 fix_postfix_maincf(){
 
@@ -198,7 +203,7 @@ root@$MAILNAME
 
 	divert bubba-backend /etc/default/hostapd /etc/default/hostapd.bubba-distrib /etc/bubba/hostapd.default false;
 	divert bubba-backend /etc/hostapd/hostapd.conf /etc/hostapd/hostapd.conf.bubba-distrib /etc/bubba/hostapd.conf hostapd;
-	divert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf false;
+	divert bubba-backend /etc/dhcp/dhclient.conf /etc/dhcp/dhclient.conf.bubba-distrib /etc/bubba/dhclient.conf dhclient;
 	divert bubba-backend /etc/dovecot/dovecot.conf /etc/dovecot/dovecot.conf.bubba-distrib /etc/bubba/dovecot.conf dovecot;
 	# proftpd has excito packaging with config in that
 	#divert bubba-backend /etc/proftpd/proftpd.conf /etc/proftpd/proftpd.conf.bubba-distrib /etc/bubba/proftpd.conf proftpd;
