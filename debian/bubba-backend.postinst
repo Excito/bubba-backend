@@ -93,7 +93,7 @@ case "$1" in
 		fi
 
         if dpkg --compare-versions "$2" lt 2.3.1; then
-            cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences
+            cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences.d/excito
             cp /usr/share/bubba-configs/apt/excito.list /etc/apt/sources.list.d/excito.list
             cp --backup --suffix=.dpkg-old /usr/share/bubba-configs/apt/sources.list /etc/apt/sources.list
             if [ -e /etc/apt/preferences ]; then
