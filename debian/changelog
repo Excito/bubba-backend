@@ -1,9 +1,14 @@
+bubba-backend (2.4~pre4) vincent; urgency=low
+
+  * Removing limitations of passwords, including resolving some legacy coding
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 19 Oct 2011 15:25:53 +0200
+
 bubba-backend (2.4~pre3) vincent; urgency=low
 
   * Quick fix for resolving RAID creation issue
   * Replace pyme with python-gnupg
   * fix default dhcp host name (Closes: #1755)
-  * Removing limitations of passwords, including resolving some legacy coding
 
  -- Carl Fürstenberg <carl@excito.com>  Wed, 19 Oct 2011 14:39:25 +0200
 
