@@ -364,7 +364,7 @@ use IPC::Open3;
 
    my($wtr, $rdr, $err);
    $err = 1; # we want to dump errors here
-   my $pid = open3($wtr, $rdr, $err,"usermod -p $pwd $name");
+   my $pid = open3($wtr, $rdr, $err,"usermod", "-p", $pwd, $name);
    my @rt=<$rdr>;
    my @err=<$err>;
    waitpid($pid,0);
@@ -408,11 +408,12 @@ sub set_workgroup {
 #
 sub set_samba_password {
    my ($name, $old_pwd, $new_pwd)=@_;
+   use IPC::Run3;
 
-   system("echo \"$old_pwd\n$new_pwd\" | smbpasswd -s $name");
+   $in = "$old_pwd\n$new_pwd";
+   run3 ['smbpasswd', '-s', $name], \$in;
 
    return $?;
-
 }
 
 # Delete user from system, both samba and unix

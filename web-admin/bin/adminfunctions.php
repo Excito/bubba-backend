@@ -262,16 +262,21 @@ function set_workgroup($workgroup){
 
 function set_unix_password($uname, $pwd){
 
-    $cmd=BACKEND." set_unix_password $uname '$pwd'";
+    $cmd=escapeshellargs(BACKEND, "set_unix_password", $uname, $pwd);
 
-    $result=shell_exec($cmd);
+	exec($cmd, $output, $retval);
+
+	return $retval == 0;
 
 }
 
 function set_samba_password($uname, $pwd1, $pwd2){
 
-	$cmd=BACKEND." set_samba_password $uname '$pwd1' '$pwd2'";
-	$result=shell_exec($cmd);
+	$cmd=escapeshellargs(BACKEND, "set_samba_password", $uname, $pwd1, $pwd2);
+
+	exec($cmd, $output, $retval);
+
+	return $retval == 0;
 }
 
 function del_user($uname){
@@ -348,7 +353,7 @@ function update_user($realname,$shell,$uname){
 
 function add_user($realname,$group,$shell,$pass1,$uname){
 	
-	$cmd = BACKEND." add_user '$realname' $group $shell $pass1 $uname";
+	$cmd = escapeshellargs(BACKEND, "add_user", $realname, $group, $shell, $pass1, $uname);
 	exec($cmd,$out,$res);
 	return $res;
 }
@@ -635,7 +640,7 @@ function write_send_mailcfg($mailhost, $auth, $user,$passwd, $plain_auth){
 	$plain_auth=$plain_auth?"yes":"no";
 
    
-   $cmd=BACKEND." write_send_mailcfg \"$mailhost\" \"$auth\" \"$user\" \"$passwd\" \"$plain_auth\"";
+   $cmd=escapeshellargs(BACKEND, "write_send_mailcfg", $mailhost, $auth, $user, $passwd, $plain_auth);
    
    exec($cmd,$out,$ret);
    return $ret;
