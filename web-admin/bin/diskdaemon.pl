@@ -231,6 +231,9 @@ sub Run($) {
 					my $vgs;
 					my $cmd_str;
 
+                    # workaround for parted when modifying partition table
+                    system('swapoff', '/dev/sda3');
+
 					{
 						@cmd = [ MANAGER, 'fstab','is_mounted', $external ];
 						run3(@cmd, undef, \$stdout_buf, undef);
@@ -695,6 +698,8 @@ sub Run($) {
 
 						$CURRENT_PROGRESS = $old_current_progress + 1;
 					}
+                    # workaround for parted when modifying partition table
+                    system('swapon', '/dev/sda3');
 
 					$IS_RUNNING = 0;
 					$STATUS_MESSAGE = "Conversion to RAID-$level complete";
@@ -722,6 +727,8 @@ sub Run($) {
 					my $vgs;
 					my $cmd_str;
 
+                    # workaround for parted when modifying partition table
+                    system('swapoff', '/dev/sda3');
 
 					{
 						# partition external disk
@@ -764,6 +771,9 @@ sub Run($) {
 
 						++$CURRENT_PROGRESS;
 					}
+
+                    # workaround for parted when modifying partition table
+                    system('swapon', '/dev/sda3');
 
 					$IS_RUNNING = 0;
 					$STATUS_MESSAGE = "The new disk has successfully been added. Synchronizing disks in progress.";
@@ -810,6 +820,9 @@ sub Run($) {
 					my @devices;
 					my $vgs;
 					my $cmd_str;
+
+                    # workaround for parted when modifying partition table
+                    system('swapoff', '/dev/sda3');
 					{
 						# grab lvs
 						@cmd = [ MANAGER, 'lv', 'list' ];
@@ -1151,6 +1164,9 @@ sub Run($) {
 
 						$CURRENT_PROGRESS = $old_current_progress + 1;
 					}
+
+                    # workaround for parted when modifying partition table
+                    system('swapon', '/dev/sda3');
 
 					$IS_RUNNING = 0;
 					$STATUS_MESSAGE = "$md has been sucessfully restored, full sync will be achieved after a few hours";
