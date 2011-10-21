@@ -336,7 +336,7 @@ End-of-Message
 		cp -a /usr/share/bubba-backend/default_web/* /home/web
 	fi
 
-	if dpkg --compare-versions "$2" lt-nl 2.0; then
+	if dpkg --compare-versions "$2" lt 2.0; then
 		sha1=$(sha1sum /home/web/index.html| awk '{print $1}');
 		if \
 			[ "$sha1" = "1df55d178ba481f4800d235ec4deae0dc8d20236" ] \
@@ -350,7 +350,7 @@ End-of-Message
 	fi
 
 	# switchover to minidlna
-	if dpkg --compare-versions "$2" lt-nl 2.2.8; then
+	if dpkg --compare-versions "$2" lt 2.2.8; then
 		invoke-rc.d --quiet mediatomb stop
 		update-rc.d -f mediatomb remove
 	fi
@@ -364,7 +364,7 @@ End-of-Message
 		adduser admin lpadmin
 	fi
 
-	if dpkg --compare-versions "$2" lt-nl 2.2.18; then
+	if dpkg --compare-versions "$2" lt 2.2.18; then
 		bkup=$(tempfile);
 		cfg=/etc/samba/smb.conf
 		cp $cfg $bkup;
