@@ -135,24 +135,6 @@ case "$1" in
 		cp /usr/share/bubba-backend/auth_template.xml /etc/bubba_auth.xml;
 	fi
 
-	# Old wizard created localtime to utilize TAI instead of UTC
-	if dpkg --compare-versions "$2" lt 1.3; then
-		if readlink -fn /etc/localtime | grep -q '/right/'; then
-			new_target=$(readlink -fn /etc/localtime | sed 's/\/right\//\//');
-			ln -f -s $new_target /etc/localtime;
-		fi
-	fi
-
-	if dpkg --compare-versions "$2" lt 1.2.4.36; then
-		for i in ui.pl led.pl; do
-			ln -t /etc/bubba-notify/enabled -s -f /etc/bubba-notify/available/$i;
-		done
-	fi
-
-	if dpkg --compare-versions "$2" lt 1.2.4.34; then
-		sed -i 's/^\s*DELAYLOGIN\s*=\s*no/DELAYLOGIN=yes/' /etc/default/rcS
-	fi
-
 	# Create a new dovecot certificate if it's due to expire
 	
 	# Certs and key file (most faithfully stolen from dovecot postinst)
@@ -244,28 +226,6 @@ root@$MAILNAME
 		rm -f $bkup;
 	fi
 
-	if dpkg --compare-versions "$2" lt 1.2.3; then
-		bkup=$(tempfile);
-		cnf=/etc/mdadm/mdadm.conf;
-
-		cp $cnf $bkup;
-		sed -i "s|^PROGRAM.*$|PROGRAM /usr/lib/web-admin/notify-monitor-raid.pl|;" $cnf;
-		if ! grep --silent PROGRAM $cnf && `cmp --silent $bkup $cnf`; then
-			cat >> $cnf <<-EOF
-			# program to handle events sent my mdadm
-			PROGRAM /usr/lib/web-admin/notify-monitor-raid.pl
-			EOF
-		fi
-
-		if ! `cmp --silent $bkup $cnf`; then
-			mv $bkup $cnf.dpkg-old
-			invoke-rc.d mdadm restart;
-		else
-			rm -f $bkup;
-		fi
-
-	fi
-
     # update interface settings
     lanif=$(bubba-networkmanager-cli getlanif)
     bkup=$(tempfile);
@@ -280,14 +240,6 @@ root@$MAILNAME
             rm -f $bkup;
         fi
     fi
-
-	# removing leftovers
-	if dpkg --compare-versions "$2" lt 1.0.32; then
-		update-rc.d -f firewall remove
-		rm -f /etc/init.d/firewall
-		update-rc.d -f disable-offload remove
-		rm -f /etc/init.d/disable-offload
-	fi
 
 	if dpkg --compare-versions "$2" lt "2.1~pre25"; then
 		invoke-rc.d dnsmasq restart
@@ -337,32 +289,6 @@ root@$MAILNAME
 	#
 	# End static avahi services
 	#
-
-
-	# Add icmp type 3 code 4 rules to the firewall, if none already exists.
-	if dpkg --compare-versions "$2" lt 1.0.14; then
-		if ! iptables -nL INPUT | grep -q -- "icmp type 3 code 4"; then
-			iptables -A INPUT -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
-		fi
-		if ! iptables -nL FORWARD | grep -q -- "icmp type 3 code 4"; then
-			iptables -A FORWARD -p icmp -m icmp --icmp-type 3/4 -j ACCEPT
-		fi
-		cp /etc/network/firewall.conf /etc/network/firewall.conf.dpkg-old
-		iptables-save > /etc/network/firewall.conf
-
-	fi
-
-	# Adding missing routes "on the fly".
-	if dpkg --compare-versions "$2" lt 1.1.11; then
-		(
-		/sbin/route add -net 224.0.0.0 netmask 255.0.0.0 eth1 2> /dev/null &&
-		echo "Adding multicast 224.0.0.0 route to eth1";
-		) || true
-		(
-		/sbin/route add -net 239.0.0.0 netmask 255.0.0.0 eth1 2> /dev/null &&
-		echo "Adding multicast 239.0.0.0 route to eth1";
-		) || true
-	fi
 
 	if dpkg --compare-versions "$2" lt 2.2.2; then
 		fix_postfix_maincf
