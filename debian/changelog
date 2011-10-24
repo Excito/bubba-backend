@@ -26,6 +26,19 @@ bubba-backend (2.4~pre1) vincent; urgency=low
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 07 Oct 2011 13:37:41 +0200
 
+bubba-backend (2.3.1~pre11) hugo; urgency=low
+
+  * delay the resetting of the lock until after 6 seconds (Closes: #1775)
+  * adding upgrade restart message
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 24 Oct 2011 16:34:18 +0200
+
+bubba-backend (2.3.1~pre10) hugo; urgency=low
+
+  * Adding workaround for RAID creation (Closes: #1746)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 24 Oct 2011 14:54:16 +0200
+
 bubba-backend (2.3.1~pre9) hugo; urgency=low
 
   * Make sure pin file are read

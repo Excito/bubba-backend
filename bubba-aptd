@@ -627,12 +627,12 @@ class AptProtocol(LineReceiver):
         syslog.syslog("Errback got: " + str(err))
 
     def _reset(self, x):
-        """we'll reset the status after 30 seconds after conclusion of an upgrade/install"""
-        systemLock.release()
+        """we'll reset the status after 6 seconds after conclusion of an upgrade/install"""
         def __do_reset():
+            systemLock.release()
             self.factory._status.clear()
             syslog.syslog("Resetting daemon")
-        reactor.callLater(10, __do_reset)
+        reactor.callLater(6, __do_reset)
 
     def lineReceived(self, line):
         try:
