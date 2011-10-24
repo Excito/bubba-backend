@@ -446,6 +446,15 @@ End-of-Message
         sysctl -p /etc/sysctl.d/bubba_min_free_kbytes.conf
     fi
 
+    if dpkg --compare-versions "$2" lt "2.3.1"; then
+			cat >>/tmp/bubba-apt.log << End-of-Message
+Code: WARN
+Desc: Restart required
+Data: Vital system parts are updated - please restart B3 for them to take effect
+End-of-Message
+
+    fi
+
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
