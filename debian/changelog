@@ -1,3 +1,9 @@
+bubba-backend (2.3.1) hugo; urgency=low
+
+  * Releasing 2.3.1
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 26 Oct 2011 16:59:20 +0200
+
 bubba-backend (2.3.1~pre11) hugo; urgency=low
 
   * delay the resetting of the lock until after 6 seconds (Closes: #1775)
