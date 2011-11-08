@@ -2,13 +2,10 @@
 
 use strict;
 
-package Bubba::Disk;
-
-use Perl6::Say;
+use v5.10;
 use JSON;
 use threads;
 use threads::shared;
-use base qw(Net::Daemon);
 use IPC::Run3;
 use IPC::Open3;
 use List::Util qw(min max);
@@ -18,11 +15,99 @@ use IPC::SysV qw(IPC_CREAT IPC_RMID S_IRUSR ftok);
 use vars qw($exit);
 use vars qw($VERSION);
 
-$VERSION = '0.0.1';
+use IO::Async::Function;
+use IO::Async::Stream;
+use IO::Async::Loop;
+use IO::Async::Listener;
+
+my $loop = IO::Async::Loop->new;
+
+$VERSION = '1.0';
 
 use constant SOCKNAME		=> "/tmp/bubba-disk.socket";
 use constant PIDFILE		=> '/tmp/bubba-disk.pid';
 use constant MANAGER		=> '/usr/sbin/diskmanager';
+sub _error {
+	my $json = new JSON;
+	my ($self, $err) = @_;
+	$self->{'socket'}->say($json->encode({ error => "Error: $err" }));
+	die( $err );
+}
+
+my $is_running = 0;
+my $listener = IO::Async::Listener->new(
+	on_stream => sub {
+		my ( undef, $stream ) = @_;
+
+		$stream->configure(
+			on_read => sub {
+				my ( $self, $buffref, $eof ) = @_;
+				my $data = $$buffref;
+				$data =~ s/\s+$//;
+				my $request;
+				if(eval { $request = $json->decode($line) }) {
+					$$buffref = "";
+					given($request->{action}) {
+						when('add_to_lvm') {
+							$is_running = 1;
+							my $disk = $request->{disk} || $self->UserError("Missing parameter 'disk'");
+							my $vg = $request->{vg} || $self->UserError("Missing parameter 'vg'");
+							my $lv = $request->{lv} || $self->UserError("Missing parameter 'lv'");
+							my $partition = "$disk"."1";
+							my $function = IO::Async::Function->new(
+								code => add_to_lvm
+							);
+							$loop->add( $function );
+							$function->call(
+								args => [$disk, $vg, $lv, $partition],
+								on_return => sub {
+									$is_running = 0;
+									say "ok";
+								},
+								on_error => sub {
+									$is_running = 0;
+									say STDERR "Error - $_[0]";
+								},
+							);
+						}
+						when('create_raid_internal_lvm_external') {
+						}
+						when('restore_raid_broken_external'){
+						}
+						when('restore_raid_broken_internal') {
+						}
+						when('format_disk') {
+						}
+						when('progress') {
+						}
+						when('status') {
+						}
+					}
+				}
+				return 0;
+			},
+			read_all => 1,
+		);
+
+		$loop->add( $stream );
+	},
+);
+
+$loop->add( $listener );
+
+$listener->listen(
+	addr => { 
+		family => "unix",
+		socktype => "stream",		
+		path => SOCKNAME
+	}
+);
+
+$loop->loop_forever;
+
+sub add_to_lvm {
+	my( $disk, $vg, $lv, $partition ) = @_;
+}
 
 my $IS_RUNNING : shared = 0;
 my $DONE : shared = 0;
