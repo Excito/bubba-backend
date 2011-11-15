@@ -47,8 +47,6 @@ Depends: ${misc:Depends}, bubba,
  libcrypt-passwdmd5-perl,
  libxml-simple-perl (>= 2.18),
  libxml-parser-perl,
- libperl6-say-perl,
- libnet-daemon-perl (>= 0.43-1ex1),
  ntp,
  libfile-slurp-perl,
  netatalk,
@@ -83,6 +81,9 @@ Depends: ${misc:Depends}, bubba,
  python-mysqldb,
  python-twisted-core,
  python-gnupg,
- python-netifaces
+ python-netifaces,
+ libio-async-perl (>= 0.44),
+ libipc-shareable-perl,
+ libproc-daemon-perl
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.
