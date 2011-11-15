@@ -25,30 +25,10 @@ use Try::Tiny;
 use POSIX ":sys_wait_h";
 use IPC::SysV qw(IPC_CREAT IPC_RMID S_IRUSR ftok);
 
-my %status;
-tie %status, 'IPC::Shareable', 'status', {
-    create => 'yes',
-    mode => 0644,
-    destroy => 'yes'
-} or die "tie failed, stopped";
-
-sub reset_status {
-    %status = (
-        overall_action => 'idle',
-        is_running => 0,
-        idle => 0,
-        progress => 0,
-        done => 0,
-        error => 0
-    );
-}
-
-reset_status();
-
 use constant SOCKNAME		=> "/tmp/bubba-disk.socket";
 use constant PIDFILE		=> '/tmp/bubba-disk.pid';
 use constant MANAGER		=> '/usr/sbin/diskmanager';
-use constant DELAY          => 3;
+use constant DELAY          => 20;
 
 my $daemon = Proc::Daemon->new(
     work_dir => '/',
@@ -59,12 +39,51 @@ $daemon->Init();
 openlog('bubba-diskdaemon', "", "user");
 syslog("info", "Starting up");
 
+my %status;
+tie %status, 'IPC::Shareable', 'status', {
+    create => 'yes',
+    mode => 0644,
+    destroy => 'yes'
+} or die "tie failed, stopped";
+
+%status = (
+        overall_action => 'idle',
+        is_running => 0,
+        idle => 0,
+        progress => 0,
+        done => 0,
+        error => 0
+);
+
+sub reset_status {
+    $status{overall_action} = 'idle';
+    $status{is_idle} = 0;
+    $status{progress} = 0;
+    $status{done} = 0;
+    $status{error} = 0;
+}
+
+
 
 unlink SOCKNAME;
 
 my $loop = IO::Async::Loop->new;
 
 my $listener;
+
+sub write_progress {
+    my($stream)= @_;
+    $stream->write(
+        encode_json(
+            {
+                done => $status{done},
+                status => $status{status},
+                progress => sprintf("%.2f", $status{progress})
+            }
+        )
+    );
+
+}
 
 $listener = IO::Async::Listener->new(
     on_stream => sub {
@@ -113,6 +132,8 @@ $listener = IO::Async::Listener->new(
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
                                 $status{is_running} = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
+                            } finally {
+                                write_progress($stream) unless $@;
                             }
                         }
                         when('create_raid_internal_lvm_external') {
@@ -142,11 +163,12 @@ $listener = IO::Async::Listener->new(
                                         die $_[0];
                                     },
                                 );
-
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
                                 $status{is_running} = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
+                            } finally {
+                                write_progress($stream) unless $@;
                             }
 
                         }
@@ -181,6 +203,8 @@ $listener = IO::Async::Listener->new(
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
                                 $status{is_running} = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
+                            } finally {
+                                write_progress($stream) unless $@;
                             }
 
                         }
@@ -216,6 +240,8 @@ $listener = IO::Async::Listener->new(
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
                                 $status{is_running} = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
+                            } finally {
+                                write_progress($stream) unless $@;
                             }
 
 
@@ -252,6 +278,8 @@ $listener = IO::Async::Listener->new(
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
                                 $status{is_running} = 0;
                                 syslog('error', "Caught error: %s", $_[0]);
+                            } finally {
+                                write_progress($stream) unless $@;
                             }
 
                         }
@@ -287,6 +315,7 @@ $listener = IO::Async::Listener->new(
                         }
                     }
                 }
+                $stream->write("\n");
                 return 0;
             },
             read_all => 1,
@@ -347,10 +376,10 @@ sub progress {
 }
 
 sub add_to_lvm {
+    my($disk, $vg, $lv, $partition) = @_;
     try {
         reset_status();
         $status{overall_action} = 'add_to_lvm';
-        my($disk, $vg, $lv, $partition) = @_;
 
         my @cmd;
         my $err;
@@ -449,10 +478,10 @@ sub add_to_lvm {
 }
 
 sub create_raid {
+    my($level, $external_disk) = @_;
     try {
         reset_status();
         $status{overall_action} = 'create_raid';
-        my($level, $external_disk) = @_;
 
         my $steps = 18;
 
@@ -844,10 +873,10 @@ sub create_raid {
 }
 
 sub restore_raid_broken_external {
+    my($disk) = @_;
     try {
         reset_status();
         $status{overall_action} = 'restore_raid_broken_external';
-        my($disk) = @_;
         my $steps = 2;
         my $external = "${disk}1";
         my $md = "/dev/md0"; # autodetect?;
@@ -908,11 +937,12 @@ sub restore_raid_broken_external {
 }
 
 sub restore_raid_broken_internal {
+    my($disk,$part) = @_;
+
     try {
         reset_status();
         $status{overall_action} = 'restore_raid_broken_internal';
 
-        my($disk,$part) = @_;
 
         my $steps = 12;
         progress(0, $steps);
@@ -1204,10 +1234,10 @@ sub restore_raid_broken_internal {
 }
 
 sub format_disk {
+    my($disk,$label) = @_;
     try {
         reset_status();
         $status{overall_action} = 'format_disk';
-        my($disk,$label) = @_;
         my $partition = "${disk}1";
 
         my( $err, $stdin_buf, $stdout_buf, $stderr_buf, $buffer );
