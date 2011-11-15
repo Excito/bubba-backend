@@ -47,12 +47,12 @@ tie %status, 'IPC::Shareable', 'status', {
 } or die "tie failed, stopped";
 
 %status = (
-        overall_action => 'idle',
-        is_running => 0,
-        idle => 0,
-        progress => 0,
-        done => 0,
-        error => 0
+    overall_action => 'idle',
+    is_running => 0,
+    idle => 0,
+    progress => 0,
+    done => 0,
+    error => 0
 );
 
 sub reset_status {
