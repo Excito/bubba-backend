@@ -120,10 +120,10 @@ $listener = IO::Async::Listener->new(
                                 $function->call(
                                     args => [$disk, $vg, $lv, $partition],
                                     on_return => sub {
+                                        syslog("info", "returning from add_to_lvm");
                                         $function->stop;
                                     },
                                     on_error => sub {
-                                        $status{is_running} = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -155,10 +155,10 @@ $listener = IO::Async::Listener->new(
                                 $function->call(
                                     args => [$level, $external_disk],
                                     on_return => sub {
+                                        syslog("info", "returning from create_raid");
                                         $function->stop;
                                     },
                                     on_error => sub {
-                                        $status{is_running} = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -190,10 +190,10 @@ $listener = IO::Async::Listener->new(
                                 $function->call(
                                     args => [$disk],
                                     on_return => sub {
+                                        syslog("info", "returning from restore_raid_broken_external");
                                         $function->stop;
                                     },
                                     on_error => sub {
-                                        $status{is_running} = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -227,10 +227,10 @@ $listener = IO::Async::Listener->new(
                                 $function->call(
                                     args => [$disk, $part],
                                     on_return => sub {
+                                        syslog("info", "returning from restore_raid_broken_internal");
                                         $function->stop;
                                     },
                                     on_error => sub {
-                                        $status{is_running} = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -265,10 +265,10 @@ $listener = IO::Async::Listener->new(
                                 $function->call(
                                     args => [$disk, $label],
                                     on_return => sub {
+                                        syslog("info", "returning from format_disk");
                                         $function->stop;
                                     },
                                     on_error => sub {
-                                        $status{is_running} = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -336,23 +336,27 @@ $listener->listen(
     on_resolve_error => sub { print STDERR "Cannot resolve - $_[0]\n"; },
     on_listen_error  => sub { print STDERR "Cannot listen\n"; },
 );
-
-my $timer = IO::Async::Timer::Periodic->new(
+my $timer;
+$timer = IO::Async::Timer::Periodic->new(
     interval => DELAY,
     first_interval => DELAY * 3,
 
     on_tick => sub {
-        if(!$status{is_running}) {
+        unless($status{is_running}) {
+            syslog("info", "Idle timer encountered");
             my $countdown = IO::Async::Timer::Countdown->new(
-                delay => DELAY,
+                delay => DELAY/2,
 
                 on_expire => sub {
-                    if(!$status{is_running}) {
+                    unless($status{is_running}) {
                         syslog("info", "Shutting down");
+                        $timer->stop;
                         $loop->loop_stop;
                         unlink PIDFILE;
                         unlink SOCKNAME;
                         $daemon->Kill_Daemon();
+                    } else {
+                        syslog("info", "we wasn't idle...");
                     }
                 },
             );
