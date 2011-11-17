@@ -1,3 +1,9 @@
+bubba-backend (2.3.1+raid1) hugo; urgency=low
+
+  * new diskdaemon based on IO::Async
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Nov 2011 17:14:35 +0100
+
 bubba-backend (2.3.1) hugo; urgency=low
 
   * Releasing 2.3.1
