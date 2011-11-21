@@ -36,6 +36,18 @@ bubba-backend (2.4~pre1) vincent; urgency=low
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 07 Oct 2011 13:37:41 +0200
 
+bubba-backend (2.3.2) hugo; urgency=low
+
+  * new diskdaemon based on IO::Async
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 17 Nov 2011 17:14:35 +0100
+
+bubba-backend (2.3.1) hugo; urgency=low
+
+  * Releasing 2.3.1
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 26 Oct 2011 16:59:20 +0200
+
 bubba-backend (2.3.1~pre11) hugo; urgency=low
 
   * delay the resetting of the lock until after 6 seconds (Closes: #1775)
