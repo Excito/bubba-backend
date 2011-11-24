@@ -15,7 +15,7 @@ use IO::Async::Listener;
 use IO::Async::Timer::Periodic;
 use IO::Async::Timer::Countdown;
 
-use IPC::Shareable;
+use IPC::Shareable (':lock');
 use IPC::Run3;
 use IPC::Open3;
 
@@ -40,7 +40,7 @@ openlog('bubba-diskdaemon', "", "user");
 syslog("info", "Starting up");
 
 my %status;
-tie %status, 'IPC::Shareable', 'status', {
+my $lock = tie %status, 'IPC::Shareable', 'status', {
     create => 'yes',
     mode => 0644,
     destroy => 'yes'
@@ -100,11 +100,13 @@ $listener = IO::Async::Listener->new(
                     $$buffref = "";
                     given($request->{action}) {
                         when('add_to_lvm') {
+                            $lock->shlock;
                             if($status{is_running}) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
                             $status{is_running} = 1;
+                            $lock->shunlock;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $vg = $request->{vg} || die("Missing parameter 'vg'");
@@ -137,11 +139,13 @@ $listener = IO::Async::Listener->new(
                             }
                         }
                         when('create_raid_internal_lvm_external') {
+                            $lock->shlock;
                             if($status{is_running}) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
                             $status{is_running} = 1;
+                            $lock->shunlock;
                             try {
                                 my $level = $request->{level} || die("Missing parameter 'level'");
                                 my $external_disk = $request->{external} || die("Missing parameter 'external'");
@@ -173,11 +177,13 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('restore_raid_broken_external'){
+                            $lock->shlock;
                             if($status{is_running}) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
                             $status{is_running} = 1;
+                            $lock->shunlock;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
 
@@ -209,11 +215,13 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('restore_raid_broken_internal') {
+                            $lock->shlock;
                             if($status{is_running}) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
                             $status{is_running} = 1;
+                            $lock->shunlock;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $part = $request->{partition} || die("Missing parameter 'partition'");
@@ -247,11 +255,13 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('format_disk') {
+                            $lock->shlock;
                             if($status{is_running}) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
                             $status{is_running} = 1;
+                            $lock->shunlock;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $label = $request->{label} || die("Missing parameter 'label'");
@@ -342,13 +352,17 @@ $timer = IO::Async::Timer::Periodic->new(
     first_interval => DELAY * 3,
 
     on_tick => sub {
+        $lock->shlock(LOCK_SH);
         unless($status{is_running}) {
+            $lock->shunlock;
             syslog("info", "Idle timer encountered");
             my $countdown = IO::Async::Timer::Countdown->new(
                 delay => DELAY/2,
 
                 on_expire => sub {
+                    $lock->shlock(LOCK_SH);
                     unless($status{is_running}) {
+                        $lock->shunlock;
                         syslog("info", "Shutting down");
                         $timer->stop;
                         $loop->loop_stop;
@@ -356,6 +370,7 @@ $timer = IO::Async::Timer::Periodic->new(
                         unlink SOCKNAME;
                         $daemon->Kill_Daemon();
                     } else {
+                        $lock->shunlock;
                         syslog("info", "we wasn't idle...");
                     }
                 },
@@ -364,6 +379,8 @@ $timer = IO::Async::Timer::Periodic->new(
             $countdown->start;
 
             $loop->add( $countdown );
+        } else {
+            $lock->shunlock;
         }
     },
 );
