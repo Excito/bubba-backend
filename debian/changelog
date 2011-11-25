@@ -1,4 +1,4 @@
-bubba-backend (2.3.2.7) hugo; urgency=low
+bubba-backend (2.3.2.11) hugo; urgency=low
 
   * Bugfix: better handling of identifying when we are done
 

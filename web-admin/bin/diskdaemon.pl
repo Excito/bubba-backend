@@ -133,9 +133,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $vg, $lv, $partition],
                                     on_return => sub {
                                         syslog("info", "returning from add_to_lvm");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -168,9 +170,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$level, $external_disk],
                                     on_return => sub {
                                         syslog("info", "returning from create_raid");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -203,9 +207,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk],
                                     on_return => sub {
                                         syslog("info", "returning from restore_raid_broken_external");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -240,9 +246,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $part],
                                     on_return => sub {
                                         syslog("info", "returning from restore_raid_broken_internal");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -278,9 +286,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $label],
                                     on_return => sub {
                                         syslog("info", "returning from format_disk");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
