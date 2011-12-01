@@ -355,22 +355,11 @@ use IPC::Open3;
 #
 sub set_unix_password {
    my ($name,$pwd)=@_;
-
-   my $ret;
-
-use IPC::Open3;
    use Crypt::PasswdMD5;
-   $pwd=quotemeta unix_md5_crypt($pwd);
-
-   my($wtr, $rdr, $err);
-   $err = 1; # we want to dump errors here
-   my $pid = open3($wtr, $rdr, $err,"usermod", "-p", $pwd, $name);
-   my @rt=<$rdr>;
-   my @err=<$err>;
-   waitpid($pid,0);
+   $pwd=unix_md5_crypt($pwd);
+   system("usermod", "-p", $pwd, $name);
 
    return $?;
-
 }
 
 # Set samba workgroup
