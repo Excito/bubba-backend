@@ -1,43 +1,17 @@
-bubba-backend (2.4~pre6) vincent; urgency=low
-
-  * adding locking to the shared variable
-
- -- Carl Fürstenberg <carl@excito.com>  Thu, 24 Nov 2011 15:06:53 +0100
-
-bubba-backend (2.4~pre5) vincent; urgency=low
+bubba-backend (2.4~pre7) vincent; urgency=low
 
   * Adding workaround for RAID creation (Closes: #1746)
   * Remove pre-2.0 postinst upgrade specific code
   * Change some postinst lt-nl to lt
   * delay the resetting of the lock until after 6 seconds (Closes: #1775)
   * adding upgrade restart message
-
- -- Carl Fürstenberg <carl@excito.com>  Mon, 24 Oct 2011 16:40:39 +0200
-
-bubba-backend (2.4~pre4) vincent; urgency=low
-
   * Removing limitations of passwords, including resolving some legacy coding
-
- -- Carl Fürstenberg <carl@excito.com>  Wed, 19 Oct 2011 15:25:53 +0200
-
-bubba-backend (2.4~pre3) vincent; urgency=low
-
   * Quick fix for resolving RAID creation issue
   * Replace pyme with python-gnupg
   * fix default dhcp host name (Closes: #1755)
-
- -- Carl Fürstenberg <carl@excito.com>  Wed, 19 Oct 2011 14:39:25 +0200
-
-bubba-backend (2.4~pre2) vincent; urgency=low
-
   * Adding tor pidfile to service_running
   * Tor default config
   * adding ControlSocket to tor default config
-
- -- Carl Fürstenberg <carl@excito.com>  Fri, 07 Oct 2011 15:27:11 +0200
-
-bubba-backend (2.4~pre1) vincent; urgency=low
-
   * Adding WD LCC fix
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 07 Oct 2011 13:37:41 +0200
