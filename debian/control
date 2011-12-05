@@ -83,7 +83,7 @@ Depends: ${misc:Depends}, bubba,
  python-twisted-core,
  python-gnupg,
  python-netifaces,
- libio-async-perl (>= 0.44),
+ libio-async-perl (>= 0.45),
  libipc-shareable-perl,
  libproc-daemon-perl
 Description: The backend of the bubba administration

@@ -38,17 +38,18 @@ my $daemon = Proc::Daemon->new(
 $daemon->Init();
 openlog('bubba-diskdaemon', "", "user");
 syslog("info", "Starting up");
-
+my $ppid = $$;
 my %status;
-my $lock = tie %status, 'IPC::Shareable', 'status', {
+tie %status, 'IPC::Shareable', $ppid, {
     create => 'yes',
-    mode => 0644,
+    mode => 0666,
     destroy => 'yes'
 } or die "tie failed, stopped";
 
+my $is_running = 0;
+
 %status = (
     overall_action => 'idle',
-    is_running => 0,
     idle => 0,
     progress => 0,
     done => 0,
@@ -63,11 +64,22 @@ sub reset_status {
     $status{error} = 0;
 }
 
+my $loop = IO::Async::Loop->new;
 
+sub HUNTSMAN {
+
+    syslog("info", "shutting down");
+    IPC::Shareable->clean_up;
+    $loop->loop_stop;
+    unlink PIDFILE;
+    unlink SOCKNAME;
+    $daemon->Kill_Daemon();
+}
+
+$SIG{INT} = \&HUNTSMAN;
 
 unlink SOCKNAME;
 
-my $loop = IO::Async::Loop->new;
 
 my $listener;
 
@@ -100,13 +112,11 @@ $listener = IO::Async::Listener->new(
                     $$buffref = "";
                     given($request->{action}) {
                         when('add_to_lvm') {
-                            $lock->shlock;
-                            if($status{is_running}) {
+                            if($is_running) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
-                            $status{is_running} = 1;
-                            $lock->shunlock;
+                            $is_running = 1;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $vg = $request->{vg} || die("Missing parameter 'vg'");
@@ -123,29 +133,29 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $vg, $lv, $partition],
                                     on_return => sub {
                                         syslog("info", "returning from add_to_lvm");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
                                 );
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
-                                $status{is_running} = 0;
+                                $is_running = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
                             } finally {
                                 write_progress($stream) unless $@;
                             }
                         }
                         when('create_raid_internal_lvm_external') {
-                            $lock->shlock;
-                            if($status{is_running}) {
+                            if($is_running) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
-                            $status{is_running} = 1;
-                            $lock->shunlock;
+                            $is_running = 1;
                             try {
                                 my $level = $request->{level} || die("Missing parameter 'level'");
                                 my $external_disk = $request->{external} || die("Missing parameter 'external'");
@@ -160,16 +170,18 @@ $listener = IO::Async::Listener->new(
                                     args => [$level, $external_disk],
                                     on_return => sub {
                                         syslog("info", "returning from create_raid");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
                                 );
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
-                                $status{is_running} = 0;
+                                $is_running = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
                             } finally {
                                 write_progress($stream) unless $@;
@@ -177,13 +189,11 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('restore_raid_broken_external'){
-                            $lock->shlock;
-                            if($status{is_running}) {
+                            if($is_running) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
-                            $status{is_running} = 1;
-                            $lock->shunlock;
+                            $is_running = 1;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
 
@@ -197,9 +207,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk],
                                     on_return => sub {
                                         syslog("info", "returning from restore_raid_broken_external");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -207,7 +219,7 @@ $listener = IO::Async::Listener->new(
 
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
-                                $status{is_running} = 0;
+                                $is_running = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
                             } finally {
                                 write_progress($stream) unless $@;
@@ -215,13 +227,11 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('restore_raid_broken_internal') {
-                            $lock->shlock;
-                            if($status{is_running}) {
+                            if($is_running) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
-                            $status{is_running} = 1;
-                            $lock->shunlock;
+                            $is_running = 1;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $part = $request->{partition} || die("Missing parameter 'partition'");
@@ -236,9 +246,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $part],
                                     on_return => sub {
                                         syslog("info", "returning from restore_raid_broken_internal");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -246,7 +258,7 @@ $listener = IO::Async::Listener->new(
 
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
-                                $status{is_running} = 0;
+                                $is_running = 0;
                                 syslog('error',"Caught error: %s",$_[0]);
                             } finally {
                                 write_progress($stream) unless $@;
@@ -255,13 +267,11 @@ $listener = IO::Async::Listener->new(
 
                         }
                         when('format_disk') {
-                            $lock->shlock;
-                            if($status{is_running}) {
+                            if($is_running) {
                                 $stream->write(encode_json({ error => "allready running" })."\n");
                                 return;
                             }
-                            $status{is_running} = 1;
-                            $lock->shunlock;
+                            $is_running = 1;
                             try {
                                 my $disk = $request->{disk} || die("Missing parameter 'disk'");
                                 my $label = $request->{label} || die("Missing parameter 'label'");
@@ -276,9 +286,11 @@ $listener = IO::Async::Listener->new(
                                     args => [$disk, $label],
                                     on_return => sub {
                                         syslog("info", "returning from format_disk");
+                                        $is_running = 0;
                                         $function->stop;
                                     },
                                     on_error => sub {
+                                        $is_running = 0;
                                         $function->stop;
                                         die $_[0];
                                     },
@@ -286,7 +298,7 @@ $listener = IO::Async::Listener->new(
 
                             } catch {
                                 $stream->write(encode_json({ error => "Caught error: $_[0]" })."\n");
-                                $status{is_running} = 0;
+                                $is_running = 0;
                                 syslog('error', "Caught error: %s", $_[0]);
                             } finally {
                                 write_progress($stream) unless $@;
@@ -346,38 +358,29 @@ $listener->listen(
     on_resolve_error => sub { print STDERR "Cannot resolve - $_[0]\n"; },
     on_listen_error  => sub { print STDERR "Cannot listen\n"; },
 );
+
 my $timer;
 $timer = IO::Async::Timer::Periodic->new(
     interval => DELAY,
     first_interval => DELAY * 3,
 
     on_tick => sub {
-        $lock->shlock(LOCK_SH);
-        unless($status{is_running}) {
-            $lock->shunlock;
+        unless($is_running) {
             syslog("info", "Idle timer encountered");
             my $countdown = IO::Async::Timer::Countdown->new(
                 delay => DELAY/2,
 
                 on_expire => sub {
-                    $lock->shlock(LOCK_SH);
-                    unless($status{is_running}) {
-                        $lock->shunlock;
-                        syslog("info", "Shutting down");
+                    unless($is_running) {
                         $timer->stop;
-                        $loop->loop_stop;
-                        unlink PIDFILE;
-                        unlink SOCKNAME;
-                        $daemon->Kill_Daemon();
+                        &HUNTSMAN;
                     } else {
                         $lock->shunlock;
                         syslog("info", "we wasn't idle...");
                     }
                 },
             );
-
             $countdown->start;
-
             $loop->add( $countdown );
         } else {
             $lock->shunlock;
@@ -493,7 +496,7 @@ sub add_to_lvm {
         $status{error} = 1;
         $status{status} = "Caught error: $_[0]";
     }
-    $status{is_running} = 0;
+    $is_running = 0;
     $status{overall_action} = 'idle';
     return;
 }
@@ -887,7 +890,7 @@ sub create_raid {
         $status{error} = 1;
         $status{status} = "Caught error: $_[0]";
     }
-    $status{is_running} = 0;
+    $is_running = 0;
     $status{overall_action} = 'idle';
     return;
 
@@ -952,14 +955,13 @@ sub restore_raid_broken_external {
         $status{error} = 1;
         $status{status} = "Caught error: $_[0]";
     }
-    $status{is_running} = 0;
+    $is_running = 0;
     $status{overall_action} = 'idle';
     return;
 }
 
 sub restore_raid_broken_internal {
     my($disk,$part) = @_;
-
     try {
         reset_status();
         $status{overall_action} = 'restore_raid_broken_internal';
@@ -1249,7 +1251,7 @@ sub restore_raid_broken_internal {
         $status{error} = 1;
         $status{status} = "Caught error: $_[0]";
     }
-    $status{is_running} = 0;
+    $is_running = 0;
     $status{overall_action} = 'idle';
     return;
 }
@@ -1334,7 +1336,7 @@ sub format_disk {
         $status{error} = 1;
         $status{status} = "Caught error: $_[0]";
     }
-    $status{is_running} = 0;
+    $is_running = 0;
     $status{overall_action} = 'idle';
     return;
 }

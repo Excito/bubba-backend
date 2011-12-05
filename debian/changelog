@@ -42,6 +42,12 @@ bubba-backend (2.4~pre1) vincent; urgency=low
 
  -- Carl Fürstenberg <carl@excito.com>  Fri, 07 Oct 2011 13:37:41 +0200
 
+bubba-backend (2.3.2.11) hugo; urgency=low
+
+  * Bugfix: better handling of identifying when we are done
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 25 Nov 2011 14:40:30 +0100
+
 bubba-backend (2.3.2) hugo; urgency=low
 
   * new diskdaemon based on IO::Async
