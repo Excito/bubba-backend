@@ -519,7 +519,7 @@ sub create_raid {
         my @services = (
             [ 'cron', '/etc/init.d/cron' ],
             [ 'squeezecenter', '/etc/init.d/squeezecenter' ],
-            [ 'mt-daapd', '/etc/init.d/mt-daapd' ],
+            [ 'forked-daapd', '/etc/init.d/forked-daapd' ],
             [ 'minidlna', '/etc/init.d/minidlna' ],
             [ 'proftpd', '/etc/init.d/proftpd' ],
             [ 'netatalk', '/etc/init.d/netatalk' ],
@@ -980,7 +980,7 @@ sub restore_raid_broken_internal {
         my @services = (
             [ 'cron', '/etc/init.d/cron' ],
             [ 'squeezecenter', '/etc/init.d/squeezecenter' ],
-            [ 'mt-daapd', '/etc/init.d/mt-daapd' ],
+            [ 'forked-daapd', '/etc/init.d/forked-daapd' ],
             [ 'minidlna', '/etc/init.d/minidlna' ],
             [ 'proftpd', '/etc/init.d/proftpd' ],
             [ 'netatalk', '/etc/init.d/netatalk' ],

@@ -9,6 +9,7 @@ Homepage: http://www.excito.com
 
 Package: bubba-backend
 Architecture: all
+Conflicts: mt-daapd
 Depends: ${misc:Depends}, bubba,
  bubba-status,
  bubba-kernel,
@@ -27,7 +28,7 @@ Depends: ${misc:Depends}, bubba,
  openssh-server,
  file,
  filetransferdaemon,
- mt-daapd,
+ forked-daapd,
  minidlna,
  zip,
  udev,

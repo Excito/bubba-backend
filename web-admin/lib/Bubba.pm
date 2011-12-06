@@ -572,10 +572,10 @@ sub change_hostname {
 
 	restart_avahi();
 
-	if(!query_service("mt-daapd")){
-		stop_service("mt-daapd");
+	if(!query_service("forked-daapd")){
+		stop_service("forked-daapd");
 		sleep(1);
-		start_service("mt-daapd");
+		start_service("forked-daapd");
 	}
 	return 0;
 }
@@ -1308,40 +1308,6 @@ sub ftp_set_anonymous{
 
 }
 
-# Helper function change mt-daapd servername
-#
-# Args   : New servername
-#
-# Outputs: Nothing
-#
-# Return: 0 - Operation failed
-#         1 - Operation ok
-sub change_daap_servername{
-	my $name=shift;
-
-	if(not $name=~ /^[\w-]*$/){
-		return 0;
-	}
- 
-	open( CONF,"/etc/mt-daapd.conf") or die "Could not open config file";
-	my @data=<CONF>;
-	close(CONF);
-
-	chomp(@data);
-	my $file=join("\n",@data)."\n";
-	
-	if(  $file =~ s/^\s*servername\s*([\w-]*)/servername\t$name/mg){
-		open( CONF,">/etc/mt-daapd.conf") or die "Could not open config file";
-		print CONF $file;
-		close CONF;
-		return 1;
-	}
-	
-	return 0;
-
-}
-
-
 # Mount partition
 #
 # Args   : device     - block device to mount
@@ -1436,7 +1402,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd mt-daapd ntp filetransferdaemon cups postfix dovecot fetchmail minidlna dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
+	} qw(proftpd forked-daapd ntp filetransferdaemon cups postfix dovecot fetchmail minidlna dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
 
 	my $meta = {
 		version => $revision,
@@ -1776,11 +1742,11 @@ sub restore_config{
 				remove_service("proftpd");
 			}
 
-			if($lines=~/mt-daapd/){
-				start_service("mt-daapd");
+			if($lines=~/forked-daapd/){
+				start_service("forked-daapd");
 			}else{
-				stop_service("mt-daapd");
-				remove_service("mt-daapd");
+				stop_service("forked-daapd");
+				remove_service("forked-daapd");
 			}
 
 			if($lines=~/minidlna/){

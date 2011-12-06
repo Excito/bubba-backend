@@ -419,8 +419,8 @@ function restart_network($interface){
 		if(query_service("samba")){
 			restart_samba();
 		}
-		if(query_service("mt-daapd")){
-			restart_service("mt-daapd");
+		if(query_service("forked-daapd")){
+			restart_service("forked-daapd");
 		}  
 		if(query_service("minidlna")){
 			restart_service("minidlna");
