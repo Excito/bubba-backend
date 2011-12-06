@@ -83,7 +83,7 @@ fix_postfix_maincf(){
 		}
 		next
 	}
-	{ print }' ${SRCFILE} > ${TMPFILE} && mv ${TMPFILE} ${SRCFILE}
+	{ print }' ${SRCFILE} > ${TMPFILE} && mv ${TMPFILE} ${SRCFILE} && chmod 644 ${SRCFILE}
 
 	invoke-rc.d --quiet postfix reload
 }
