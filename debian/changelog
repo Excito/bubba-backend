@@ -1,3 +1,11 @@
+bubba-backend (2.4~pre8) vincent; urgency=low
+
+  * Make sure main.cf is chmodded 644 on modification (Closes: #1762)
+  * switch mt-daapd to forked-daapd (Closes: #1791)
+  * disable poert forward opening per default (Closes: #1777)
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 08 Dec 2011 14:38:44 +0100
+
 bubba-backend (2.4~pre7) vincent; urgency=low
 
   * Adding workaround for RAID creation (Closes: #1746)
