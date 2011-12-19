@@ -42,7 +42,7 @@
 /etc/apache2/privkey.pem
 
 # Squeezecenter
-/var/lib/squeezecenter/prefs
+/var/lib/squeezeboxserver/prefs
 
 # Bubba diverted configs
 /etc/bubba/*

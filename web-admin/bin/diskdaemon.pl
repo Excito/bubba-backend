@@ -518,7 +518,7 @@ sub create_raid {
 
         my @services = (
             [ 'cron', '/etc/init.d/cron' ],
-            [ 'squeezecenter', '/etc/init.d/squeezecenter' ],
+            [ 'logitechmediaserver', '/etc/init.d/logitechmediaserver' ],
             [ 'forked-daapd', '/etc/init.d/forked-daapd' ],
             [ 'minidlna', '/etc/init.d/minidlna' ],
             [ 'proftpd', '/etc/init.d/proftpd' ],
@@ -979,7 +979,7 @@ sub restore_raid_broken_internal {
 
         my @services = (
             [ 'cron', '/etc/init.d/cron' ],
-            [ 'squeezecenter', '/etc/init.d/squeezecenter' ],
+            [ 'logitechmediaserver', '/etc/init.d/logitechmediaserver' ],
             [ 'forked-daapd', '/etc/init.d/forked-daapd' ],
             [ 'minidlna', '/etc/init.d/minidlna' ],
             [ 'proftpd', '/etc/init.d/proftpd' ],

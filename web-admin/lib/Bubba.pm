@@ -1402,7 +1402,7 @@ sub backup_config{
 	# services, boolean such if service enabled or not
 	my %services = map {
 		$_ => (defined bsd_glob "/etc/rc2.d/S??$_");
-	} qw(proftpd forked-daapd ntp filetransferdaemon cups postfix dovecot fetchmail minidlna dnsmasq squeezecenter hostapd netatalk ifup-br0 samba);
+	} qw(proftpd forked-daapd ntp filetransferdaemon cups postfix dovecot fetchmail minidlna dnsmasq logitechmediaserver hostapd netatalk ifup-br0 samba);
 
 	my $meta = {
 		version => $revision,
@@ -1801,12 +1801,12 @@ sub restore_config{
 				remove_service("dnsmasq");
 			}
 
-			if($lines=~/squeezecenter/){
-				stop_service("squeezecenter");
-				start_service("squeezecenter");
+			if($lines=~/logitechmediaserver/){
+				stop_service("logitechmediaserver");
+				start_service("logitechmediaserver");
 			}else{
-				stop_service("squeezecenter");
-				remove_service("squeezecenter");
+				stop_service("logitechmediaserver");
+				remove_service("logitechmediaserver");
 			}
 
 			reload_service("samba");

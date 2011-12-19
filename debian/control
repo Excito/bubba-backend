@@ -86,6 +86,7 @@ Depends: ${misc:Depends}, bubba,
  python-netifaces,
  libio-async-perl (>= 0.45),
  libipc-shareable-perl,
- libproc-daemon-perl
+ libproc-daemon-perl,
+ logitechmediaserver
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

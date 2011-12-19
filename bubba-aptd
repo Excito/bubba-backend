@@ -477,7 +477,7 @@ def run_hotfix(status):
 
     # Get list of our packages
     dpkg = subprocess.Popen(
-        ['dpkg-query', '--show', '--showformat', '${Status}\t${Package}\t${Version}\n', 'bubba-*', 'squeezecenter', 'filetransferdaemon'],
+        ['dpkg-query', '--show', '--showformat', '${Status}\t${Package}\t${Version}\n', 'bubba-*', 'logitechmediaserver', 'filetransferdaemon'],
         stdout=subprocess.PIPE
     )
 
