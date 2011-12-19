@@ -1,3 +1,12 @@
+bubba-backend (2.4~pre9) vincent; urgency=low
+
+  * change tor control socket
+  * do not use ipv6 for proftpd (Closes: #1792)
+  * touch  default locale file unless exists (Closes: #1807)
+  * squeezecenter → logitechmediaserver
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 19 Dec 2011 13:36:34 +0100
+
 bubba-backend (2.4~pre8) vincent; urgency=low
 
   * Make sure main.cf is chmodded 644 on modification (Closes: #1762)
