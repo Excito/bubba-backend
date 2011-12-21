@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre11) hugo vincent; urgency=low
+
+  * specify minimum version on the bubba-kernel
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 21 Dec 2011 15:58:10 +0100
+
 bubba-backend (2.4~pre9) vincent; urgency=low
 
   * change tor control socket
