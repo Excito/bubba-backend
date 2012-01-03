@@ -35,6 +35,9 @@ db_stop
 
 case "$1" in
 	upgrade|deconfigure)
+		if [ -f /etc/rc2.d/S??squeezecenter ]; then
+			touch /tmp/dpkg_bubba-backend_squeezecenter_enabled;
+		fi
 	;;
 	remove)
 

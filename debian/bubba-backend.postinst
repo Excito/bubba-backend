@@ -92,6 +92,13 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
 
+
+		if [ -f /tmp/dpkg_bubba-backend_squeezecenter_enabled ]; then
+			rm -f /tmp/dpkg_bubba-backend_squeezecenter_enabled;
+			update-rc.d logitechmediaserver defaults;
+			invoke-rc.d logitechmediaserver start;
+		fi
+
         if [ ! -e /etc/default/locale ]; then
             touch /etc/default/locale;
             chmod 644 /etc/default/locale;
