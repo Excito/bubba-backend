@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre12) hugo vincent; urgency=low
+
+  * Enable logitechmediaserver is squeezecenter was enabled (Closes: #1813)
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 03 Jan 2012 15:11:33 +0100
+
 bubba-backend (2.4~pre11) hugo vincent; urgency=low
 
   * specify minimum version on the bubba-kernel
