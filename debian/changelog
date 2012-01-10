@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre13) hugo vincent; urgency=low
+
+  * disable Tor
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 10 Jan 2012 13:51:23 +0100
+
 bubba-backend (2.4~pre12) hugo vincent; urgency=low
 
   * Enable logitechmediaserver is squeezecenter was enabled (Closes: #1813)

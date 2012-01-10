@@ -92,6 +92,13 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
 
+		if dpkg --compare-versions "$2" lt 2.4; then
+            # Disable Tor in initial setup or first upgrade
+            echo "Disabling Tor"
+            invoke-rc.d tor stop || true;
+            update-rc.d tor remove || true;
+        fi
+
 
 		if [ -f /tmp/dpkg_bubba-backend_squeezecenter_enabled ]; then
 			rm -f /tmp/dpkg_bubba-backend_squeezecenter_enabled;
