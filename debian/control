@@ -13,7 +13,6 @@ Conflicts: mt-daapd
 Depends: ${misc:Depends}, bubba,
  bubba-status,
  bubba-kernel (>= 1:2.6.39),
- bubba-modules,
  bubba-horde,
  bubba-igd,
  foomatic-db-compressed-ppds | foomatic-db,

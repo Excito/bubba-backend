@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre14) hugo vincent; urgency=low
+
+  * remove bubba-modules reference
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 10 Jan 2012 13:54:18 +0100
+
 bubba-backend (2.4~pre13) hugo vincent; urgency=low
 
   * disable Tor
