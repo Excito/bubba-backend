@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre15) hugo vincent; urgency=low
+
+  * change to bubba3-kernel
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 10 Jan 2012 13:56:14 +0100
+
 bubba-backend (2.4~pre14) hugo vincent; urgency=low
 
   * remove bubba-modules reference
