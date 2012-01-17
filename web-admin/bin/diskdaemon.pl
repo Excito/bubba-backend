@@ -15,7 +15,7 @@ use IO::Async::Listener;
 use IO::Async::Timer::Periodic;
 use IO::Async::Timer::Countdown;
 
-use IPC::Shareable (':lock');
+use IPC::Shareable;
 use IPC::Run3;
 use IPC::Open3;
 
@@ -375,15 +375,12 @@ $timer = IO::Async::Timer::Periodic->new(
                         $timer->stop;
                         &HUNTSMAN;
                     } else {
-                        $lock->shunlock;
                         syslog("info", "we wasn't idle...");
                     }
                 },
             );
             $countdown->start;
             $loop->add( $countdown );
-        } else {
-            $lock->shunlock;
         }
     },
 );
