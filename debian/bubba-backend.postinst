@@ -91,6 +91,15 @@ fix_postfix_maincf(){
 
 case "$1" in
     configure)
+		# Fix proftpd
+		if dpkg --compare-versions "$2" lt 2.4; then
+			if [ -e /etc/proftpd/proftpd.conf ] && grep -qE 'UseIPv6\s+on' /etc/proftpd/proftpd.conf; then
+				echo "Disabling IPv6 in proftpd configuration"
+				perl -pi -e 's/(UseIPv6\s+)on/$1off/' /etc/proftpd/proftpd.conf
+				invoke-rc.d proftpd restart || true
+			fi
+
+        fi
 
 		if dpkg --compare-versions "$2" lt 2.4; then
             # Disable Tor in initial setup or first upgrade
