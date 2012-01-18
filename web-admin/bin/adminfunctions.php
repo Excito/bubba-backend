@@ -975,7 +975,7 @@ function get_fwsettings() {
 			if (!strcmp($rule["target"],"ACCEPT")) {
 				$retval["fwports"][$key]=$rule;
 				if(!isset($retval["fwports"][$key]["to_ip"])) {
-					$retval["fwports"][$key]["to_ip"] =  t("B3");
+					$retval["fwports"][$key]["to_ip"] =  "B3";
 				}
 				if(!isset($retval["fwports"][$key]["to_port"])) {
 					$retval["fwports"][$key]["to_port"] = "";
@@ -1402,14 +1402,14 @@ function backup_updatesettings($user,$data) {
 		
 	foreach($req_fields as $field) {
 		if(!isset($_POST[$field]) || $_POST[$field] == "") {
-			$error .= t("Required field") ." ". t($field) . " " .t("is missing");
+			$error .= "Required field" ." ". $field . " " ."is missing";
 		}
 	}
 
 	// encryption requires password.
 	if(isset($_POST['encrypt'])) {
 		if(!isset($_POST['GPG_key']) || $_POST['GPG_key'] == "") {
-			$error .= " " . t("Encryption selected, but no password entered");
+			$error .= " " . "Encryption selected, but no password entered";
 		}
 	}
 		
@@ -1417,15 +1417,15 @@ function backup_updatesettings($user,$data) {
 		if($_POST['target_protocol'] == "file") {
 			// require disk label and disk uuid
 			if(! (isset($_POST["disk_label"]) && isset($_POST["disk_uuid"])) ) {
-				$error .= " " . t("No external disk selected");
+				$error .= " " . "No external disk selected";
 			}
 		} else {
 			// require remote host and password
 			if(!isset($_POST["target_host"]) || $_POST["target_host"] == "" ) {
-				$error .= " " . t("Host target missing");
+				$error .= " " . "Host target missing";
 			}
 			if(!(isset($_POST["target_user"]) && isset($_POST["target_FTPpasswd"])) || $_POST["target_FTPpasswd"] =="" || $_POST["target_user"] == "" ) {
-				$error .= " " . t("Target settings (user/password) missing");
+				$error .= " " . "Target settings (user/password missing");
 			}
 		}
 	}
@@ -1447,16 +1447,16 @@ function backup_updatesettings($user,$data) {
 
 					if(preg_match("/[^\w\_\-\/]/",$value,$chars)) {  // only allow "\w", "_", "-", "/" 
 						//print "Error in $key: $value\n";
-						$error .= t("Illegal character(s) '$chars[0]' in field: ");
+						$error .= "Illegal character(s '$chars[0]' in field: ");
 						switch ($key) {
 							case "target_path" : 
-								$error .= t("'Destination directory'");
+								$error .= "'Destination directory'";
 								break;
 							case "target_user" : 
-								$error .= t("'Remote user'");
+								$error .= "'Remote user'";
 								break;
 							case "monthweek" : 
-								$error .= t("schedule settings");
+								$error .= "schedule settings";
 								break;
 							default:
 								$error .= $key;
@@ -1468,7 +1468,7 @@ function backup_updatesettings($user,$data) {
 					break;
 				case "target_host"       :
 					if(preg_match("/[^\w\.]/",$value,$chars)) {  // only allow "\w", "." 
-					  $error .= t("Illegal character(s) '$chars[0]' in field: 'Target'");
+					  $error .= "Illegal character(s '$chars[0]' in field: 'Target'");
 					} else {
 						$settings[$key] = $value;
 					}
@@ -1602,14 +1602,14 @@ function create_backupjob($user,$jobname) {
 	foreach ($jobs as $existingjob) {
 		if($jobname == $existingjob) {
 			$return_val["error"] = 1;
-			$return_val["status"] = t("Jobname exists");
+			$return_val["status"] = "Jobname exists";
 			return $return_val;
 		}
 	}
 	
 	if(preg_match("/[^\w-]/",$jobname)) {
 			$return_val["error"] = 1;
-			$return_val["status"] = t("Illegal characters in jobname");
+			$return_val["status"] = "Illegal characters in jobname";
 			return $return_val;
 	}		
 	
@@ -1831,7 +1831,7 @@ function get_restorestatus() {
 			$fh_log = fopen($lockinfo[2],"r");
 			$filesize = filesize($lockinfo[2]);
 			$data["done"] = 0;
-			$data["status"] = t("Retreiving information");
+			$data["status"] = "Retreiving information";
 			if($filesize) {
 				$log = fread($fh_log,$filesize);
 				// split log file
@@ -1839,44 +1839,44 @@ function get_restorestatus() {
 				foreach($log as $logline) {
 					if (preg_match("/\.\s+Invalid SSH password/",$logline)) {
 						$data["done"] = -1;
-						$data["status"] = t("Invalid SSH password");
+						$data["status"] = "Invalid SSH password";
 						break;
 					} elseif (preg_match("/Errno 20/",$logline)) {
 						$data["done"] = -1;
-						$data["status"] = t("Error writing to restore target directory.");
+						$data["status"] = "Error writing to restore target directory.";
 						break;
 					} elseif (preg_match("/Errno 2/",$logline)) {
 						$data["done"] = -1;
-						$data["status"] = t("Target directory missing.");
+						$data["status"] = "Target directory missing.";
 						break;
 					} elseif (preg_match("/ERROR 2/",$logline)) {
 						$data["done"] = -1;
-						$data["status"] = t("Incorrect backup job settings.");
+						$data["status"] = "Incorrect backup job settings.";
 						break;
 					}	elseif(preg_match("/ERROR ([\w ]+)/i",$logline,$matches)) {
 						if(isset($matches[1])) {
 							switch ($matches[1]) {
 								case "19" :
-									$data["status"] = t("File not found in backupset, nothing restored.");
+									$data["status"] = "File not found in backupset, nothing restored.";
 									break;
 								case "11" :
-									$data["status"] = t("File exists, select overwrite to force restore.");
+									$data["status"] = "File exists, select overwrite to force restore.";
 									break;
 								case "30 BackendException" :
-									$data["status"] = t("Could not find backup files. Please check your job settings.");
+									$data["status"] = "Could not find backup files. Please check your job settings.";
 									break;
 								case "30 CollectionsError" :
-									$data["status"] = t("No previous backup sets found. Please check connectivity and jobsettings");
+									$data["status"] = "No previous backup sets found. Please check connectivity and jobsettings";
 									break;
 								case "30 AttributeError" :
-									$data["status"] = t("Wrong encryption key supplied.");
+									$data["status"] = "Wrong encryption key supplied.";
 									break;
 								default: 
 									$data["status"] = $matches[1];
 									break;
 							}
 						} else {
-							$data["status"] = t("Unknown error");
+							$data["status"] = "Unknown error";
 						}
 						$data["done"] = -1;
 						break;
@@ -1884,9 +1884,9 @@ function get_restorestatus() {
 					} else {
 						if (preg_match("/\.\s+Processed volume (\d+) of (\d+)/",$logline,$matches)) {
 							if(isset($matches[1])) {
-								$data["status"] = t("Processed volume") . " $matches[1] " . t("of") . " $matches[2]";
+								$data["status"] = "Processed volume" . " $matches[1] " . "of" . " $matches[2]";
 							} else {
-								$data["status"] = t("Retreiving volume information");
+								$data["status"] = "Retreiving volume information";
 							}
 						}
 					}
@@ -1896,12 +1896,12 @@ function get_restorestatus() {
 		} else {
 			// lockinfo exists but no log file most likely not created yet.
 			$data["done"] = 0;
-			$data["status"] = t("Retreiving information");
+			$data["status"] = "Retreiving information";
 		}
 	} else {
 		// no lockinformation -> restore job not running.
 		$data["done"] = 1;
-		$data["status"] = t("Restore complete");
+		$data["status"] = "Restore complete";
 	}	
 	// put together useful info here.
 	

@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre18) hugo vincent; urgency=low
+
+  * remove old usage of the "t" function (Closes: #1843)
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 18 Jan 2012 13:02:41 +0100
+
 bubba-backend (2.4~pre17) hugo vincent; urgency=low
 
   * Disable ipv6 in proftpd configuration (Closes: #1792)
