@@ -91,7 +91,7 @@ class Health():
                     self._err(
                         code=section['Code'],
                         desc=section['Desc'],
-                        data=data
+                        data=data.split()
                     )
             except Exception:
                 pass
