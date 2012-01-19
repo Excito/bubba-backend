@@ -1425,7 +1425,7 @@ function backup_updatesettings($user,$data) {
 				$error .= " " . "Host target missing";
 			}
 			if(!(isset($_POST["target_user"]) && isset($_POST["target_FTPpasswd"])) || $_POST["target_FTPpasswd"] =="" || $_POST["target_user"] == "" ) {
-				$error .= " " . "Target settings (user/password missing");
+				$error .= " " . "Target settings (user/password missing)";
 			}
 		}
 	}
@@ -1447,7 +1447,7 @@ function backup_updatesettings($user,$data) {
 
 					if(preg_match("/[^\w\_\-\/]/",$value,$chars)) {  // only allow "\w", "_", "-", "/" 
 						//print "Error in $key: $value\n";
-						$error .= "Illegal character(s '$chars[0]' in field: ");
+						$error .= "Illegal character(s) '$chars[0]' in field: ";
 						switch ($key) {
 							case "target_path" : 
 								$error .= "'Destination directory'";
@@ -1468,7 +1468,7 @@ function backup_updatesettings($user,$data) {
 					break;
 				case "target_host"       :
 					if(preg_match("/[^\w\.]/",$value,$chars)) {  // only allow "\w", "." 
-					  $error .= "Illegal character(s '$chars[0]' in field: 'Target'");
+					  $error .= "Illegal character(s) '$chars[0]' in field: 'Target'";
 					} else {
 						$settings[$key] = $value;
 					}

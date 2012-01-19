@@ -1,3 +1,9 @@
+bubba-backend (2.4~pre19) hugo vincent; urgency=low
+
+  * Fix syntax errors in adminfunctions (Closes: #1847)
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 19 Jan 2012 13:00:37 +0100
+
 bubba-backend (2.4~pre18) hugo vincent; urgency=low
 
   * remove old usage of the "t" function (Closes: #1843)
