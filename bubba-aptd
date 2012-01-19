@@ -360,6 +360,7 @@ def dist_upgrade(status):
         status['logs'] = health.get_errors()
 
     status['done'] = True
+    status['logs'] = health.get_errors()
 
     return True
 
