@@ -1,9 +1,15 @@
+bubba-backend (2.4) hugo vincent; urgency=low
+
+  * Bumping for release
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 Jan 2012 21:49:11 +0100
+
 bubba-backend (2.4~pre20) hugo vincent; urgency=low
 
   * input splitted array into the error log
   * We still need to get "errors" as they can include notices
 
- -- Carl Fürstenberg <carl@excito.com>  Thu, 19 Jan 2012 15:21:27 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 Jan 2012 21:49:08 +0100
 
 bubba-backend (2.4~pre19) hugo vincent; urgency=low
 
