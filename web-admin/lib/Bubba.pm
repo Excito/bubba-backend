@@ -2141,7 +2141,6 @@ sub notify_flush {
 
 sub set_interface {
 
-    use Config::Tiny;
 	use Config::Simple;
     use File::Slurp;
 
@@ -2154,9 +2153,13 @@ sub set_interface {
     }
 
     {
-		my $config = new Config::Simple('/etc/minidlna.conf');
-		$config->param('network_interface', $interface );
-		$config->save();
+        my $config = '/etc/minidlna.conf';
+
+        my $data = read_file( $config );
+
+        return 1 unless $data =~ s/^\s*network_interface\s*=.*?$/network_interface=$interface/g;
+
+        write_file( $config, $data );
 	}
 
     {

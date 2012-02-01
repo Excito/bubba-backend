@@ -259,6 +259,13 @@ root@$MAILNAME
     lanif=$(bubba-networkmanager-cli getlanif)
     bkup=$(tempfile);
     cnf=/etc/minidlna.conf;
+
+    # Restore broken minidlna config files
+    origcnf=/etc/bubba/minidlna.conf
+    if dpkg --compare-versions "$2" lt 2.4.1 && [ -f $cnf ] && grep -q "Config::Simple" $cnf; then
+        mv $origcnf $cnf;
+    fi
+
     if [ -f $cnf ]; then
         cp $cnf $bkup
         sed -i "s/network_interface=.*\$/network_interface=$lanif/" $cnf
