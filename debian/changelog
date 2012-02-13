@@ -1,3 +1,9 @@
+bubba-backend (2.4.0.3) vincent hugo; urgency=low
+
+  * Add power cycle request message (Closes: #1895)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 13 Feb 2012 16:47:25 +0100
+
 bubba-backend (2.4.0.2) hugo vincent; urgency=low
 
   * adding dependency to hddtemp

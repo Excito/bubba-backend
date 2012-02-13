@@ -342,6 +342,17 @@ Data: In order to provide better name resolution, the easyfind name service has 
 End-of-Message
 	fi
 
+    # Notify users that core system has been upgraded (missed from 2.4)
+	if dpkg --compare-versions "$2" lt 2.4.1; then
+		cat >>/tmp/bubba-apt.log << End-of-Message
+Code: WARN
+Desc: Power cycle recommended
+Data: Core system components have been updated, including a firmware update of your hard drive.
+ A power cycle is required for these changes to take effect.
+ Please shut down your B3, remove power and wait 30 seconds, before powering up again.
+
+End-of-Message
+	fi
 
 	if ! getent passwd admin >/dev/null; then
 		echo "Adding administrator user \"admin\"";
