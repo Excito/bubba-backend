@@ -1,3 +1,9 @@
+bubba-backend (2.4.0.4) vincent hugo; urgency=low
+
+  * add dependency for compat-wireless
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 14 Feb 2012 18:30:37 +0100
+
 bubba-backend (2.4.0.3) vincent hugo; urgency=low
 
   * Add power cycle request message (Closes: #1895)
