@@ -1561,6 +1561,16 @@ sub restore_config{
 					$user->{username}
 				);
 			}
+
+            # chown the user dir
+            system(
+                "chown",
+                "--from", $user->{uid},
+                "--recursive",
+                "--silent",
+                "$user->{username}:",
+                "/home/$user->{username}"
+            );
 		}
 
 		foreach my $user( keys %removed_users ) {
