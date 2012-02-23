@@ -1,3 +1,9 @@
+bubba-backend (2.4.0.7) vincent hugo; urgency=low
+
+  * Revert "add dependency for compat-wireless"
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 23 Feb 2012 15:12:01 +0100
+
 bubba-backend (2.4.0.6) vincent hugo; urgency=low
 
   * Add tor-geoipdb as depends (Closes: #1901)
