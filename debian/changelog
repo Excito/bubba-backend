@@ -1,3 +1,9 @@
+bubba-backend (2.4.0.8) vincent; urgency=low
+
+  * drop the old raid metadata
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 06 Mar 2012 13:53:07 +0100
+
 bubba-backend (2.4.0.7) vincent hugo; urgency=low
 
   * Revert "add dependency for compat-wireless"

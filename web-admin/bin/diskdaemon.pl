@@ -793,7 +793,7 @@ sub create_raid {
         system(
             'mdadm',
             '--create',
-            '-e', '0.90',
+#            '-e', '0.90',
             '--run',
             '--force',
             '--assume-clean',
