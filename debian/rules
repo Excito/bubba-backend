@@ -16,6 +16,7 @@ override_dh_install:
 	dh_installinit --name=bubba-firewall
 	dh_installinit --name=smbrestart --no-start
 	dh_installinit --name=bubba-apt --no-restart-on-upgrade
+	dh_installinit --name=b2gpt2mbr --no-start --no-restart-on-upgrade
 	dh_installcron --name=bubba-notify
 	dh_installcron --name=dovecot-timefix
 	install -m 755 debian/bubba-backend.mtu.action debian/bubba-backend/etc/ifplugd/action.d/mtu

@@ -1,0 +1,44 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Required-Start:    $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: GPT to MBR conversion
+# Description:       This script will convert the GPT partition layout to
+#                    MBR(msdos) as the old b2 boodloader is way too borked.
+### END INIT INFO
+
+# Author: Carl Fürstenberg <carl@excito.com>
+
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+HAS_CONVERTED="false";
+# Read configuration variable file if it is present
+[ -r /etc/default/b2gpt2mbr ] && . /etc/default/b2gpt2mbr;
+
+case "$1" in
+    start)
+        if [ "$HAS_CONVERTED" = "false" ] && bubba-info -2; then
+            log_daemon_msg "Converting the internal disk to MBR"
+            echo 'HAS_CONVERTED="true"' > /etc/default/b2gpt2mbr;
+            sgdisk --gpttombr=1:2:3 /dev/sda;
+            log_end_msg $?;
+        fi
+        ;;
+    stop)
+        exit 0;
+        ;;
+    status)
+        exit 0;
+        ;;
+    restart|force-reload)
+        exit 0;
+        ;;
+    *)
+        echo "Usage: $SCRIPTNAME {start|stop|status|restart|force-reload}" >&2
+        exit 3
+        ;;
+esac
+
+:
