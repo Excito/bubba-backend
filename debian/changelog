@@ -1,3 +1,9 @@
+bubba-backend (2.4.0.10) vincent hugo; urgency=low
+
+  * rename init file
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 09 Mar 2012 17:28:19 +0100
+
 bubba-backend (2.4.0.9) vincent; urgency=low
 
   * adding script to convert the broken gpt to mbr for b2
