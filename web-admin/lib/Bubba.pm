@@ -2167,7 +2167,7 @@ sub set_interface {
 
         my $data = read_file( $config );
 
-        return 1 unless $data =~ s/^\s*network_interface\s*=.*?$/network_interface=$interface/g;
+        return 1 unless $data =~ s/^\s*network_interface\s*=.*?$/network_interface=$interface/mg;
 
         write_file( $config, $data );
 	}
