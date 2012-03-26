@@ -1,0 +1,46 @@
+import sys
+import time
+from twisted.internet import task
+from twisted.internet import reactor
+
+def led_set_color(color):
+    node = open("/sys/devices/platform/bubbatwo/color", "wb")
+    node.write(str(color))
+    node.close()
+
+def led_get_color():
+    node = open("/sys/devices/platform/bubbatwo/color", "rb")
+    color = node.read()
+    node.close()
+    return color
+
+def buzzer_enable(enabled):
+    node = open("/sys/devices/platform/bubbatwo/buzzer", "wb")
+    node.write("1" if enabled else "0")
+    node.close()
+
+current_color = 0
+def main():
+
+    def updateColor():
+        global current_color
+        led_set_color(current_color)
+        current_color += 1
+        current_color %= 3
+
+    def endIt(initial_color):
+        l.stop()
+        led_set_color(initial_color)
+        buzzer_enable(False)
+        reactor.stop()
+
+    initial_color = led_get_color()
+    buzzer_enable(True)
+    l = task.LoopingCall(updateColor)
+    l.start(0.05)
+    reactor.callLater(20, endIt, initial_color)
+
+    reactor.run()
+
+if __name__ == '__main__':
+    main()
