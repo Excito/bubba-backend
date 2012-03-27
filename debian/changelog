@@ -1,3 +1,10 @@
+bubba-backend (2.4.0.12) vincent hugo; urgency=low
+
+  * update mdadm.conf when working with new raid
+  * update progress reporting
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 27 Mar 2012 17:48:12 +0200
+
 bubba-backend (2.4.0.11) vincent hugo; urgency=low
 
   * add lsb headers that insserv complains about
