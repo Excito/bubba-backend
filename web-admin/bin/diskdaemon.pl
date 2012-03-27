@@ -8,6 +8,8 @@ use Proc::Daemon;
 
 use Sys::Syslog;
 
+use File::Slurp;
+
 use IO::Async::Function;
 use IO::Async::Stream;
 use IO::Async::Loop;
@@ -806,6 +808,12 @@ sub create_raid {
         );
 
         progress(12, $steps);
+
+
+		@mdadm_conf = read_file("/etc/mdadm/mdadm.conf");
+		@mdadm_conf = grep {!/^ARRAY/} @mdadm_conf;
+		push @mdadm_conf, `mdadm --detail --scan`;
+		write_file("/etc/mdadm/mdadm.conf", @mdadm_conf);
 
         # TODO
         # uppdatera mdadm.conf
