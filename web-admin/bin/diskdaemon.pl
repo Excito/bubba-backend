@@ -506,7 +506,7 @@ sub create_raid {
         reset_status();
         $status{overall_action} = 'create_raid';
 
-        my $steps = 18;
+        my $steps = 20;
 
 
         my $vg = "bubba"; # bubba
@@ -815,6 +815,8 @@ sub create_raid {
 		push @mdadm_conf, `mdadm --detail --scan`;
 		write_file("/etc/mdadm/mdadm.conf", @mdadm_conf);
 
+        progress(13, $steps);
+
         # TODO
         # uppdatera mdadm.conf
 
@@ -830,7 +832,7 @@ sub create_raid {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
 
-        progress(13, $steps);
+        progress(14, $steps);
 
 
         # Setup FsTab
@@ -843,7 +845,7 @@ sub create_raid {
         if( exists $err->{status} and $err->{status} == 0 ) {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
-        progress(14, $steps);
+        progress(15, $steps);
 
         # Mount
         $status{status} = "Mounting $mountpath";
@@ -855,21 +857,21 @@ sub create_raid {
         if( exists $err->{status} and $err->{status} == 0 ) {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
-        progress(15, $steps);
+        progress(16, $steps);
 
         # Restore the previous backup
         $status{status} = "Restoring backup";
         system 'cp', '--archive', '--recursive', glob('/bkup/*'), '/home';
         system 'rm', '-rf', '/bkup';
 
-        progress(1, $steps);
+        progress(17, $steps);
 
         # Restore default web page
         $status{status} = "Restore the default web page";
         system 'cp', '-a', glob('/usr/share/bubba-backend/default_web/*'), '/home/web';
         system 'chown', 'www-data:users', '/home/web';
 
-        progress(16, $steps);
+        progress(18, $steps);
 
         # Restarting services
         $status{status} = "Restarting shut down services";
@@ -882,11 +884,11 @@ sub create_raid {
             system $init_d, 'start';
         }
 
-        progress(17, $steps);
+        progress(19, $steps);
         # workaround for parted when modifying partition table
         system('swapon', '/dev/sda3');
 
-        progress(18, $steps);
+        progress(20, $steps);
 
         $status{status} = "Conversion to RAID-$level complete";
         $status{done} = 1;
