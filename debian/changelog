@@ -1,3 +1,10 @@
+bubba-backend (2.4.1.1) vincent hugo; urgency=low
+
+  * Replace the loading title with "Loading..."
+  * Adding update of mdadm.conf
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 29 Mar 2012 12:03:55 +0200
+
 bubba-backend (2.4.1) vincent hugo; urgency=low
 
   * Quick fix for minidlna iface change bug
