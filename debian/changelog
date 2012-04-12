@@ -1,3 +1,10 @@
+bubba-backend (2.4.2) vincent hugo; urgency=low
+
+  * Helper script to physically identify the box
+  * add dependency for compat-wireless
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 12 Apr 2012 14:36:11 +0200
+
 bubba-backend (2.4.1.1) vincent hugo; urgency=low
 
   * Replace the loading title with "Loading..."
