@@ -25,6 +25,7 @@ case "$1" in
             log_daemon_msg "Converting the internal disk to MBR"
             echo 'HAS_CONVERTED="true"' > /etc/default/b2gpt2mbr;
             sgdisk --gpttombr=1:2:3 /dev/sda;
+            sgdisk --zap /dev/sda
             log_end_msg $?;
         fi
         ;;

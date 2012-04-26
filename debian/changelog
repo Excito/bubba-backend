@@ -1,3 +1,9 @@
+bubba-backend (2.4.2.1) vincent hugo; urgency=low
+
+  * After converting to gpt, make sure we zap the disk
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 26 Apr 2012 15:49:30 +0200
+
 bubba-backend (2.4.2) vincent hugo; urgency=low
 
   * Helper script to physically identify the box
