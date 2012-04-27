@@ -971,7 +971,7 @@ sub restore_raid_broken_internal {
         $status{overall_action} = 'restore_raid_broken_internal';
 
 
-        my $steps = 12;
+        my $steps = 13;
         progress(0, $steps);
 
         my $vg = "bubba"; # bubba
@@ -1204,7 +1204,16 @@ sub restore_raid_broken_internal {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
 
-        progress(9, $steps);
+		progress(9, $steps);
+		$status{status} = "Updating mdadm.conf";
+        use File::Slurp;
+
+        my @mdadm_conf = read_file("/etc/mdadm/mdadm.conf");
+        @mdadm_conf = grep {!/^ARRAY/} @mdadm_conf;
+        push @mdadm_conf, `mdadm --detail --scan`;
+        write_file("/etc/mdadm/mdadm.conf", @mdadm_conf);
+
+        progress(10, $steps);
 
         # Setup FsTab
         $status{status} = "Setting up FsTab";
@@ -1217,7 +1226,7 @@ sub restore_raid_broken_internal {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
 
-        progress(10, $steps);
+        progress(11, $steps);
 
         # Mount
         $status{status} = "Mounting $mountpath";
@@ -1230,7 +1239,7 @@ sub restore_raid_broken_internal {
             die(sprintf("Error: %s in command %s", $err->{errmsg}, join( ' ', @{$cmd[0]} )))
         };
 
-        progress(11, $steps);
+        progress(12, $steps);
 
         # Restarting services
         $status{status} = "Restarting shut down services";
@@ -1243,7 +1252,7 @@ sub restore_raid_broken_internal {
             system $init_d, 'start';
         }
 
-        progress(12, $steps);
+        progress(13, $steps);
 
         # workaround for parted when modifying partition table
         system('swapon', '/dev/sda3');
