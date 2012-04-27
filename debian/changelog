@@ -1,3 +1,9 @@
+bubba-backend (2.4.2.2) vincent hugo; urgency=low
+
+  * BIII-41: Update mdadm.conf when restoring RAID on new internal disk
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 27 Apr 2012 14:42:14 +0200
+
 bubba-backend (2.4.2.1) vincent hugo; urgency=low
 
   * After converting to gpt, make sure we zap the disk
