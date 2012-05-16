@@ -90,6 +90,7 @@ Depends: ${misc:Depends}, bubba,
  libproc-daemon-perl,
  logitechmediaserver,
  hddtemp,
- gdisk
+ gdisk,
+ incron
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

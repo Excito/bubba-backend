@@ -1,3 +1,9 @@
+bubba-backend (2.5~pre1) vincent hugo; urgency=low
+
+  * utilize incron to reload samba in printcap change (Closes: #87)
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 16 May 2012 18:04:18 +0200
+
 bubba-backend (2.4.2.2) vincent hugo; urgency=low
 
   * BIII-41: Update mdadm.conf when restoring RAID on new internal disk

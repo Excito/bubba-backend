@@ -28,4 +28,5 @@ override_dh_install:
 	install -m 755 samba-dhcp.hook debian/bubba-backend/etc/dhcp/dhclient-exit-hooks.d/samba
 	install -m 644 dnsmasq.conf debian/bubba-backend/etc/dnsmasq.d/bubba.conf
 	install -m 644 sysctl.conf debian/bubba-backend/etc/sysctl.d/bubba_min_free_kbytes.conf
+	install -m 644 incron debian/bubba-backend/etc/incron.d/bubba-backend
 	$(foreach notifier, $(wildcard notifiers/*),$(call install_notifier, $(value notifier)))
