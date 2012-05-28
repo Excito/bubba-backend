@@ -1,1 +1,1 @@
-/var/run/cups/printcap IN_MODIFY service samba reload
+/var/run/cups/printcap IN_MODIFY /usr/share/bubba-backend/new_printer_init.sh
