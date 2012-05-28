@@ -171,9 +171,10 @@
 #
 
 # The line below sets some DEFAULT, starting with Netatalk 2.1.
-:DEFAULT: options:upriv,usedots,tm
+:DEFAULT: options:upriv,usedots
 
 # By default all users have access to their home directories.
-/home/  "User share" cnidscheme:dbd dbpath:/var/lib/netatalk allow:@users fperm:0644 dperm:0755
-/home/storage/ "Public share" cnidscheme:dbd dbpath:/var/lib/netatalk fperm:0664 dperm:0775
+/home/.TimeMachine "TimeMachine" options:tm allow:@users rwlist:@users
+/home/  "User share" cnidscheme:dbd dbpath:/var/lib/netatalk allow:@users rwlist:@users fperm:0644 dperm:0755
+/home/storage/ "Public share" cnidscheme:dbd dbpath:/var/lib/netatalk rwlist:@users fperm:0664 dperm:0775
 # End of File
