@@ -91,6 +91,15 @@ fix_postfix_maincf(){
 
 case "$1" in
     configure)
+
+        # publish old printers towards AirPrint
+        if dpkg --compare-versions "$2" lt 2.5; then
+            echo "publishing AirPrint printers"
+            rm -f /etc/avahi/services/printer_*
+            airprint-generate --directory=/etc/avahi/services/ --prefix=printer_
+
+        fi
+
 		# Fix proftpd
 		if dpkg --compare-versions "$2" lt 2.4; then
 			if [ -e /etc/proftpd/proftpd.conf ] && grep -qE 'UseIPv6\s+on' /etc/proftpd/proftpd.conf; then
