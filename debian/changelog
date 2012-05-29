@@ -1,3 +1,9 @@
+bubba-backend (2.5~pre5) vincent hugo; urgency=low
+
+  * Removing save of firewall (Closes: #119)
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 29 May 2012 16:07:24 +0200
+
 bubba-backend (2.5~pre4) vincent hugo; urgency=low
 
   * Publish AirPrint at upgrade (Closes: #118)

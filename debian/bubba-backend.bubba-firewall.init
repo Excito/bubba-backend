@@ -33,9 +33,6 @@ case "$1" in
 	;;
 
 	stop|restart|force-reload)
-	log_action_begin_msg "Saving firewall"
-
-	iptables-save > /etc/network/firewall.conf
 
 	log_action_end_msg $?
 	exit 0
