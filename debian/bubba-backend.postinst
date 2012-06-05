@@ -92,6 +92,13 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
 
+        if dpkg --compare-versions "$2" lt 2.5.0.1; then
+            if [ ! -d /home/.TimeMachine ]; then
+                mkdir /home/.TimeMachine
+            fi
+            chown root:users /home/.TimeMachine
+            chmod 770 /home/.TimeMachine
+        fi
         # publish old printers towards AirPrint
         if dpkg --compare-versions "$2" lt 2.5; then
             echo "publishing AirPrint printers"
