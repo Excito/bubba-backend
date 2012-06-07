@@ -333,6 +333,8 @@ sub find_disk {
 sub get_destinations {
 	use JSON;
 
+	use Config::Simple;
+
 	# use this function to return a list of targets
 	# each target needs:
 	# target_path - path to the backup directory on the remote system.
@@ -362,23 +364,15 @@ sub get_destinations {
 	my($user,$jobname,$nolog) = @_;
 	my %targetdata;
 	my $jobfile = "/home/" . $user ."/" . ARCHIVEINFO_DIR . $jobname . "/" . JOBFILE;
-	my @jobdata;
 	my $error = "";
 
-	if(open(THISJOB,"<",$jobfile)) {
-		@jobdata = <THISJOB>;
-		close(THISJOB);
-	}
+	my %Config;
 
-	foreach my $line (@jobdata) {
-		chomp($line);
-		next if(/^#/);
-		$line =~ m/^(\w+)\s+=\s+(.*)$/;
-		$targetdata{$1} = esc_chars($2);
-		if( !$targetdata{'target_path'} ) {
-			#do not allow empty target, set to "."
-			$targetdata{'target_path'} = esc_chars(".");
-		}
+	Config::Simple->import_from('jobdata', \%Config);
+	%targetdata = map { $_ => quotemeta($Config{$_}) } keys %Config;
+	if( !$targetdata{'target_path'} ) {
+		#do not allow empty target, set to "."
+		$targetdata{'target_path'} = ".";
 	}
 
 	unless($targetdata{"local_user"} && $targetdata{"jobname"}) {
