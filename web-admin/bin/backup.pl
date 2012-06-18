@@ -368,7 +368,7 @@ sub get_destinations {
 
 	my $cfg = Config::Simple->new($jobfile);
 	my $Config = $cfg->param(-block => 'default');
-	%targetdata = map { $_ => quotemeta($Config->{$_}) } keys %$Config;
+	%targetdata = map { $_ => esc_chars($Config->{$_}) } keys %$Config;
 
 	if( !$targetdata{'target_path'} ) {
 		#do not allow empty target, set to "."

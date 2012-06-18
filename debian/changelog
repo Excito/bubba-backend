@@ -1,3 +1,9 @@
+bubba-backend (2.5.0.5) vincent hugo; urgency=low
+
+  * fix backup quoting (Closes: #143)
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 18 Jun 2012 13:56:12 +0200
+
 bubba-backend (2.5.0.4) vincent hugo; urgency=low
 
   * Config::Simple exported default.key for section-less ini files
