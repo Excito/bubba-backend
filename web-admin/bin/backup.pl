@@ -632,7 +632,8 @@ sub run_backup {
     }
     flock( $fh_LOCK, LOCK_UN );
     close($fh_LOCK);
-    unlink(LOCK_FILE)
+    unlink(LOCK_FILE);
+    return 0;
 }
 
 sub removelogs {
