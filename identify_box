@@ -1,12 +1,12 @@
-import sys
-import time
-from twisted.internet import task
-from twisted.internet import reactor
+#!/usr/bin/python
+from twisted.internet import task, reactor
+
 
 def led_set_color(color):
     node = open("/sys/devices/platform/bubbatwo/color", "wb")
     node.write(str(color))
     node.close()
+
 
 def led_get_color():
     node = open("/sys/devices/platform/bubbatwo/color", "rb")
@@ -14,12 +14,15 @@ def led_get_color():
     node.close()
     return color
 
+
 def buzzer_enable(enabled):
     node = open("/sys/devices/platform/bubbatwo/buzzer", "wb")
     node.write("1" if enabled else "0")
     node.close()
 
 current_color = 0
+
+
 def main():
 
     def updateColor():
