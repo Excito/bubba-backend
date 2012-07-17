@@ -101,9 +101,7 @@ name = config['name']
 
 
 def easyfind_ip_changed(data):
-    global old_ip, enabled
-    if not enabled:
-        return
+    global old_ip
     try:
         decoded = json.loads(data)
         if 'ip_address' in decoded:
@@ -173,6 +171,9 @@ def err(reason):
 
 
 def check_easyfind():
+    if not enabled:
+        log.msg("Easyfind is not enabled; aborting")
+        return
     d = httpRequest(
         "http://79.125.123.89/ip.json",
         method='GET',

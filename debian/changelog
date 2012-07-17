@@ -1,3 +1,13 @@
+bubba-backend (2.5..1~pre1) vincent hugo; urgency=low
+
+  * tidy up the backup.pl code
+  * Always exit without errors in backup.pl (Closes: #139)
+  * adding easyfind daemon
+  * adding working skeleton for actually updating the IP
+  * fix identify_box script so it's executable (Closes: #114)
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 17 Jul 2012 17:05:26 +0200
+
 bubba-backend (2.5.0.5) vincent hugo; urgency=low
 
   * fix backup quoting (Closes: #143)
