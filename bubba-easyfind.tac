@@ -77,7 +77,7 @@ def httpRequest(url, values={}, headers={}, method='POST', timeout=10):
             return string_reciever.deferred
 
     def handle_error(error):
-        log.err(error)
+        pass
     d.addCallback(handle_response)
     d.addErrback(handle_error)
     return d
