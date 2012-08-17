@@ -3,6 +3,8 @@ import ConfigParser
 import codecs
 import json
 import urllib
+import netifaces
+import subprocess
 from cStringIO import StringIO
 
 from configobj import ConfigObj
@@ -83,7 +85,7 @@ def httpRequest(url, values={}, headers={}, method='POST', timeout=10):
 spec = """
     name = string(default="")
     ip = string(default="127.0.0.1")
-    enabled = boolean(default=False)
+    enable = boolean(default=False)
 """
 
 application = service.Application("Easyfind Update Service")
@@ -96,7 +98,7 @@ except IOError:
     log.err("unable to write easyfind config")
 
 old_ip = config['ip']
-enabled = config['enabled']
+enabled = config['enable']
 name = config['name']
 
 
@@ -106,7 +108,7 @@ def easyfind_ip_changed(data):
         decoded = json.loads(data)
         if 'ip_address' in decoded:
             new_ip = decoded['ip_address']
-            if old_ip is not new_ip:
+            if old_ip != new_ip:
                 log.msg("Got new IP '%s' which is not the same as the last one '%s'" % (new_ip, old_ip))
                 easyfind_set_ip(new_ip)
             else:
@@ -117,7 +119,7 @@ def easyfind_ip_changed(data):
         log.err("Failed to decode as JSON: \"%s\"" % data)
 
 
-def easyfind_ip_updated():
+def easyfind_ip_updated(response):
     pass
 
 
@@ -139,8 +141,6 @@ def easyfind_set_ip(new_ip):
 
     old_ip = new_ip
     log.msg(key)
-    config = ConfigParser.RawConfigParser()
-    config.read('/etc/network/easyfind.conf')
 
     config['ip'] = new_ip
 
@@ -151,16 +151,23 @@ def easyfind_set_ip(new_ip):
     except IOError:
         log.err("unable to write easyfind config")
 
+    # current WAN interface
+    WAN = subprocess.Popen(
+        ['bubba-networkmanager-cli', 'getwanif'],
+        stdout=subprocess.PIPE
+    ).communicate()[0].strip()
+
+    interface = netifaces.ifaddresses(WAN)
+    if netifaces.AF_LINK in interface:
+        mac0 = interface[netifaces.AF_LINK][0]['addr']
     d = httpRequest(
-        "http://79.125.123.89/domain.json",
+        "https://easyfind.excito.org",
         {
             'key': key,
-            'ip': new_ip,
-            'name': config['name']
+            'mac0': mac0,
         },
         method='POST',
-        headers={'Content-Type': ['application/json']},
-        timeout=2
+        headers={'Content-Type': ['application/json']}
     )
     d.addCallback(easyfind_ip_updated)
     d.addErrback(err)
@@ -175,7 +182,7 @@ def check_easyfind():
         log.msg("Easyfind is not enabled; aborting")
         return
     d = httpRequest(
-        "http://79.125.123.89/ip.json",
+        "http://ef.excito.org/ip.json",
         method='GET',
         headers={'Content-Type': ['application/json']},
         timeout=2
