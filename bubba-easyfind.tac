@@ -167,7 +167,7 @@ def easyfind_set_ip(new_ip):
             'mac0': mac0,
         },
         method='POST',
-        headers={'Content-Type': ['application/json']}
+        headers={'Content-Type': ['application/x-www-form-urlencoded']}
     )
     d.addCallback(easyfind_ip_updated)
     d.addErrback(err)
