@@ -115,8 +115,8 @@ def easyfind_ip_changed(data):
                 old_ip = new_ip
                 log.msg("Got new IP '%s' which is the same as the last one '%s'" % (new_ip, old_ip))
     except TypeError as e:
-        log.err(e)
-        log.err("Failed to decode as JSON: \"%s\"" % data)
+        # ignore any errors
+        pass
 
 
 def easyfind_ip_updated(response):
