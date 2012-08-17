@@ -124,9 +124,7 @@ def easyfind_ip_updated(response):
 
 
 def parse_cmdline():
-
-    cmdline = (open("/proc/cmdline", "r").read())
-    return dict(token.split('=', 1) if token.count("=") else (token, True) for token in cmdline.split(" "))
+    return dict(token.split('=', 1) if token.count("=") else (token, True) for token in open("/proc/cmdline", "r").read().split(" "))
 
 
 def easyfind_set_ip(new_ip):
