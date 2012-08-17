@@ -52,3 +52,5 @@ bubba-aptd /usr/sbin
 identify_box /usr/sbin
 
 wdtIdle3_ARM.tar.gz /usr/share/bubba-backend
+
+bubba-easyfind.tac /usr/share/bubba-backend
