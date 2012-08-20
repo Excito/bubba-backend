@@ -1,3 +1,11 @@
+bubba-backend (2.5.1~pre6) vincent; urgency=low
+
+  * more dynamic approach to read config file
+  * correct stop for easyfind daemon
+  * need to validate after reload
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 20 Aug 2012 15:03:05 +0200
+
 bubba-backend (2.5.1~pre5) vincent; urgency=low
 
   * actually install init script
