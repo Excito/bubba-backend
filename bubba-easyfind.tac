@@ -21,7 +21,7 @@ from validate import Validator
 from zope.interface import implements
 
 
-LOOP_TIMEOUT = 1  # in seconds the wait time until next query
+LOOP_TIMEOUT = 60  # in seconds the wait time until next query
 
 
 class StringProducer(object):
