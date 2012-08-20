@@ -96,23 +96,17 @@ try:
 except IOError:
     log.err("unable to write easyfind config")
 
-old_ip = config['ip']
-enabled = config['enable']
-name = config['name']
-
 
 def easyfind_ip_changed(data):
-    global old_ip
     try:
         decoded = json.loads(data)
         if 'ip_address' in decoded:
             new_ip = decoded['ip_address']
-            if old_ip != new_ip:
-                log.msg("Got new IP '%s' which is not the same as the last one '%s'" % (new_ip, old_ip))
+            if config['ip'] != new_ip:
+                log.msg("Got new IP '%s' which is not the same as the last one '%s'" % (new_ip, config['ip']))
                 easyfind_set_ip(new_ip)
             else:
-                old_ip = new_ip
-                log.msg("Got new IP '%s' which is the same as the last one '%s'" % (new_ip, old_ip))
+                log.msg("Got new IP '%s' which is the same as the last one '%s'" % (new_ip, config['ip']))
     except TypeError:
         # ignore any errors
         pass
@@ -127,17 +121,12 @@ def parse_cmdline():
 
 
 def easyfind_set_ip(new_ip):
-    global old_ip
     cmdline = parse_cmdline()
-    log.msg(cmdline)
     try:
         key = cmdline['key']
     except KeyError:
         log.err("Unable to retrieve secret key from system")
         return
-
-    old_ip = new_ip
-    log.msg(key)
 
     config['ip'] = new_ip
 
@@ -175,7 +164,8 @@ def err(reason):
 
 
 def check_easyfind():
-    if not enabled:
+    config.reload()
+    if not config['enable']:
         log.msg("Easyfind is not enabled; aborting")
         return
     d = httpRequest(
