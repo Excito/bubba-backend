@@ -1,3 +1,15 @@
+bubba-backend (2.5.1~pre4) vincent; urgency=low
+
+  * We are sending application/x-www-form-urlencoded, not application/json
+  * we want to have a oneliner here
+  * drop json errors
+  * ignore http errors
+  * adding init script for easyfind pinger
+  * Remove obsolete code from easyfind script
+  * increase timeout from one second to one minute
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 20 Aug 2012 13:38:06 +0200
+
 bubba-backend (2.5.1~pre3) vincent; urgency=low
 
   * install the easyfind tac file
