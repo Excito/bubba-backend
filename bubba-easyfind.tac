@@ -1,5 +1,4 @@
 #!/usr/bin/python
-import ConfigParser
 import codecs
 import json
 import urllib
@@ -114,7 +113,7 @@ def easyfind_ip_changed(data):
             else:
                 old_ip = new_ip
                 log.msg("Got new IP '%s' which is the same as the last one '%s'" % (new_ip, old_ip))
-    except TypeError as e:
+    except TypeError:
         # ignore any errors
         pass
 
