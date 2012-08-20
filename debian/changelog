@@ -1,3 +1,9 @@
+bubba-backend (2.5.1~pre5) vincent; urgency=low
+
+  * actually install init script
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 20 Aug 2012 13:42:58 +0200
+
 bubba-backend (2.5.1~pre4) vincent; urgency=low
 
   * We are sending application/x-www-form-urlencoded, not application/json
