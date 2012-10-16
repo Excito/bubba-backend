@@ -242,6 +242,7 @@ root@$MAILNAME
 	divert bubba-backend /etc/minidlna.conf /etc/minidlna.conf.bubba-distrib /etc/bubba/minidlna.conf minidlna;
 	divert bubba-backend /etc/tor/torrc /etc/tor/torrc.bubba-distrib /etc/bubba/tor.conf tor;
 	divert bubba-backend /etc/forked-daapd.conf /etc/forked-daapd.conf.bubba-distrib /etc/bubba/forked-daapd.conf forked-daapd;
+	divert bubba-backend /etc/apt/apt.conf.d/50unattended-upgrades /etc/bubba/unattended-upgrades.disrib /etc/bubba/unattended-upgrades.conf unattended-upgrades;
 
 	# things that cant be diverted
 	if [ ! -f /etc/default/ifplugd.bubba-distrib ]; then

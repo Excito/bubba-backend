@@ -59,6 +59,8 @@ case "$1" in
 	undivert bubba-backend /etc/minidlna.conf /etc/minidlna.conf.bubba-distrib minidlna;
 	undivert bubba-backend /etc/tor/torrc /etc/tor/torrc.bubba-distrib tor;
 	undivert bubba-backend /etc/forked-daapd.conf /etc/forked-daapd.conf.bubba-distrib forked-daapd;
+	undivert bubba-backend /etc/apt/apt.conf.d/50unattended-upgrades /etc/bubba/unattended-upgrades.disrib unattended-upgrades;
+
 
 	mv /etc/postfix/main.cf.bubba-distrib /etc/postfix/main.cf;
 	mv /etc/samba/smb.conf.bubba-distrib /etc/samba/smb.conf;

@@ -5,23 +5,29 @@
 # Stable bubba release, currently elvin
 Package: *
 Pin:
+ release o=Excito, n=hive, v=1.0
+ origin "xyz.update.excito.org"
+Pin-Priority: 999
+
+Package: *
+Pin:
  release o=Excito, n=elvin, v=1.0,
  origin "b3.update.excito.org"
-Pin-Priority: 999
+Pin-Priority: 888
 
 # Unstable bubba release, always vincent
 Package: *
 Pin:
  release o=Excito, n=vincent,
  origin "b3.update.excito.org"
-Pin-Priority: 999
+Pin-Priority: 888
 
 # Unstable bubba release, always vincent
 Package: *
 Pin:
  release o=Excito, n=hugo,
  origin "b3.update.excito.org"
-Pin-Priority: 999
+Pin-Priority: 888
 
 # Old stable release, currently vacant
 Package: *
