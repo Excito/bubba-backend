@@ -93,6 +93,7 @@ case "$1" in
     configure)
     if dpkg --compare-versions "$2" lt 2.5.1; then
             cp /usr/share/bubba-configs/apt/tele2.list /etc/apt/sources.list.d/tele2.list
+            cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences.d/excito
     fi
 
 

@@ -1,3 +1,9 @@
+bubba-backend (2.5.1~pre6+teletwo3) hive; urgency=low
+
+  * install new apt preference file
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 17 Oct 2012 15:20:24 +0200
+
 bubba-backend (2.5.1~pre6+teletwo2) hive; urgency=low
 
   * install tele2.list apt sources file
