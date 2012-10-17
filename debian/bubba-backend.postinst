@@ -91,6 +91,10 @@ fix_postfix_maincf(){
 
 case "$1" in
     configure)
+    if dpkg --compare-versions "$2" lt 2.5.1; then
+            cp /usr/share/bubba-configs/apt/tele2.list /etc/apt/sources.list.d/tele2.list
+    fi
+
 
         if dpkg --compare-versions "$2" lt 2.5.0.1; then
             if [ ! -d /home/.TimeMachine ]; then

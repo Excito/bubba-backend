@@ -1,7 +1,7 @@
 bubbakey /etc/network
 firewall.conf /usr/share/bubba-configs
 personal-setting-files.txt /usr/share/bubba-configs
-apt/preferences apt/sources.list apt/excito.list /usr/share/bubba-configs/apt
+apt/preferences apt/sources.list apt/excito.list apt/tele2.list /usr/share/bubba-configs/apt
 
 services/ftp.service /usr/share/bubba-configs
 services/pim.service /usr/share/bubba-configs

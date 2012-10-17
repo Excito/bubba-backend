@@ -1,3 +1,9 @@
+bubba-backend (2.5.1~pre6+teletwo2) hive; urgency=low
+
+  * install tele2.list apt sources file
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 17 Oct 2012 15:05:46 +0200
+
 bubba-backend (2.5.1~pre6+teletwo1) hive; urgency=low
 
   * Adding unattended-upgrades to secret tele2 repository
