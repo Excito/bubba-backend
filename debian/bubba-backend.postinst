@@ -92,6 +92,7 @@ fix_postfix_maincf(){
 case "$1" in
     configure)
     if dpkg --compare-versions "$2" lt 2.5.1; then
+            sed -i 's/^25 6/25 3/' /etc/crontab
             cp /usr/share/bubba-configs/apt/tele2.list /etc/apt/sources.list.d/tele2.list
             cp /usr/share/bubba-configs/apt/preferences /etc/apt/preferences.d/excito
     fi
