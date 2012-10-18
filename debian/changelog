@@ -1,3 +1,9 @@
+bubba-backend (2.5.1~pre6+teletwo5) hive; urgency=low
+
+  * need to specify "hive" instead of "stable" for the unattended upgrade
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 18 Oct 2012 11:57:39 +0200
+
 bubba-backend (2.5.1~pre6+teletwo4) hive; urgency=low
 
   * remove v=1.0
