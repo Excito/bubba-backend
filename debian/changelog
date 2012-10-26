@@ -1,3 +1,10 @@
+bubba-backend (2.5.1~pre6+teletwo7) unstable; urgency=low
+
+  * switch hive to release
+  * fix hive to release in unattended upgrades
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 26 Oct 2012 17:48:07 +0200
+
 bubba-backend (2.5.1~pre6+teletwo6) hive; urgency=low
 
   * Move execution of cron.daily three hours back in time to 3:25.
