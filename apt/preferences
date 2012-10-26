@@ -5,7 +5,7 @@
 # Stable bubba release, currently elvin
 Package: *
 Pin:
- release o=Excito, n=hive,
+ release o=Excito, n=release,
  origin "xyz.update.excito.org"
 Pin-Priority: 999
 
