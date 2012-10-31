@@ -1,6 +1,6 @@
-bubba-backend (2.5.1.3) elvin; urgency=high
+bubba-backend (2.5.1.4) elvin; urgency=high
 
-  * remove python-twisted-web deps for the time beeing, as it borked the update
+  * switch bubba-aptd to use twisted instead of manual daemonization
 
  -- Carl Fürstenberg <carl@excito.com>  Wed, 31 Oct 2012 12:05:03 +0100
 

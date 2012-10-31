@@ -1,24 +1,27 @@
-#!/bin/sh
+#! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          bubba-apt
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Provides:          bubba-aptd
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Excito Bubba apt daemon
+# Short-Description: Excito System Update Daemon
 # Description:       An daemon to handle distribution upgrade of Excito platform
 ### END INIT INFO
 
-# Author: Carl Fürstenberg <carl@excito.com
+# Author: Carl Fürstenberg <carl@excito.com>
+
+# Do NOT "set -e"
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="Excito Apt Daemon"
+DESC="Handles system updates from web interface"
 NAME=bubba-aptd
-DAEMON=/usr/sbin/$NAME
-DAEMON_ARGS="--daemonize"
+DAEMON=/usr/bin/twistd
 PIDFILE=/var/run/$NAME.pid
-SCRIPTNAME=/etc/init.d/bubba-apt
+SCRIPTNAME=/etc/init.d/$NAME
+TWISTEDSCRIPTFILE=/usr/share/bubba-backend/bubba-aptd.tac
+DAEMON_ARGS=" --syslog --pidfile=$PIDFILE --python=$TWISTEDSCRIPTFILE"
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
@@ -63,7 +66,7 @@ do_stop()
 	#   1 if daemon was already stopped
 	#   2 if daemon could not be stopped
 	#   other if a failure occurred
-	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+	start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name twistd
 	RETVAL="$?"
 	[ "$RETVAL" = 2 ] && return 2
 	# Wait for children to finish too if this is a daemon that forks

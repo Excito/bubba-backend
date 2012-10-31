@@ -9,7 +9,7 @@ Homepage: http://www.excito.com
 
 Package: bubba-backend
 Architecture: all
-Conflicts: mt-daapd, python-twisted-core (>=12), python-twisted-web (>= 12)
+Conflicts: mt-daapd
 Depends: ${misc:Depends}, bubba,
  bubba-status,
  bubba3-kernel (>= 1:2.6.39),
@@ -82,7 +82,8 @@ Depends: ${misc:Depends}, bubba,
  python-daemon,
  python-argparse,
  python-mysqldb,
- python-twisted-core (<< 12),
+ python-twisted-web (>= 12),
+ python-twisted-core,
  python-gnupg,
  python-netifaces,
  python-configobj,

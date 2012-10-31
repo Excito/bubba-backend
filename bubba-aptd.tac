@@ -1,33 +1,25 @@
 #!/usr/bin/python
 from apt.progress import base
 from apt_pkg import gettext as _
-import aptsources
-import aptsources.sourceslist
-from daemon import pidlockfile
 from os import path
 from twisted.internet import reactor, threads
 from twisted.internet.protocol import Factory
 from twisted.protocols.basic import LineReceiver
+from twisted.application import service
 import apt
 import apt_pkg
-import argparse
 import base64
-import daemon
 import io
 import json
 import netifaces
 import os
-import signal
 import subprocess
-import sys
 import syslog
 import threading
 import urllib
 import urllib2
 import re
 import tempfile
-import shutil
-
 
 SOCKNAME   = "/var/run/bubba-aptd.sock"
 PIDFILE	   = '/var/run/bubba-aptd.pid'
@@ -727,65 +719,44 @@ class AptFactory(Factory):
     def __init__(self, status):
         self._status = status
 
+
 def program_cleanup(self, arg):
     """Called when terminating the daemon"""
     syslog.syslog("Caught SIGTERM")
     reactor.fireSystemEvent('shutdown')
     reactor.stop()
 
+class AptService (service.Service):
+
+    def __init__(self):
+        pass
+
+    def startService(self):
+        global status, hotfix_status
+        syslog.openlog("bubba-aptd", syslog.LOG_PID, syslog.LOG_DAEMON)
+
+        status = {}
+        hotfix_status = {}
+
+        os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
+        os.environ['APT_LISTCHANGES_FRONTEND'] = 'none'
+
+        if os.path.exists("/etc/apt/bubba-apt.conf"):
+            apt_pkg.read_config_file(apt_pkg.config, "/etc/apt/bubba-apt.conf")
+
+        if os.path.exists(SOCKNAME):
+            os.unlink(SOCKNAME)
+
+        # mode is restricted to root, as we dont' want anyone to be able to initiate an upgrade
+        reactor.listenUNIX(SOCKNAME, AptFactory(status), mode=0600)
+
+    def stopService(self):
+        pass
+
+
+application = service.Application("Excito Apt Service")
+aptService = AptService()
+aptService.setServiceParent(application)
+
 if __name__ == "__main__":
-    syslog.openlog("bubba-aptd", syslog.LOG_PID, syslog.LOG_DAEMON)
-
-    parser = argparse.ArgumentParser(description='Bubba Apt Worker', prog='Bubba-Apt')
-    # mode is not used, but might be sent from PHP as argument
-    parser.add_argument('--mode', nargs='?', default='na', const='na')
-    parser.add_argument('--daemonize', action='store_true')
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
-
-    args = parser.parse_args()
-
-    lock = pidlockfile.PIDLockFile(PIDFILE)
-
-    if lock.is_locked():
-        print "Bubba Apt Server is already running"
-        exit()
-
-    if args.daemonize:
-        context = daemon.DaemonContext(
-            pidfile=lock,
-        )
-    else:
-        context = daemon.DaemonContext(
-            pidfile=lock,
-            detach_process=False,
-            stdout=sys.stdout,
-            stderr=sys.stderr
-        )
-
-
-    context.signal_map = {
-        signal.SIGTERM: program_cleanup,
-        signal.SIGINT: program_cleanup,
-        signal.SIGHUP: 'terminate',
-    }
-
-    context.open()
-    status = {}
-    hotfix_status = {}
-
-    syslog.syslog("Bubba Apt Server Started")
-
-    os.environ['DEBIAN_FRONTEND'] = 'noninteractive'
-    os.environ['APT_LISTCHANGES_FRONTEND'] = 'none'
-
-    if os.path.exists("/etc/apt/bubba-apt.conf"):
-        apt_pkg.read_config_file(apt_pkg.config, "/etc/apt/bubba-apt.conf")
-
-    if os.path.exists(SOCKNAME):
-        os.unlink(SOCKNAME)
-
-    # mode is restricted to root, as we dont' want anyone to be able to initiate an upgrade
-    reactor.listenUNIX(SOCKNAME, AptFactory(status), mode=0600)
-
-    # main loop, we are taking care of our own signal handling using DaemonContext.signal_map
-    reactor.run(installSignalHandlers=False)
+    pass
