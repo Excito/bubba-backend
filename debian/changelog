@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.4teletwo1) unstable; urgency=low
+
+  * releasing version 2.5.1.4teletwo1
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 31 Oct 2012 15:48:51 +0100
+
 bubba-backend (2.5.1.4) elvin; urgency=high
 
   * switch bubba-aptd to use twisted instead of manual daemonization
