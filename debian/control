@@ -95,6 +95,6 @@ Depends: ${misc:Depends}, bubba,
  gdisk,
  incron,
  unattended-upgrades,
- locale
+ locales
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

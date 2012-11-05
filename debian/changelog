@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.4teletwo3) unstable; urgency=low
+
+  * missing s in locales
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 05 Nov 2012 14:12:38 +0100
+
 bubba-backend (2.5.1.4teletwo2) unstable; urgency=low
 
   * enforce en_US.UTF-8 locale
