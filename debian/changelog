@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.4teletwo4) unstable; urgency=low
+
+  * Adding beehive as dependency
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 07 Nov 2012 15:55:34 +0100
+
 bubba-backend (2.5.1.4teletwo3) unstable; urgency=low
 
   * missing s in locales
