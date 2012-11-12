@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.4teletwo5) unstable; urgency=high
+
+  * Need to parse easyfind config more correctly
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Nov 2012 16:44:55 +0100
+
 bubba-backend (2.5.1.4teletwo4) unstable; urgency=low
 
   * Adding beehive as dependency
