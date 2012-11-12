@@ -65,7 +65,7 @@ sub read_config() {
 		@data = <INFILE>;
 		close INFILE;
 		my $file=join("\n",@data);
-		if($file =~ m/enable\s*=\s*yes/) {
+		if($file =~ m/enable\s*=\s*(True|true|yes|on|1)/) {
 			$conf{'enable'} = "yes";
 		}
 		if($file =~ m/ip\s*=\s*(\d+\.\d+\.\d+\.\d+)/) {
