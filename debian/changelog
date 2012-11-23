@@ -1,8 +1,9 @@
-bubba-backend (2.5.1.5teletwo1) unstable; urgency=high
+bubba-backend (2.5.1.5teletwo2) unstable; urgency=high
 
   * Need to parse easyfind config more correctly
+  * might be a good idea to actually enable Apt::Periodic::Enable
 
- -- Carl Fürstenberg <carl@excito.com>  Mon, 12 Nov 2012 16:44:55 +0100
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 23 Nov 2012 14:11:08 +0100
 
 bubba-backend (2.5.1.4teletwo4) unstable; urgency=low
 
