@@ -54,3 +54,5 @@ wdtIdle3_ARM.tar.gz /usr/share/bubba-backend
 
 bubba-easyfind.tac /usr/share/bubba-backend
 bubba-aptd.tac /usr/share/bubba-backend
+
+bubba-run-backupjobs /usr/sbin

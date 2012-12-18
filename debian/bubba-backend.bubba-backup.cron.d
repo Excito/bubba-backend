@@ -1,0 +1,3 @@
+25 3 * * sun,wed     root bubba-run-backupjobs halfweekly
+25 4 * * sun         root bubba-run-backupjobs weekly
+00 2 * * *           root bubba-run-backupjobs daily

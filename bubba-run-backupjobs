@@ -1,0 +1,206 @@
+#!/usr/bin/evn python
+
+import yaml
+import tempfile
+import subprocess
+import os
+import argparse
+import textwrap
+import syslog
+
+
+class MountError(Exception):
+    pass
+
+accounts_file = '/etc/bubba/remote_accounts.yml'
+local_jobs_file = '/etc/bubba/local_backup_jobs.yml'
+remote_jobs_file = '/etc/bubba/remote_backup_jobs.yml'
+status_file = '/var/lib/bubba/backup_status.yml'
+tmp_dir = '/home/admin/.backup/tmp'
+partial_dir = '/home/admin/.backup/partials'
+log_file = '/var/log/bubba-backup.log'
+
+if not os.path.exists(tmp_dir):
+    os.makedirs(tmp_dir)
+
+if not os.path.exists(partial_dir):
+    os.makedirs(partial_dir)
+
+
+def run_rsync(user, host, targetdir, source, key):
+    excludefile = tempfile.NamedTemporaryFile(delete=False)
+    keyfile = tempfile.NamedTemporaryFile(delete=False)
+    keyfile.write(key)
+    keyfile.close()
+    excludefile.write(source)
+    excludefile.close()
+    cmd = [
+        'rsync',
+        '--quiet',
+        '--checksum',
+        '--recursive',
+        '--links',
+        '--owner',
+        '--group',
+        '--perms',
+        '--executability',
+        '--times',
+        '--sparse',
+        '--rsh', '/usr/bin/ssh -F /dev/null -p 22 -l {user} -i {keyfile} -o StrictHostKeyChecking=no -c aes128-cbc,blowfish-cbc'.format(keyfile=keyfile.name, user=user),
+        '--stats',
+        '--log-file', log_file,
+        '--partial',
+        '--exclude-from', excludefile.name,
+        '/home',
+        "{user}@{host}:{dir}".format(user=user, host=host, dir=targetdir)
+    ]
+
+    subprocess.call(cmd)
+    os.unlink(keyfile.name)
+    os.unlink(excludefile.name)
+
+
+def run_local_rsync(source, targetdir):
+    excludefile = tempfile.NamedTemporaryFile(delete=False)
+    excludefile.write(source)
+    excludefile.close()
+
+    cmd = [
+        'rsync',
+        '--archive',
+        '--no-owner',
+        '--no-perms',
+        '--no-group',
+        '--safe-links',
+        '--modify-window', "1",
+        '--quiet',
+        '--checksum',
+        '--recursive',
+        '--stats',
+        '--log-file', log_file,
+        '--partial',
+        '--exclude-from', excludefile.name,
+        '/home',
+        targetdir
+    ]
+    subprocess.call(cmd)
+    os.unlink(excludefile.name)
+
+
+def mount(uuid, mountdir):
+    try:
+        dev = subprocess.check_output(['blkid', '-U', uuid])
+        subprocess.call(['mount', dev.strip(), mountdir])
+    except subprocess.CalledProcessError:
+        raise MountError(uuid)
+
+selection_mapping = {
+    'data': """\
+    + /home/
+    - /home/storage
+    - /*
+    """,
+    'storage': """\
+    + /home/
+    + /home/storage
+    - /home/storage/extern
+    - /home/*
+    - /*
+    """,
+    'music': """\
+    + /home/
+    + /home/storage/
+    + /home/storage/music
+    - /home/*
+    - /home/storage/*
+    - /*
+    """,
+    'video': """\
+    + /home/
+    + /home/storage/
+    + /home/storage/video
+    - /home/*
+    - /home/storage/*
+    - /*
+    """,
+    'pictures': """\
+    + /home/
+    + /home/storage/
+    + /home/storage/pictures
+    - /home/*
+    - /home/storage/*
+    - /*
+    """
+}
+
+hosts_mapping = {
+    'HiDrive': 'rsync.hidrive.strato.com'
+}
+
+targetdir_mapping = {
+    'HiDrive': 'users/{user}/backup',
+    'local': 'backup'
+}
+try:
+    accounts = yaml.load(open(accounts_file, 'r'))
+except IOError:
+    accounts = []
+
+try:
+    local_jobs = yaml.load(open(local_jobs_file, 'r'))
+except IOError:
+    local_jobs = []
+
+try:
+    remote_jobs = yaml.load(open(remote_jobs_file, 'r'))
+except IOError:
+    remote_jobs = []
+
+try:
+    status = yaml.load(open(status_file, 'r'))
+except IOError:
+    status = []
+
+parser = argparse.ArgumentParser(description="Run scheduled backup jobs", prog="bubba-run-backupjobs")
+parser.add_argument('schedule', type=str, choices=('daily', 'weekly', 'halfweekly'), help="Which schedule to run")
+args = parser.parse_args()
+
+for job, schedules in remote_jobs.items():
+    account = accounts[job]
+    if not args.schedule in schedules:
+        continue
+    for selection in schedules[args.schedule]:
+        syslog.syslog(
+            syslog.LOG_INFO,
+            "Running {schedule} backup job for {selection} to remote {user}@{type}".format(
+                selection=selection,
+                schedule=args.schedule,
+                user=account['username'],
+                type=account['type']
+            )
+        )
+        run_rsync(
+            user=account['username'],
+            host=hosts_mapping[account['type']],
+            targetdir=targetdir_mapping[account['type']].format(user=account['username']),
+            source=textwrap.dedent(selection_mapping[selection]),
+            key=account['openssh']
+        )
+
+
+for job, schedules in local_jobs.items():
+    if not args.schedule in schedules:
+        continue
+    for selection in schedules[args.schedule]:
+        mountdir = tempfile.mkdtemp()
+        try:
+            mount(job, mountdir)
+        except MountError as e:
+            syslog.syslog(syslog.LOG_ERR, "Failed to mount device with {uuid} for {when} backup".format(job, args.schedule))
+            os.rmdir(mountdir)
+
+        syslog.syslog(syslog.LOG_INFO, "Running {schedule} local backup job for {selection} to device {uuid}".format(selection=selection, schedule=args.schedule, uuid=job))
+        run_local_rsync(
+            source=textwrap.dedent(selection_mapping[selection]),
+            targetdir=os.path.join(mountdir, targetdir_mapping['local'])
+        )
