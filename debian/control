@@ -94,6 +94,7 @@ Depends: ${misc:Depends}, bubba,
  hddtemp,
  gdisk,
  incron,
- python-yaml
+ python-yaml,
+ davfs2
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.
