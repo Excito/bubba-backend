@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.5+backup2) unstable; urgency=low
+
+  * update to use new ssh key layout
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 21 Dec 2012 16:25:43 +0100
+
 bubba-backend (2.5.1.5+backup1) vincent; urgency=low
 
   * Switch backup solution
