@@ -464,6 +464,7 @@ Desc: Restart required
 Data: Vital system parts are updated - please restart B3 for them to take effect
 End-of-Message
 
+    chmod 0700 /etc/bubba/ssh-keys
     fi
 
     ;;

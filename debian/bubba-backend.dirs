@@ -16,6 +16,7 @@
 
 /usr/share/bubba-configs
 /etc/bubba
+/etc/bubba/ssh-keys
 
 /etc/sysctl.d
 /etc/incron.d

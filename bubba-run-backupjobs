@@ -19,6 +19,7 @@ status_file = '/var/lib/bubba/backup_status.yml'
 tmp_dir = '/home/admin/.backup/tmp'
 partial_dir = '/home/admin/.backup/partials'
 log_file = '/var/log/bubba-backup.log'
+ssh_keydir = '/etc/bubba/ssk-keys'
 
 if not os.path.exists(tmp_dir):
     os.makedirs(tmp_dir)
@@ -27,13 +28,12 @@ if not os.path.exists(partial_dir):
     os.makedirs(partial_dir)
 
 
-def run_rsync(user, host, targetdir, source, key):
+def run_rsync(user, host, targetdir, source, uuid):
     excludefile = tempfile.NamedTemporaryFile(delete=False)
-    keyfile = tempfile.NamedTemporaryFile(delete=False)
-    keyfile.write(key)
-    keyfile.close()
+    keyfile = os.path.join(ssh_keydir, uuid)
     excludefile.write(source)
     excludefile.close()
+
     cmd = [
         'rsync',
         '--quiet',
@@ -46,7 +46,15 @@ def run_rsync(user, host, targetdir, source, key):
         '--executability',
         '--times',
         '--sparse',
-        '--rsh', '/usr/bin/ssh -F /dev/null -p 22 -l {user} -i {keyfile} -o StrictHostKeyChecking=no -c aes128-cbc,blowfish-cbc'.format(keyfile=keyfile.name, user=user),
+        '--rsh', '''\
+        /usr/bin/ssh \
+        -F /dev/null \
+        -p 22 \
+        -l {user} \
+        -i {keyfile} \
+        -o StrictHostKeyChecking=no \
+        -c aes128-cbc,blowfish-cbc\
+        '''.format(keyfile=keyfile, user=user),
         '--stats',
         '--log-file', log_file,
         '--partial',
@@ -56,7 +64,6 @@ def run_rsync(user, host, targetdir, source, key):
     ]
 
     subprocess.call(cmd)
-    os.unlink(keyfile.name)
     os.unlink(excludefile.name)
 
 
@@ -134,12 +141,14 @@ selection_mapping = {
 }
 
 hosts_mapping = {
-    'HiDrive': 'rsync.hidrive.strato.com'
+    'HiDrive': 'rsync.hidrive.strato.com',
+    'ssh': None
 }
 
 targetdir_mapping = {
     'HiDrive': 'users/{user}/backup',
-    'local': 'backup'
+    'local': 'backup',
+    'ssh': 'backup'
 }
 try:
     accounts = yaml.load(open(accounts_file, 'r'))
@@ -179,12 +188,15 @@ for job, schedules in remote_jobs.items():
                 type=account['type']
             )
         )
+        host = hosts_mapping[account['type']]
+        if not host:
+            host = account['host']
         run_rsync(
             user=account['username'],
-            host=hosts_mapping[account['type']],
+            host=host,
             targetdir=targetdir_mapping[account['type']].format(user=account['username']),
             source=textwrap.dedent(selection_mapping[selection]),
-            key=account['openssh']
+            uuid=account['uuid']
         )
 
 
