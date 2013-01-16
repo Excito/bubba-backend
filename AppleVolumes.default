@@ -175,6 +175,6 @@
 
 # By default all users have access to their home directories.
 /home/.TimeMachine "TimeMachine" options:tm allow:@users rwlist:@users
-/home/  "User share" cnidscheme:dbd dbpath:/var/lib/netatalk allow:@users rwlist:@users fperm:0644 dperm:0755
-/home/storage/ "Public share" cnidscheme:dbd dbpath:/var/lib/netatalk rwlist:@users fperm:0664 dperm:0775
+/home/$u/ "User share for $u" cnidscheme:dbd dbpath:/var/lib/netatalk/$v allow:@users rwlist:@users fperm:0644 dperm:0755
+/home/storage/ "Public share" cnidscheme:dbd dbpath:/var/lib/netatalk/$v rwlist:@users fperm:0664 dperm:0775
 # End of File
