@@ -19,7 +19,7 @@ status_file = '/var/lib/bubba/backup_status.yml'
 tmp_dir = '/home/admin/.backup/tmp'
 partial_dir = '/home/admin/.backup/partials'
 log_file = '/var/log/bubba-backup.log'
-ssh_keydir = '/etc/bubba/ssk-keys'
+ssh_keydir = '/etc/bubba/ssh-keys'
 
 if not os.path.exists(tmp_dir):
     os.makedirs(tmp_dir)
