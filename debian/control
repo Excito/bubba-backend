@@ -97,6 +97,7 @@ Depends: ${misc:Depends}, bubba,
  python-yaml,
  davfs2,
  sshpass,
- rsync
+ rsync,
+ sshfs
 Description: The backend of the bubba administration
  The backend consists of scripts required for the bubba to function.

@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.5+backup5) unstable; urgency=low
+
+  * adding sshfs as depends
+
+ -- Carl Fürstenberg <carl@excito.com>  Mon, 21 Jan 2013 11:14:14 +0100
+
 bubba-backend (2.5.1.5+backup4) unstable; urgency=low
 
   * adding rsync deps
