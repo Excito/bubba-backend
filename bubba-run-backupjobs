@@ -28,6 +28,19 @@ if not os.path.exists(partial_dir):
     os.makedirs(partial_dir)
 
 
+def write_status(value, job, schedule, selection):
+    if not job in status:
+        status[job] = {}
+    if not schedule in status[job]:
+        status[job][schedule] = {}
+    if not selection in status[job][schedule]:
+        status[job][schedule] = {}
+    status[job][schedule][selection] = value
+
+    stream = file(status_file, 'w')
+    yaml.dump(status, stream, default_flow_style=False)
+
+
 def run_rsync(user, host, targetdir, source, uuid):
     excludefile = tempfile.NamedTemporaryFile(delete=False)
     keyfile = os.path.join(ssh_keydir, uuid)
@@ -63,8 +76,9 @@ def run_rsync(user, host, targetdir, source, uuid):
         "{user}@{host}:{dir}".format(user=user, host=host, dir=targetdir)
     ]
 
-    subprocess.call(cmd)
+    retval = subprocess.call(cmd)
     os.unlink(excludefile.name)
+    return retval
 
 
 def run_local_rsync(source, targetdir):
@@ -90,8 +104,9 @@ def run_local_rsync(source, targetdir):
         '/home',
         targetdir
     ]
-    subprocess.call(cmd)
+    retval = subprocess.call(cmd)
     os.unlink(excludefile.name)
+    return retval
 
 
 def mount(uuid, mountdir):
@@ -153,22 +168,22 @@ targetdir_mapping = {
 try:
     accounts = yaml.load(open(accounts_file, 'r'))
 except IOError:
-    accounts = []
+    accounts = {}
 
 try:
     local_jobs = yaml.load(open(local_jobs_file, 'r'))
 except IOError:
-    local_jobs = []
+    local_jobs = {}
 
 try:
     remote_jobs = yaml.load(open(remote_jobs_file, 'r'))
 except IOError:
-    remote_jobs = []
+    remote_jobs = {}
 
 try:
     status = yaml.load(open(status_file, 'r'))
 except IOError:
-    status = []
+    status = {}
 
 parser = argparse.ArgumentParser(description="Run scheduled backup jobs", prog="bubba-run-backupjobs")
 parser.add_argument('schedule', type=str, choices=('daily', 'weekly', 'halfweekly'), help="Which schedule to run")
@@ -191,13 +206,14 @@ for job, schedules in remote_jobs.items():
         host = hosts_mapping[account['type']]
         if not host:
             host = account['host']
-        run_rsync(
+        retval = run_rsync(
             user=account['username'],
             host=host,
             targetdir=targetdir_mapping[account['type']].format(user=account['username']),
             source=textwrap.dedent(selection_mapping[selection]),
             uuid=account['uuid']
         )
+        write_status(retval, job, args.schedule, selection)
 
 
 for job, schedules in local_jobs.items():
@@ -212,7 +228,8 @@ for job, schedules in local_jobs.items():
             os.rmdir(mountdir)
 
         syslog.syslog(syslog.LOG_INFO, "Running {schedule} local backup job for {selection} to device {uuid}".format(selection=selection, schedule=args.schedule, uuid=job))
-        run_local_rsync(
+        retval = run_local_rsync(
             source=textwrap.dedent(selection_mapping[selection]),
             targetdir=os.path.join(mountdir, targetdir_mapping['local'])
         )
+        write_status(retval, job, args.schedule, selection)
