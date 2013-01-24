@@ -110,10 +110,10 @@ def run_local_rsync(source, targetdir):
 
 
 def mount(uuid, mountdir):
-    try:
-        dev = subprocess.check_output(['blkid', '-U', uuid])
+    dev = subprocess.Popen(['blkid', '-U', uuid], stdout=subprocess.PIPE).communicate()[0]
+    if dev.strip():
         subprocess.call(['mount', dev.strip(), mountdir])
-    except subprocess.CalledProcessError:
+    else:
         raise MountError(uuid)
 
 selection_mapping = {
