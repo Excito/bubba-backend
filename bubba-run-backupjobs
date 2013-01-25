@@ -116,6 +116,9 @@ def mount(uuid, mountdir):
     else:
         raise MountError(uuid)
 
+def umount(mountdir):
+    subprocess.call(['umount', mountdir])
+
 selection_mapping = {
     'data': """\
     + /home/
@@ -234,4 +237,5 @@ for job, schedules in local_jobs.items():
             source=textwrap.dedent(selection_mapping[selection]),
             targetdir=os.path.join(mountdir, targetdir_mapping['local'])
         )
+        umount(mountdir)
         write_status(retval, job, args.schedule, selection)
