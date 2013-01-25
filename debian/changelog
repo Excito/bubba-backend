@@ -1,3 +1,11 @@
+bubba-backend (2.5.1.5+backup8) unstable testing; urgency=low
+
+  * exclude mounted remotes in rsync data backup list
+  * Unmount local external drive after backup
+  * fix error in error message
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 25 Jan 2013 13:17:21 +0100
+
 bubba-backend (2.5.1.5+backup7) unstable testing; urgency=low
 
   * check_output is not found in python 2.6
