@@ -120,6 +120,8 @@ selection_mapping = {
     'data': """\
     + /home/
     - /home/storage
+    - /home/admin/HiDrive
+    - /home/admin/ssh
     - /*
     """,
     'storage': """\
