@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.5+backup9) testing unstable; urgency=low
+
+  * Adding PATH specifier to crontab
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 01 Feb 2013 11:56:08 +0100
+
 bubba-backend (2.5.1.5+backup8) unstable testing; urgency=low
 
   * exclude mounted remotes in rsync data backup list
