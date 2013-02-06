@@ -167,7 +167,6 @@ def check_easyfind():
     config.reload()
     config.validate(validator)
     if not config['enable']:
-        log.msg("Easyfind is not enabled; aborting")
         return
     d = httpRequest(
         "http://ef.excito.org/ip.json",
