@@ -38,6 +38,7 @@ AppleVolumes.default /etc/bubba
 minidlna.conf /etc/bubba
 tor.conf /etc/bubba
 forked-daapd.conf /etc/bubba
+davfs2.conf /etc/bubba
 
 ifplugd.default /etc/bubba
 fetchmail.default /etc/bubba
