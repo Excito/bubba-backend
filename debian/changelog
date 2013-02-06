@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.5+backup10) testing unstable; urgency=low
+
+  * Fix davfs cache location
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 06 Feb 2013 14:13:23 +0100
+
 bubba-backend (2.5.1.5+backup9) testing unstable; urgency=low
 
   * Adding PATH specifier to crontab
