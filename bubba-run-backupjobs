@@ -125,6 +125,7 @@ selection_mapping = {
     - /home/storage
     - /home/admin/HiDrive
     - /home/admin/ssh
+    - /home/.cache
     - /*
     """,
     'storage': """\
