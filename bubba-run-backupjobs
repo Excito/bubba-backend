@@ -212,6 +212,7 @@ for job, schedules in remote_jobs.items():
         host = hosts_mapping[account['type']]
         if not host:
             host = account['host']
+        write_status(-1, job, args.schedule, selection)
         retval = run_rsync(
             user=account['username'],
             host=host,
@@ -234,6 +235,7 @@ for job, schedules in local_jobs.items():
             os.rmdir(mountdir)
 
         syslog.syslog(syslog.LOG_INFO, "Running {schedule} local backup job for {selection} to device {uuid}".format(selection=selection, schedule=args.schedule, uuid=job))
+        write_status(-1, job, args.schedule, selection)
         retval = run_local_rsync(
             source=textwrap.dedent(selection_mapping[selection]),
             targetdir=os.path.join(mountdir, targetdir_mapping['local'])
