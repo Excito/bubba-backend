@@ -7,6 +7,7 @@ import os
 import argparse
 import textwrap
 import syslog
+import socket
 
 
 class MountError(Exception):
@@ -116,6 +117,7 @@ def mount(uuid, mountdir):
     else:
         raise MountError(uuid)
 
+
 def umount(mountdir):
     subprocess.call(['umount', mountdir])
 
@@ -167,9 +169,9 @@ hosts_mapping = {
 }
 
 targetdir_mapping = {
-    'HiDrive': 'users/{user}/backup',
-    'local': 'backup',
-    'ssh': 'backup'
+    'HiDrive': 'users/{user}/backup/{host}/{selection}',
+    'local': 'backup/{host}/{selection}',
+    'ssh': 'backup/{host}/{selection}'
 }
 try:
     accounts = yaml.load(open(accounts_file, 'r'))
@@ -216,7 +218,11 @@ for job, schedules in remote_jobs.items():
         retval = run_rsync(
             user=account['username'],
             host=host,
-            targetdir=targetdir_mapping[account['type']].format(user=account['username']),
+            targetdir=targetdir_mapping[account['type']].format(
+                user=account['username'],
+                host=socket.gethostname(),
+                selection=selection
+            ),
             source=textwrap.dedent(selection_mapping[selection]),
             uuid=account['uuid']
         )
@@ -238,7 +244,10 @@ for job, schedules in local_jobs.items():
         write_status(-1, job, args.schedule, selection)
         retval = run_local_rsync(
             source=textwrap.dedent(selection_mapping[selection]),
-            targetdir=os.path.join(mountdir, targetdir_mapping['local'])
+            targetdir=os.path.join(mountdir, targetdir_mapping['local'].format(
+                host=socket.gethostname(),
+                selection=selection
+            ))
         )
         umount(mountdir)
         write_status(retval, job, args.schedule, selection)
