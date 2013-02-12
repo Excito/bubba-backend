@@ -1,3 +1,9 @@
+bubba-backend (2.5.1.5+teletwo4) unstable testing; urgency=low
+
+  * fix version
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 12 Feb 2013 11:50:36 +0100
+
 bubba-backend (2.5.1.5teletwo3) unstable; urgency=low
 
   * need to force conf-files and use stable instead of release
