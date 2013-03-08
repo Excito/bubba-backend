@@ -9,6 +9,7 @@ WriteMakefile(
 	'bin/disk.pl',
 	'bin/firewall.pl',
 	'bin/easyfind.pl',
+	'bin/backup.pl',
 	'bin/diskdaemon.pl',
 	'bin/notify-dispatcher.pl',
 	'bin/notify-monitor-raid.pl',

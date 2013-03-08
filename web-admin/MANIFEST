@@ -10,6 +10,7 @@ bin/updater.pl
 bin/thumbnail.pl
 bin/backend.pl
 bin/print.pl
+bin/backup.pl
 bin/diskdaemon.pl
 bin/notify-dispatcher.pl
 bin/notify-monitor-raid.pl
