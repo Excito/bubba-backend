@@ -1,3 +1,11 @@
+bubba-backend (2.5.1.5+backup12) testing unstable; urgency=low
+
+  * write a status -1 when backup is running
+  * Make remote path consistent and non-arbitary
+  * readd the old backup as it's needed for  backward compability
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 08 Mar 2013 15:54:09 +0100
+
 bubba-backend (2.5.1.5+backup11) testing unstable; urgency=low
 
   * make sure we exclude potential cache in the backup
