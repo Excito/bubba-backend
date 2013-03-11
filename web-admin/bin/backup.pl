@@ -883,7 +883,7 @@ sub run_now {
             my $logfile = $logdir . "/" . $now . ".removefull";
             print("Logging removal of fullbackups to: $logfile \n");
 
-            $cmd = $key . DUPLICITY . " remove-all-but-n-full " . $targetdata->{"nbr_fullbackups"} . " --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
+            $cmd = $key . DUPLICITY . " remove-all-but-n-full " . $targetdata->{"nbr_fullbackups"} . "--tempdir /home/.tmp --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
             exec_cmd($cmd);
 
             removelogs( $local_fileinfo, $logfile );
@@ -891,7 +891,7 @@ sub run_now {
 
             my $logfile = $logdir . "/" . $now . ".cleanup";
             print("Logging removal of cleanup log to: $logfile \n");
-            $cmd = $key . DUPLICITY . " cleanup --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
+            $cmd = $key . DUPLICITY . " cleanup --tempdir /home/.tmp --num-retries 2 --force $use_sshpasswd -v 5 $no_crypt --log-file $logfile $ssh_key $target";
             exec_cmd($cmd);
 
         }
@@ -978,7 +978,7 @@ sub get_lastsetinfo {
     my ( $cmd, $key, $no_crypt, $ssh_key, $ssh_key, $use_sshpasswd, $full_expiretime, $target ) = setup_jobinfo($targetdata);
 
     # ---- Get the status of the backupsets
-    $cmd = $key . DUPLICITY . " collection-status --time-separator '.' $use_sshpasswd $no_crypt --num-retries 2 $ssh_key " . $target;
+    $cmd = $key . DUPLICITY . " collection-status --tempdir /home/.tmp --time-separator '.' $use_sshpasswd $no_crypt --num-retries 2 $ssh_key " . $target;
     d_print "$cmd\n";
     my @output = exec_cmd($cmd);
     d_print @output;
@@ -1004,7 +1004,7 @@ sub get_lastsetinfo {
     d_print @output;
 
     # ---  Get what files are included in the backup.
-    $cmd = $key . DUPLICITY . " list-current-files --time-separator '.' $use_sshpasswd $no_crypt --num-retries 2 $ssh_key " . $target;
+    $cmd = $key . DUPLICITY . " list-current-files --tempdir /home/.tmp --time-separator '.' $use_sshpasswd $no_crypt --num-retries 2 $ssh_key " . $target;
     d_print "$cmd\n";
     @output = exec_cmd($cmd);
 
@@ -1425,7 +1425,7 @@ sub restore_files {
     $file_target     = esc_chars($file_target);
     $target          = esc_chars($target);
 
-    $cmd = $key . DUPLICITY . " -v 5 $restoredate $use_sshpasswd $no_crypt $force --num-retries 2 --log-file $logfile --file-to-restore $file_to_restore $ssh_key $target $file_target";
+    $cmd = $key . DUPLICITY . " -v 5 $restoredate $use_sshpasswd $no_crypt $force --tempdir /home/.tmp --num-retries 2 --log-file $logfile --file-to-restore $file_to_restore $ssh_key $target $file_target";
     d_print("$cmd\n");
     exec_cmd($cmd);
 

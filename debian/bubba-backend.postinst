@@ -393,6 +393,7 @@ End-of-Message
 	install --directory --owner=nobody --group=users --mode=2777 /home/storage/pictures
 	install --directory --owner=nobody --group=users --mode=2775 /home/storage/extern
 	install --directory --owner=root   --group=users --mode=2775 /home/web
+	install --directory --owner=nobody --group=users --mode=2777 /home/.tmp
 
 	# install default web if missing
 	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then
