@@ -1,3 +1,13 @@
+bubba-backend (2.5.1.5+backup13) testing unstable; urgency=low
+
+  * adding gitreview
+  * remove easyfind not enable message
+  * add minimum tor version requirement
+  * specify temp directory for old backup
+  * rename cron file so it doesn't conflict with old backup
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 12 Mar 2013 11:55:50 +0100
+
 bubba-backend (2.5.1.5+backup12) testing unstable; urgency=low
 
   * write a status -1 when backup is running
