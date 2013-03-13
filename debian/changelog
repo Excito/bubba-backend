@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc1) testing unstable; urgency=low
+
+  * Fix netatalk CNID dir
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 13 Mar 2013 14:54:35 +0100
+
 bubba-backend (2.5.1.5+backup13) testing unstable; urgency=low
 
   * adding gitreview
