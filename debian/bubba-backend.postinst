@@ -398,6 +398,8 @@ End-of-Message
 	install --directory --owner=root   --group=root  --mode=0700 /home/.cache/davfs2
 	install --directory --owner=nobody --group=users --mode=2777 /home/.tmp
 
+  install --directory --owner=root --group=root --mode=0770 /var/lib/netatalk
+
 	# install default web if missing
 	if [ x`find /home/web/ -maxdepth 1 -mindepth 1 2>&- | wc -l` = x0 ]; then
 		cp -a /usr/share/bubba-backend/default_web/* /home/web
