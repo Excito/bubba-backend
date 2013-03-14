@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc2) testing unstable; urgency=low
+
+  * Make sure targetdir exists when rsyncing locally
+
+ -- Carl Fürstenberg <carl@excito.com>  Thu, 14 Mar 2013 13:43:28 +0100
+
 bubba-backend (2.6~rc1) testing unstable; urgency=low
 
   * Fix netatalk CNID dir
