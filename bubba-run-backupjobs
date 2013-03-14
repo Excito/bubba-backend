@@ -4,6 +4,7 @@ import yaml
 import tempfile
 import subprocess
 import os
+import errno
 import argparse
 import textwrap
 import syslog
@@ -27,6 +28,16 @@ if not os.path.exists(tmp_dir):
 
 if not os.path.exists(partial_dir):
     os.makedirs(partial_dir)
+
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
 
 
 def write_status(value, job, schedule, selection):
@@ -83,6 +94,7 @@ def run_rsync(user, host, targetdir, source, uuid):
 
 
 def run_local_rsync(source, targetdir):
+    mkdir_p(targetdir)
     excludefile = tempfile.NamedTemporaryFile(delete=False)
     excludefile.write(source)
     excludefile.close()
