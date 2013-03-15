@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc3) testing unstable; urgency=low
+
+  * davfs2 bugs out on cache directory
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 15 Mar 2013 15:15:44 +0100
+
 bubba-backend (2.6~rc2) testing unstable; urgency=low
 
   * Make sure targetdir exists when rsyncing locally
