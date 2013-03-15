@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc7) unstable testing; urgency=low
+
+  * davfs2 bails out on 2777, seems to require 0700
+
+ -- Carl Fürstenberg <carl@excito.com>  Fri, 15 Mar 2013 16:38:39 +0100
+
 bubba-backend (2.6~rc3) testing unstable; urgency=low
 
   * davfs2 bugs out on cache directory
