@@ -394,7 +394,8 @@ End-of-Message
 	install --directory --owner=nobody --group=users --mode=2777 /home/storage/pictures
 	install --directory --owner=nobody --group=users --mode=2775 /home/storage/extern
 	install --directory --owner=root   --group=users --mode=2775 /home/web
-	install --directory --owner=root   --group=root  --mode=2777 /home/.cache
+	install --directory --owner=root   --group=root  --mode=0777 /home/.cache
+	install --directory --owner=davfs2 --group=davfs2 --mode=0700 /home/.davfs2cache
 	install --directory --owner=nobody --group=users --mode=2777 /home/.tmp
 
   install --directory --owner=root --group=root --mode=0770 /var/lib/netatalk
