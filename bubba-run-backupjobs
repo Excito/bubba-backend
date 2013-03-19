@@ -181,9 +181,9 @@ hosts_mapping = {
 }
 
 targetdir_mapping = {
-    'HiDrive': 'users/{user}/backup/{host}/{selection}',
-    'local': 'backup/{host}/{selection}',
-    'ssh': 'backup/{host}/{selection}'
+    'HiDrive': 'users/{user}/backup_{host}_{selection}',
+    'local': 'backup_{host}_{selection}',
+    'ssh': 'backup_{host}_{selection}'
 }
 try:
     accounts = yaml.load(open(accounts_file, 'r'))
