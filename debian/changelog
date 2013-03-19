@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc8) unstable testing; urgency=low
+
+  * rsync is only able to create one parent directory
+
+ -- Carl Fürstenberg <carl@excito.com>  Tue, 19 Mar 2013 14:43:40 +0100
+
 bubba-backend (2.6~rc7) unstable testing; urgency=low
 
   * davfs2 bails out on 2777, seems to require 0700
