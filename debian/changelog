@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc9) unstable testing; urgency=low
+
+  * add preinst file to update tor rc.d files
+
+ -- Carl Fürstenberg <carl@excito.com>  Wed, 20 Mar 2013 14:57:04 +0100
+
 bubba-backend (2.6~rc8) unstable testing; urgency=low
 
   * rsync is only able to create one parent directory
