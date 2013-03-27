@@ -1,6 +1,7 @@
 /var/log/bubba-backup.log {
-	daily
-	rotate 5
+	yearly
+	rotate 12
+  size 1M
 	compress
 	delaycompress
 	missingok
