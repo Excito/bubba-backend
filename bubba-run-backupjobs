@@ -45,8 +45,6 @@ def write_status(value, job, schedule, selection):
         status[job] = {}
     if not schedule in status[job]:
         status[job][schedule] = {}
-    if not selection in status[job][schedule]:
-        status[job][schedule] = {}
     status[job][schedule][selection] = value
 
     stream = file(status_file, 'w')
