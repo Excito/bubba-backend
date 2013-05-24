@@ -47,8 +47,12 @@ def write_status(value, job, schedule, selection):
         status[job][schedule] = {}
     status[job][schedule][selection] = value
 
-    stream = file(status_file, 'w')
+    stream = file(status_file, 'w+')
     yaml.dump(status, stream, default_flow_style=False)
+    stream.flush()
+    os.fsync(stream.fileno())
+    stream.close()
+
 
 
 def run_rsync(user, host, targetdir, source, uuid):
@@ -246,18 +250,18 @@ for job, schedules in local_jobs.items():
         mountdir = tempfile.mkdtemp()
         try:
             mount(job, mountdir)
+            syslog.syslog(syslog.LOG_INFO, "Running {schedule} local backup job for {selection} to device {uuid}".format(selection=selection, schedule=args.schedule, uuid=job))
+            write_status(-1, job, args.schedule, selection)
+            retval = run_local_rsync(
+                source=textwrap.dedent(selection_mapping[selection]),
+                targetdir=os.path.join(mountdir, targetdir_mapping['local'].format(
+                    host=socket.gethostname(),
+                    selection=selection
+                ))
+            )
+            umount(mountdir)
         except MountError as e:
             syslog.syslog(syslog.LOG_ERR, "Failed to mount device with {uuid} for {schedule} backup".format(uuid=job, schedule=args.schedule))
-            os.rmdir(mountdir)
-
-        syslog.syslog(syslog.LOG_INFO, "Running {schedule} local backup job for {selection} to device {uuid}".format(selection=selection, schedule=args.schedule, uuid=job))
-        write_status(-1, job, args.schedule, selection)
-        retval = run_local_rsync(
-            source=textwrap.dedent(selection_mapping[selection]),
-            targetdir=os.path.join(mountdir, targetdir_mapping['local'].format(
-                host=socket.gethostname(),
-                selection=selection
-            ))
-        )
-        umount(mountdir)
+        finally:
+            os.rmdir(mountdir) 
         write_status(retval, job, args.schedule, selection)
