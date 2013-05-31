@@ -1,3 +1,9 @@
+bubba-backend (2.6~rc11) unstable testing; urgency=low
+
+  * Updated backup functionality
+
+ -- Neira Pasic <neira.pasic@excito.com>  Wed, 31 May 2013 14:39:01 +0100
+
 bubba-backend (2.6~rc10) unstable testing; urgency=low
 
   * rotate less often
