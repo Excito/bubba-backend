@@ -1,3 +1,9 @@
+bubba-backend (2.6.0.0+teletwo2) unstable testing; urgency=low
+
+  * update version
+
+ -- Andreas Lestréus <andreas.lestreus@excito.com>  Wed, 12 Jun 2013 08:43:36 +0100
+
 bubba-backend (2.6.0.0+teletwo1) unstable testing; urgency=low
 
   * update version
