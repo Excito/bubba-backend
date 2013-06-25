@@ -1,8 +1,15 @@
+bubba-backend (2.6~rc12) unstable testing; urgency=low
+
+  * Fixed permissions for backed up files
+
+ -- neira <neira.pasic@excito.com>  Tue, 25 Jun 2013 14:39:01 +0100
+
+
 bubba-backend (2.6~rc11) unstable testing; urgency=low
 
   * Updated backup functionality
 
- -- Neira Pasic <neira.pasic@excito.com>  Wed, 31 May 2013 14:39:01 +0100
+ -- neira <neira.pasic@excito.com>  Wed, 31 May 2013 14:39:01 +0100
 
 bubba-backend (2.6~rc10) unstable testing; urgency=low
 

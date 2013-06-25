@@ -104,6 +104,7 @@ def run_local_rsync(source, targetdir):
     cmd = [
         'rsync',
         '--archive',
+        '--chmod=ugo=rwX',
         '--no-owner',
         '--no-perms',
         '--no-group',
