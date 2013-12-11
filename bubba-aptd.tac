@@ -128,8 +128,39 @@ class Health():
             )
             return False
         return True
+        
+    def _get_mysql_password(self):
+        '''retreive mysql settings from the .my.cnf config file, if it exists'''
+        import ConfigParser
+        FILE='/root/.my.cnf'
+        MyLogin={'host':'localhost','user':'root'}
+        try:
+           config = ConfigParser.ConfigParser() 
+           with open(FILE) as OF:
+                 config.readfp(OF)
+                 if config.has_option('mysql','password'):MyLogin['passwd']=config.get('mysql','password')
+                 return MyLogin
+        except IOError:
+           return MyLogin
+        finally:
+           OF.close()        
 
     def _check_mysql_no_password(self):
+        """Make sure we either have no password for mysql, or one that is stored in a config file"""
+        import MySQLdb
+        UserPass = _get_mysql_password(self)
+        try:
+            MySQLdb.connect(**UserPass)
+        except MySQLdb.OperationalError:
+            self._err(
+                code='ERROR',
+                desc=_("Failed to access MySQL, if a password for root is present, create a .my.cnf file to store these credentials",
+                       "unable to continue with upgrade")
+            )
+            return False
+        return True
+
+    '''def _check_mysql_no_password(self):
         """Make sure we do not have a password for mysql access"""
         import MySQLdb
         try:
@@ -145,6 +176,7 @@ class Health():
             )
             return False
         return True
+    '''
 
     def _check_functional_apache_config(self):
         """Make sure that apache can be restarted"""
